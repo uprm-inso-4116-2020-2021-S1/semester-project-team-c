@@ -1,0 +1,41 @@
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none;
+}
+
+.SearchBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #fff;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 5%;
+  border-style: none;
+  border-radius: 20px;
+}
+
+.searchIcon {
+  padding-left: 30px;
+  padding-right: 10px;
+}
+
+#search {
+  border-style: none;
+  border-radius: 4px;
+  min-height: 40px;
+  margin-left: 20px;
+  flex: 1;
+}
+
+.searchButton {
+  padding: 2%;
+  font-size: 15px;
+  background-color: rgb(0, 102, 102);
+  color: #fff;
+  border-style: none;
+  border-radius: 20px;
+  width: 120px;
+}

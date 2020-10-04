@@ -13,3 +13,13 @@
   justify-content: space-evenly;
   align-items: center;
 }
+.navButton {
+  text-decoration: none;
+  padding: 2%;
+  font-size: 20px;
+  background-color: rgb(0, 102, 102, 0);
+  color: #fff;
+  border-style: none;
+  border-radius: 20px;
+  width: 200px;
+}

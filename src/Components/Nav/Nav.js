@@ -10,14 +10,12 @@ function Nav() {
       </Link>
       <ul>
         {/* <li>Become a Guide</li> */}
-        <button
-          type="text"
-          className="navButton"
-        >
-          Become a Guide
-        </button>
+        <Link to="/createaccount" className="navButton">
+          <li>Become a Guide</li>
+        </Link>
+
         <Link to="/login" className="navButton">
-          Log In
+          <li>Log In</li>
         </Link>
         {/* <li>Account</li> */}
       </ul>

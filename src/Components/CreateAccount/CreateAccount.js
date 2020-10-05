@@ -1,14 +1,15 @@
 import React,{useState} from "react";
-import "./LogIn.css";
+import "./CreateAccount.css";
 import Nav from "../Nav/Nav";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
-export default function Login() {
+export default function CreateAccount() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRePassword] = useState("");
 
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    return password === repassword && email.length > 0 && password.length > 6;
   }
 
   function handleSubmit(event) {
@@ -16,11 +17,11 @@ export default function Login() {
   }
   
   return (
-    <div className="Login">
+    <div className="CreateAccount">
     <Nav />
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
-          <FormLabel>Email </FormLabel><br />
+          <FormLabel> Enter Email </FormLabel><br />
           <FormControl
             autoFocus
             
@@ -31,15 +32,23 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-          <FormLabel>Password</FormLabel><br />
+          <FormLabel>Enter Password</FormLabel><br />
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
           />
+        </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+          <FormLabel>Re enter Password</FormLabel><br />
+          <FormControl
+            value={repassword}
+            onChange={e => setRePassword(e.target.value)}
+            type="password"
+          />
         </FormGroup><br />
         <Button block bsSize="large" disabled={!validateForm()} type="submit">
-          Login
+          Submit
         </Button>
       </form>
     </div>

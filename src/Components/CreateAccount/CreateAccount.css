@@ -1,13 +1,13 @@
-.Login {
+.CreateAccount {
     text-align: center;
     font-size: 20px;
     color: #fff;
-    background-image: url("../../images/beaches.jpg");
+    background-image: url("../../images/rivers.jpg");
     background-position: center;
     background-size: cover;
     min-height: 100vh;
 }
-.Login form {
+.CreateAccount form {
     margin: 0 auto;
     max-width: 320px;
 }

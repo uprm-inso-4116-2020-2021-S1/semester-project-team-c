@@ -5,19 +5,26 @@ import { Link } from "react-router-dom";
 function Nav() {
   return (
     <div className="nav">
-      <Link to="/" className="navButton">
-        <h2>ExplorePR</h2>
-      </Link>
       <ul>
-        {/* <li>Become a Guide</li> */}
+        <Link to="/" className="navButton">
+          <li className="navButton">Home</li>
+        </Link>
+        
+        <Link className="navButton">
+          <li className="navButton">About us</li>
+        </Link>
+
         <Link to="/createaccount" className="navButton">
-          <li>Become a Guide</li>
+          <li className="navButton">Become a Guide</li>
+        </Link>
+
+        <Link className="navButton">
+          <li className="navButton">Browse Tours</li>
         </Link>
 
         <Link to="/login" className="navButton">
-          <li>Log In</li>
+          <li className="navButton">Log In</li>
         </Link>
-        {/* <li>Account</li> */}
       </ul>
     </div>
   );

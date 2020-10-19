@@ -1,9 +1,12 @@
 import React from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
+import Logo from "../../images/ExplorePRLogo.png"
 
 function Nav() {
   return (
+    <React.Fragment>
+    <img class="Logo" src={Logo} alt="Logo"></img>
     <div className="nav">
       <ul>
         <Link to="/" className="navButton">
@@ -12,6 +15,10 @@ function Nav() {
         
         <Link className="navButton">
           <li className="navButton">About us</li>
+        </Link>
+
+        <Link to="/meetourguides" className="navButton">
+          <li className="navButton">Meet our Guides</li>
         </Link>
 
         <Link to="/createaccount" className="navButton">
@@ -27,6 +34,7 @@ function Nav() {
         </Link>
       </ul>
     </div>
+    </React.Fragment>
   );
 }
 

@@ -24,3 +24,11 @@
   border-style: none;
   border-radius: 20px;
 }
+
+.Logo {
+  position: absolute;
+  width: 273px;
+  height: 60px;
+  left: 0px;
+  top: 0px;
+}

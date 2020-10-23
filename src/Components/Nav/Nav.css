@@ -1,8 +1,11 @@
 .nav {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: flex-end;
   color: #fff;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .nav ul {
@@ -13,13 +16,19 @@
   justify-content: space-evenly;
   align-items: center;
 }
+
 .navButton {
   text-decoration: none;
-  padding: 2%;
   font-size: 20px;
-  background-color: rgb(0, 102, 102, 0);
   color: #fff;
   border-style: none;
   border-radius: 20px;
-  width: 200px;
+}
+
+.Logo {
+  position: absolute;
+  width: 273px;
+  height: 60px;
+  left: 0px;
+  top: 0px;
 }

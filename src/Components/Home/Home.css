@@ -1,23 +1,126 @@
-.Home {
-    text-align: center;
-    background-image: url("../../images/laperla2.jpg");
-    background-position: center;
-    background-size: cover;
-    min-height: 100vh;
-  }
-  
-  .Home-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .Home-link {
-    color: #61dafb;
-  }
-  
+.TitleDiv {
+  text-align: center;
+  background-image: url("../../images/laperla2.jpg");
+  background-position: center;
+  background-size: cover;
+  min-height: 1300px;
+}
+
+.Title {
+  color: #fff;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 80px;
+}
+
+.TitleDescription {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 30px;
+  color: #fff;
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 45px;
+}
+
+.PlanAdventureDiv {
+  text-align: center;
+  min-height: 1300px;
+}
+
+.PlanAdventureTitle {
+  color: #343434;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.PlanAdventureDescription {
+  padding-left: 15%;
+  padding-right: 15%;
+  color: #343434;
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.Crashboat {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 200px;
+  top: 1600px;
+  border-radius: 500px;
+}
+
+.Gozalandia {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 600px;
+  top: 1600px;
+  border-radius: 500px;
+}
+
+.Yunque {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 1000px;
+  top: 1600px;
+  border-radius: 500px;
+}
+
+.BahiaBioluminicente {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 1400px;
+  top: 1600px;
+  border-radius: 500px;
+}
+
+.Chinchorro {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 200px;
+  top: 2000px;
+  border-radius: 500px;
+}
+
+.ElMorro {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 600px;
+  top: 2000px;
+  border-radius: 500px;
+}
+
+.Hiking {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 1000px;
+  top: 2000px;
+  border-radius: 500px;
+}
+
+.Zipline {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  left: 1400px;
+  top: 2000px;
+  border-radius: 500px;
+}

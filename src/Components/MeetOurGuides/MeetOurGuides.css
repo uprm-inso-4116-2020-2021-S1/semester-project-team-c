@@ -1,0 +1,226 @@
+.HeaderDiv {
+  text-align: center;
+}
+
+.Background {
+  position: relative;
+  background-image: url("../../images/MorroAereal.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 450px;
+}
+
+.GuidesHeader {
+  color: #000000;
+  font-family: Merriweather;
+  font-size: 64px;
+  line-height: 80px;
+}
+
+.Name {
+  position: absolute;
+  width: 320px;
+  top: 460px;
+  margin: 0;
+  font-family: Merriweather;
+  font-weight: normal;
+  font-size: 48px;
+  text-align: center;
+  color: #000000;
+}
+
+.TongoName1 {
+  left: 80px;
+}
+
+.TongoName2 {
+  left: 560px;
+}
+
+.TongoName3 {
+  left: 1040px;
+}
+
+.TongoName4 {
+  left: 1521px;
+}
+
+.Picture {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  top: 532px;
+  border-radius: 500px;
+}
+
+.TongoPicture1 {
+  left: 115px;
+}
+
+.TongoPicture2 {
+  left: 595px;
+}
+
+.TongoPicture3 {
+  left: 1075px;
+}
+
+.TongoPicture4 {
+  left: 1555px;
+}
+
+.Bio{
+  position: absolute;
+  width: 320px;
+  top: 800px;
+  margin: 0;
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  text-align: justify;
+  color: #000000;
+}
+
+.TongoBio1 {
+  left: 80px;
+}
+
+.TongoBio2 {
+  left: 560px;
+}
+
+.TongoBio3 {
+  left: 1040px;
+}
+
+.TongoBio4 {
+  left: 1521px;
+}
+
+.Email {
+  position: absolute;
+  width: 320px;
+  top: 880px;
+  margin: 0;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+}
+
+.TongoEmail1 {
+  left: 80px;
+}
+
+.TongoEmail2 {
+  left: 560px;
+}
+
+.TongoEmail3 {
+  left: 1040px;
+}
+
+.TongoEmail4 {
+  left: 1521px;
+}
+
+.Mobile {
+  position: absolute;
+  width: 320px;
+  top: 905px;
+  margin: 0;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+}
+
+.TongoMobile1 {
+  left: 80px;
+}
+
+.TongoMobile2 {
+  left: 560px;
+}
+
+.TongoMobile3 {
+  left: 1040px;
+}
+
+.TongoMobile4 {
+  left: 1521px;
+}
+
+.Icon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 940px;
+}
+
+.TongoFacebookIcon1 {
+  left: 80px;
+}
+
+.TongoFacebookIcon2 {
+  left: 560px;
+}
+
+.TongoFacebookIcon3 {
+  left: 1040px;
+}
+
+.TongoFacebookIcon4 {
+  left: 1521px;
+}
+
+.TongoInstagramIcon1 {
+  left: 176.7px;
+}
+
+.TongoInstagramIcon2 {
+  left: 656.7px;
+}
+
+.TongoInstagramIcon3 {
+  left: 1136.7px;
+}
+
+.TongoInstagramIcon4 {
+  left: 1616.7px;
+}
+
+.TongoTwitterIcon1 {
+  left: 273.3px;
+}
+
+.TongoTwitterIcon2 {
+  left: 753.3px;
+}
+
+.TongoTwitterIcon3 {
+  left: 1233.3px;
+}
+
+.TongoTwitterIcon4 {
+  left: 1713.3px;
+}
+
+.TongoYoutubeIcon1 {
+  left: 370px;
+}
+
+.TongoYoutubeIcon2 {
+  left: 850px;
+}
+
+.TongoYoutubeIcon3 {
+  left: 1330px;
+}
+
+.TongoYoutubeIcon4 {
+  left: 1810px;
+}

@@ -25,8 +25,8 @@ function Nav() {
           <li className="navButton">Become a Guide</li>
         </Link>
 
-        <Link className="navButton">
-          <li className="navButton">Browse Tours</li>
+        <Link to="/tours" className="navButton">
+          <li className="navButton">Tours</li>
         </Link>
 
         <Link to="/login" className="navButton">

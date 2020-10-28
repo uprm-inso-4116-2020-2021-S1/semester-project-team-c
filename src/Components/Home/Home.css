@@ -3,10 +3,11 @@
   background-image: url("../../images/laperla2.jpg");
   background-position: center;
   background-size: cover;
-  min-height: 1300px;
+  min-height: 100vh;
 }
 
 .Title {
+  margin-top: 5%;
   color: #fff;
   font-family: Merriweather;
   font-style: normal;

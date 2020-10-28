@@ -234,7 +234,7 @@ CREATE TABLE `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `role` varchar(45) DEFAULT NULL,
+  `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -243,6 +243,9 @@ CREATE TABLE `user` (
 --
 -- Dumping data for table `user`
 --
+INSERT INTO `user` (`uid`, `email`, `password`, `role`, `createdAt`) VALUES
+  (1, 'testing@gmol.com', 'test123', 1, '2019-06-19 11:15:30'),
+  (DEFAULT, 'angeldburgos@gmol.com', 'test123', DEFAULT, DEFAULT);
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;

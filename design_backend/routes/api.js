@@ -3,12 +3,15 @@ var config = require('../config/config').accessLevels;
 var user_controller = require('../controllers/user');
 
 
-var allowOnly = require('../services/checkAuth').allowOnly;
 
-var APIRoutes = function(passport) {
+//User routes
+    router.get('/all-users', user_controller.getAll);
 
-    router.get('/users/all', user_controller.getAll);
+//Guide routes
 
-    return router;
-}
-module.exports = APIRoutes;
+//Customer routes
+
+//Company routes
+
+//Public routes
+module.exports = router;

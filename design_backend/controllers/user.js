@@ -18,6 +18,10 @@ exports.deleteUser = function(id) {
     return user.destroy({ where: { id: id }});
 }
 
+exports.test = function(req, res) {
+    console.log('test1');
+}
+
 exports.getAll = function(req, res) {
     user.findAll().then((users) => {
         res.status(200).json(users);

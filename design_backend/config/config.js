@@ -4,10 +4,7 @@ require('dotenv').config();
 config.keys = {
     secret: '/%/%/SUPER-SECRET-KEY-FOR-THIS-APP/%/%/'
 };
-config.accessLevels = {
-    customer: 'customer',
-    guide: 'guide',
-};
+
 config.development = {
     name: process.env.DB_DBNAME,
     user: process.env.DB_USERNAME,

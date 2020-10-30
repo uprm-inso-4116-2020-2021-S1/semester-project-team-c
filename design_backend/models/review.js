@@ -1,7 +1,6 @@
-var config = require('../config/config');
 module.exports = (db, Sequelize) => {
-    var user = db.define('user', {
-        uid: {
+    var review = db.define('review', {
+        rid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             unique: true
@@ -13,16 +12,22 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.STRING
         },
         role: {
-            type: Sequelize.NUMBER,
-            defaultValue: 1
+            type: Sequelize.NUMBER
         },
-        createdAt: {
+        reviewcreatedAt: {
             type: Sequelize.DATE
-        }
+        },
+        customer_cid: {
+            type: Sequelize.NUMBER
+        },
+        event_eid: {
+            type: Sequelize.NUMBER,
+            primaryKey: true
+        },
     }, {
-        tableName: 'user',
+        tableName: 'review',
         timestamps: false
     });
 
-    return user;
+    return review;
 };

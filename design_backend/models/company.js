@@ -1,28 +1,27 @@
-var config = require('../config/config');
 module.exports = (db, Sequelize) => {
-    var user = db.define('user', {
-        uid: {
+    var company = db.define('company', {
+        coid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             unique: true
         },
-        email: {
+        companyname: {
             type: Sequelize.STRING
         },
-        password: {
+        companyurl: {
             type: Sequelize.STRING
         },
-        role: {
+        location_lid: {
             type: Sequelize.NUMBER,
-            defaultValue: 1
+            primaryKey: true
         },
-        createdAt: {
+        companycreatedAt: {
             type: Sequelize.DATE
         }
     }, {
-        tableName: 'user',
+        tableName: 'company',
         timestamps: false
     });
 
-    return user;
+    return company;
 };

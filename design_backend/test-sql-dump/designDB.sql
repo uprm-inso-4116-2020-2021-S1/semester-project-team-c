@@ -30,6 +30,7 @@ CREATE TABLE `company` (
   `companyname` varchar(45) DEFAULT NULL,
   `companyurl` varchar(45) DEFAULT NULL,
   `location_lid` int(11) NOT NULL,
+  `companycreatedAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`coid`,`location_lid`),
   KEY `fk_company_location1_idx` (`location_lid`),
   CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -203,7 +204,7 @@ CREATE TABLE `review` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `reviewmessage` varchar(255) DEFAULT NULL,
   `stars` int(1) NOT NULL,
-  `reviewcreatedAt` varchar(45) DEFAULT NULL,
+  `reviewcreatedAt` datetime DEFAULT current_timestamp(),
   `customer_cid` int(11) NOT NULL,
   `event_eid` int(11) NOT NULL,
   PRIMARY KEY (`rid`,`event_eid`),
@@ -232,8 +233,8 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`uid`)
@@ -243,9 +244,10 @@ CREATE TABLE `user` (
 --
 -- Dumping data for table `user`
 --
-INSERT INTO `user` (`uid`, `email`, `password`, `role`, `createdAt`) VALUES
-  (1, 'testing@gmol.com', 'test123', 1, '2019-06-19 11:15:30'),
-  (DEFAULT, 'angeldburgos@gmol.com', 'test123', DEFAULT, DEFAULT);
+INSERT INTO `user` (`email`, `password`, `role`, `createdAt`) VALUES
+  ('testing@gmol.com', 'test123', 1, '2019-06-19 11:15:30'),
+  ('testin2433g@gmol.com', 'test123', 1, '2019-06-19 11:15:30'),
+  ('angeldburgos@gmol.com', 'test123', DEFAULT, DEFAULT);
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;

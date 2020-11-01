@@ -179,7 +179,7 @@ CREATE TABLE `location` (
   `building` varchar(100) DEFAULT NULL,
   `street` varchar(100) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
-  `zipcode` varchar(45) DEFAULT NULL,
+  `zipcode` int(12) DEFAULT NULL,
   PRIMARY KEY (`lid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

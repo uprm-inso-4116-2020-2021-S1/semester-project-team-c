@@ -10,7 +10,7 @@ class Search extends React.Component {
         <input
           type="text"
           id="search"
-          placeholder="search by attraction or location..."
+          placeholder="Search by attraction or location..."
         />
         <button
           type="button"

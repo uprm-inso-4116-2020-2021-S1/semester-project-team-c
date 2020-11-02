@@ -7,7 +7,7 @@ import SearchResults from "../SearchResults/SearchResults";
 class Home extends React.Component {
     constructor(props) {
       super(props);
-  
+      
       this.state = {
         results: [],
       };

@@ -18,6 +18,7 @@ export default function Login() {
   return (
     <div className="Login">
     <Nav />
+    <div className="Loginbox"> 
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
           <FormLabel>Email </FormLabel><br />
@@ -42,6 +43,7 @@ export default function Login() {
           Login
         </Button>
       </form>
+      </div>
     </div>
   );
 }

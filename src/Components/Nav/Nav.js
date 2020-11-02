@@ -11,7 +11,7 @@ function Nav() {
       <ul>
         {/* <li>Become a Guide</li> */}
         <Link to="/createaccount" className="navButton">
-          <li>Become a Guide</li>
+          <li>Create Account</li>
         </Link>
 
         <Link to="/login" className="navButton">

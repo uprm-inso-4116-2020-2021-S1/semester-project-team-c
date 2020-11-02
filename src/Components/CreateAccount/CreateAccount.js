@@ -19,6 +19,7 @@ export default function CreateAccount() {
   return (
     <div className="CreateAccount">
     <Nav />
+    <div className="Createaccountbox"> 
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
           <FormLabel> Enter Email </FormLabel><br />
@@ -51,6 +52,7 @@ export default function CreateAccount() {
           Submit
         </Button>
       </form>
+      </div>
     </div>
   );
 }

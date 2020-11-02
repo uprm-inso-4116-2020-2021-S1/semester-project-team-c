@@ -9,8 +9,19 @@ After installing use this resource to export the db:
 	CREATE DATABASE designDB;
 	ctrl C
 	sudo mysql -u root -p designDB < designDB.sql 
-After you did these steps go to the folder design_backend in a terminal and run:
-    node app.js
+
+After you did these steps go to the folder design_backend in a terminal:
+	touch .env (Make sure the file is in the design_backend folder)
+	nano .env 
+	Paste this information:
+		SECRET_KEY=/%/%/SUPER-SECRET-KEY-FOR-THIS-APP/%/%/
+		DB_DBNAME=designDB
+		DB_USERNAME=root
+		DB_PASSWORD=
+		DB_PORT=3306
+	Save!
+	And to run the backend:
+    	node app.js
     
     
 ERRORS:
@@ -32,8 +43,6 @@ If having trouble with launching the backend due to 'ER_ACCESS_DENIED_NO_PASSWOR
 		FLUSH PRIVILEGES;
 	Source: 
 		https://askubuntu.com/questions/766334/cant-login-as-mysql-user-root-from-normal-user-account-in-ubuntu-16-04
-	
-	https://phoenixnap.com/kb/how-to-create-mariadb-user-grant-privileges
 
   
   Any questions please be sure to contact us!

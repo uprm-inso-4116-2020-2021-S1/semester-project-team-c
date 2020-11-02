@@ -1,11 +1,11 @@
 var router = require('express').Router();
-var config = require('../config/config').accessLevels;
 var user_controller = require('../controllers/user');
 
 
 
 //User routes
     router.get('/all-users', user_controller.getAll);
+    router.post('/add-user', user_controller.addUser);
 
 //Guide routes
 
@@ -14,4 +14,6 @@ var user_controller = require('../controllers/user');
 //Company routes
 
 //Public routes
+
+
 module.exports = router;

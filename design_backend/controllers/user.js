@@ -1,7 +1,5 @@
 var db = require('../models');
 var user = db.user;
-var config = require('../config/config');
-var request = require('request');
 
 exports.addUser = function(userData) {
     console.log('Successfully added user...\n' + JSON.stringify(userData, null, 2));
@@ -13,9 +11,9 @@ exports.addUser = function(userData) {
     });
 }
 
-exports.deleteUser = function(id) {
-    console.log('Deleting user with id: ' + id + '...')
-    return user.destroy({ where: { id: id }});
+exports.deleteUser = function(uid) {
+    console.log('Deleting user with id: ' + uid + '...')
+    return user.destroy({ where: { uid: uid }});
 }
 
 exports.getAll = function(req, res) {

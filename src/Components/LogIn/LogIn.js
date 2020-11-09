@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import "./LogIn.css";
-import Nav from "../Nav/Nav";
+import Nav from "../NavigationBar/NavigationBar";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
 export default function Login() {

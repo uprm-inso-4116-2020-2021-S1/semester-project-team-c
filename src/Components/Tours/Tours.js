@@ -1,6 +1,6 @@
 import "./Tours.css";
 import React from "react";
-import Nav from "../Nav/Nav";
+import Nav from "../NavigationBar/NavigationBar";
 import Search from "../Search/Search";
 import SearchResults from "../SearchResults/SearchResults";
 

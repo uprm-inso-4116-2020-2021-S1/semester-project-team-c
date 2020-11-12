@@ -1,0 +1,13 @@
+.navbar {
+  font-family: Merriweather;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.Logo {
+  position: absolute;
+  width: 273px;
+  height: 60px;
+  left: 0px;
+  top: 0px;
+}

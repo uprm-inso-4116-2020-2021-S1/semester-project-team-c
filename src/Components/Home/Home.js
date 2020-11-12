@@ -19,25 +19,6 @@ class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
-<<<<<<< HEAD
-        <div className="TitleDiv">
-          <Nav />
-          <h1 className="Title">ExplorePR</h1>
-          <h2 className="TitleDescription">Puerto Rico is full of hidden gems waiting for you to explore them.</h2>
-        </div>
-        <div className="PlanAdventureDiv">
-          <h1 className="PlanAdventureTitle">Plan your adventure</h1>
-          <h2 className="PlanAdventureDescription">From beaches to a national forest, a bioluminescent lake, or hiking, in Puerto Rico you will find what suit you most. Plan your adventure along with our local tour guides to make the most of your stay.</h2>
-          <img class="Crashboat" src={Crashboat} alt="Crashboat"></img>
-          <img class="Gozalandia" src={Gozalandia} alt="Gozalandia"></img>
-          <img class="Yunque" src={Yunque} alt="Yunque"></img>
-          <img class="BahiaBioluminicente" src={BahiaBioluminicente} alt="Bahia Bioluminicente"></img>
-          <img class="Chinchorro" src={Chinchorro} alt="Chinchorro"></img>
-          <img class="ElMorro" src={ElMorro} alt="El morro"></img>
-          <img class="Hiking" src={Hiking} alt="Hiking"></img>
-          <img class="Zipline" src={Zipline} alt="Zipline"></img>
-        </div>
-=======
       <div className="TitleDiv">
         <Nav />
         <Container fluid>
@@ -67,7 +48,6 @@ class Home extends React.Component {
           <Col className="picPadding"><Image className="picDim d-block mx-auto" src={Zipline} roundedCircle/></Col>
         </Row>
       </Container>
->>>>>>> origin
       </React.Fragment>
     );
   }

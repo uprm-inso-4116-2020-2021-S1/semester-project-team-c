@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 
 
 // API Routes
-app.use('/', api);
+app.use('/api', api);
 
 
 

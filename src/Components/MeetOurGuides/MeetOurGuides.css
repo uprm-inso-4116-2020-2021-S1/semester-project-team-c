@@ -1,0 +1,74 @@
+.HeaderDiv {
+  text-align: center;
+}
+
+.Background {
+  position: relative;
+  background-image: url("../../images/MorroAereal.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 450px;
+}
+
+.GuidesHeader {
+  color: #000000;
+  font-family: Merriweather;
+  font-size: 64px;
+  line-height: 80px;
+}
+
+.Name {
+  font-family: Merriweather;
+  font-size: 40px;
+  text-align: center;
+  color: #000000;
+}
+
+div.NameColPadding {
+  padding-top: 20px;
+}
+
+.picDim {
+  width: 250px;
+  height: 250px;
+}
+
+div.PicColPadding {
+  padding-bottom: 20px;
+}
+
+.Bio{
+  margin: 0;
+  font-family: Merriweather;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  text-align: justify;
+  color: #000000;
+}
+
+div.BioColPadding {
+  padding: 0 10% 10px 10%;
+}
+
+.Contact {
+  margin: 0;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+}
+
+div.ContactColPadding {
+  padding: 0 10%;
+}
+
+.Icon {
+  width: 35px;
+  height: 35px;
+}
+
+div.iconColPadding {
+  padding-top: 10px;
+}

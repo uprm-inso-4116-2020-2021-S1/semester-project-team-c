@@ -12,6 +12,8 @@ var user_controller = require('./controllers/user');
 var api = require('./routes/api');
 
 var allowedOrigins = ['http:localhost:8080/'];
+
+app.use(express.static('public'));
 app.use(cors());
 app.use(compression()); //Compress all routes
 app.use(helmet());      //Protect from well-known web vulnerabilities

@@ -11,7 +11,7 @@ function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="/meetourguides">Meet our Guides</Nav.Link>
-            <Nav.Link href="/createaccount">Become a Guide</Nav.Link>
+            <Nav.Link href="/createguideaccount">Become a Guide</Nav.Link>
             <Nav.Link href="/tours">Tours</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
           </Nav>

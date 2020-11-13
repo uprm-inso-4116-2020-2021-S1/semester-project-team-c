@@ -1,3 +1,4 @@
+
 const url = "http://localhost:8080/api/";
 
 export const Server = {
@@ -9,7 +10,7 @@ export const Server = {
     // getEvent,
     // getReview,
     // addUser,
-    // addGuide,
+    addGuide,
     // addCustomer,
     // addLocation,
     // addCompany,
@@ -24,6 +25,9 @@ function getUsers() {
 
 function getGuides() {
     return fetch(url + "all-guides").then(receivedData => receivedData.json());
+}
+function addGuide(req){
+    return fetch(url + "addGuide",req).then(response => response.json());
 }
 
 export default Server

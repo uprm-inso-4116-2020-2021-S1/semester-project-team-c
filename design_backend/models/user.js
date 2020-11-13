@@ -2,8 +2,9 @@ var config = require('../config/config');
 module.exports = (db, Sequelize) => {
     var user = db.define('user', {
         uid: {
-            type: Sequelize.NUMBER,
+            type: Sequelize.INTEGER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         email: {
@@ -24,6 +25,8 @@ module.exports = (db, Sequelize) => {
         tableName: 'user',
         timestamps: false
     });
+
+    
 
     return user;
 };

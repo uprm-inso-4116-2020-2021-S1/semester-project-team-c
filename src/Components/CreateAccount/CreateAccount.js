@@ -59,10 +59,10 @@ export class CreateAccount extends React.Component {
 
     switch (name) {
       case 'firstName':
-        formErrors.firstName = value.length < 3 ? "minimum 3 characters required" : "";
+        formErrors.firstName = value.length < 2 ? "minimum 2 characters required" : "";
         break;
       case 'lastName':
-        formErrors.lastName = value.length < 3 ? "minimum 3 characters required" : "";
+        formErrors.lastName = value.length < 2 ? "minimum 2 characters required" : "";
         break;
       case 'email':
         formErrors.email = emailRegex.test(value) ? "" : "Invalid email Address";

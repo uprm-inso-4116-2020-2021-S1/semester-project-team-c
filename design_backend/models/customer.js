@@ -3,6 +3,7 @@ module.exports = (db, Sequelize) => {
         cid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         firstName: {

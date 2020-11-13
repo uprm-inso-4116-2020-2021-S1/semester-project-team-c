@@ -3,6 +3,7 @@ module.exports = (db, Sequelize) => {
         lid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         building: {

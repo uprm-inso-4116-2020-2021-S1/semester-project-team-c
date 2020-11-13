@@ -26,8 +26,13 @@ function getUsers() {
 function getGuides() {
     return fetch(url + "all-guides").then(receivedData => receivedData.json());
 }
-function addGuide(req){
-    return fetch(url + "addGuide",req).then(response => response.json());
+function addGuide(data){
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: data 
+    };
+    return fetch(url + "add-guide",req).then(response => response.json());
 }
 
 export default Server

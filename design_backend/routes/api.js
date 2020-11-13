@@ -1,14 +1,15 @@
 var router = require('express').Router();
 var user_controller = require('../controllers/user');
+var guide_controller = require('../controllers/guide');
 
 
 
 //User routes
     router.get('/all-users', user_controller.getAll);
-    router.post('/add-user', user_controller.addUser);
 
 //Guide routes
     // Router for create guide
+    router.post('/add-guide', guide_controller.addGuide);
     // Router for delete guide
     
 //Customer routes

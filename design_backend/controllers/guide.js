@@ -1,7 +1,6 @@
 var db = require('../models');
 var guide = db.guide;
-var config = require('../config/config');
-var request = require('request');
+var user = db.user;
 
 
 exports.getAll = function (req, res) {
@@ -11,7 +10,6 @@ exports.getAll = function (req, res) {
 }
 
 exports.addGuide = function (req, res) { //gid automatically created by DB
-    console.log('Successfully added guide...\n' + JSON.stringify(req.body, null, 2));
     var guideData = req.body;
     user.create({
         email: guideData.email,
@@ -19,6 +17,8 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
         role: guideData.role,
         creation_date: new Date().toLocaleDateString()
     }).then((new_user) => {
+        console.log("New user id" + JSON.stringify(new_user, null, 2));
+        console.log('Successfully added guide...\n' + JSON.stringify(req.body, null, 2));
         guide.create({
             firstName: guideData.firstName,
             lastName: guideData.lastName,
@@ -31,19 +31,21 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
             user_uid: new_user.uid,
             company_coid: new_user.uid,
             company_location_lid: new_user.uid,
-        }).then((new_guide) => {
-            res.status(200).json({
-                success: true,
-                message: 'Successfully added guide: ' + new_guide.firstName + ' ' + new_guide.lastName
-            });
-        }).catch(Error, (err) => {
-            res.status(409).json({
-                success: false,
-                message: 'Error adding guide...',
-                error: err
-            });
+        })
+    }).then(() => {
+        res.status(200).json({
+            success: true,
+            message: 'Successfully added recruiter!',
+            first_name: guideData.firstName,
+            last_name: guideData.lastName
         });
-    })
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error adding recruiter...',
+            error: err
+        });
+    });
 }
 
 

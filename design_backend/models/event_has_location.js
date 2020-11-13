@@ -3,6 +3,7 @@ module.exports = (db, Sequelize) => {
         event_eventid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         location_id: {

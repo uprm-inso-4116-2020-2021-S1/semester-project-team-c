@@ -1,6 +1,5 @@
 
 const url = "http://localhost:8080/api/";
-const 
 
 export const Server = {
     getGuides,
@@ -19,7 +18,7 @@ export const Server = {
 
 };
 //User
-
+const user = "user/";
 function getUsers() {
     return fetch(url + user +"all-users").then(receivedData => receivedData.json());
 }

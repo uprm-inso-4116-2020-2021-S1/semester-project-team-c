@@ -49,11 +49,11 @@ export class CreateGuideAccount extends React.Component {
             email: "",
             password: "",
             description: " ",
-            companyName: "",
-            companyURL: "",
-            building: "",
-            street: "",
-            city: "",
+            companyName: " ",
+            companyURL: " ",
+            building: " ",
+            street: " ",
+            city: " ",
             zipcode: "",
             formErrors: {
                 firstName: "",
@@ -181,6 +181,7 @@ export class CreateGuideAccount extends React.Component {
                 <div className="wrapper">
                     <div className="form-wrapper">
                         <h1>Create Account!</h1>
+                        <form onSubmit={this.handleSubmit} noValidate>
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -188,7 +189,6 @@ export class CreateGuideAccount extends React.Component {
                             </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
-                                        <form onSubmit={this.handleSubmit} noValidate>
                                             <div className="firstName">
                                                 <label htmlFor="firstName">First Name</label>
                                                 <input
@@ -336,7 +336,6 @@ export class CreateGuideAccount extends React.Component {
                                             {formErrors.description.length > 0 && (
                                                 <span className="errorMessage" >{formErrors.description}</span>
                                             )}
-                                        </form>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -346,7 +345,6 @@ export class CreateGuideAccount extends React.Component {
                         </Accordion.Toggle>
                                 <Accordion.Collapse eventKey="1">
                                     <Card.Body>
-                                        <form onSubmit={this.handleSubmit} noValidate>
                                             <div className="companyName">
                                                 <label htmlFor="companyName">Company Name</label>
                                                 <input
@@ -433,7 +431,6 @@ export class CreateGuideAccount extends React.Component {
                                                 <span className="errorMessage" >{formErrors.zipcode}</span>
                                             )}
 
-                                        </form>
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
@@ -442,6 +439,7 @@ export class CreateGuideAccount extends React.Component {
                             <button type="submit">Create Account</button>
                             <small>Already have an account?</small><a href="/login">Log In</a>
                         </div>
+                        </form>
                     </div>
                 </div>
             </React.Fragment>

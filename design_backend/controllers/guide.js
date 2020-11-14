@@ -14,7 +14,7 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
     user.create({
         email: guideData.email,
         password: guideData.password,
-        role: guideData.role,
+        role: 1,
         creation_date: new Date().toLocaleDateString()
     }).then((new_user) => {
         console.log('Successfully added guide...\n' + JSON.stringify(req.body, null, 2));
@@ -33,14 +33,14 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
     }).then(() => {
         res.status(200).json({
             success: true,
-            message: 'Successfully added recruiter!',
+            message: 'Successfully added guide!',
             first_name: guideData.firstName,
             last_name: guideData.lastName
         });
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error adding recruiter...',
+            message: 'Error adding guide...',
             error: err
         });
     });

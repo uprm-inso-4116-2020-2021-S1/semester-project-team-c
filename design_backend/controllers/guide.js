@@ -14,7 +14,7 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
     user.create({
         email: guideData.email,
         password: guideData.password,
-        role: guideData.role,
+        role: 1,
         creation_date: new Date().toLocaleDateString()
     }).then((new_user) => {
         console.log('Successfully added guide...\n' + JSON.stringify(req.body, null, 2));

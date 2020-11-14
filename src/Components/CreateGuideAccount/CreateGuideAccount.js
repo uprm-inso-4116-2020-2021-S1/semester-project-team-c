@@ -84,7 +84,6 @@ export class CreateGuideAccount extends React.Component {
             phoneNumber: this.state.phone,
             email: this.state.email,
             password: this.state.password,
-            role: 1,
             facebook: this.state.facebook,
             instagram: this.state.instagram,
             twitter: this.state.twitter,

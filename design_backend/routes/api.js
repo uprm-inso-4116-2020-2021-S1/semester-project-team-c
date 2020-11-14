@@ -8,22 +8,23 @@ var customer_controller = require('../controllers/customer');
 
 
 //User routes
-    router.get('/all-users', user_controller.getAll);
-    router.post('/add-user', user_controller.addUser);
+    router.get('/user/all-users', user_controller.getAll);
+    router.post('/user/add-user', user_controller.addUser);
 
 //Guide routes
     // Router for create guide
-    router.post('/add-guide', guide_controller.addGuide);
+    router.post('/guide/add-guide', guide_controller.addGuide);
     // Router for delete guide
     
 //Customer routes
     // Router for create customer
-    router.post('/add-customer', customer_controller.addCustomer)
+    router.get('/customer/all-customers', customer_controller.getall);
+    router.post('/customer/add-customer', customer_controller.addCustomer);
     // Router for delete customer
     
 //Company routes
     // Router for create company
-    router.get('/allcompanies', company_controller.getall);
+    router.get('/company/allcompanies', company_controller.getall);
     // Router for delete company
     
 

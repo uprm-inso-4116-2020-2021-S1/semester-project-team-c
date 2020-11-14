@@ -23,10 +23,11 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company` (
-  `coid` int(11) NOT NULL AUTO_INCREMENT,
+  `coid` int(11) NOT NULL DEFAULT 1,
   `companyname` varchar(45) DEFAULT NULL,
   `companyurl` varchar(45) DEFAULT NULL,
-  `location_lid` int(11) DEFAULT NULL,
+  `location_lid` int(11) NOT NULL,
+  `companycreatedAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`coid`,`location_lid`),
   KEY `fk_company_location1_idx` (`location_lid`),
   CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -145,7 +146,7 @@ CREATE TABLE `guide` (
   `instagram` varchar(100) DEFAULT NULL,
   `user_uid` int(11) NOT NULL,
   `company_coid` int(11) NOT NULL,
-  PRIMARY KEY (`gid`,`company_coid`),
+  PRIMARY KEY (`gid`,`company_coid`,`user_uid`),
   KEY `fk_guide_user_idx` (`user_uid`),
   KEY `fk_guide_company1_idx` (`company_coid`),
   CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -163,6 +164,32 @@ LOCK TABLES `guide` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `images`
+--
+
+DROP TABLE IF EXISTS `images`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `images` (
+  `img_id` int(11) NOT NULL,
+  `img_name` varchar(100) DEFAULT NULL,
+  `user_uid` int(11) NOT NULL,
+  PRIMARY KEY (`img_id`,`user_uid`),
+  KEY `fk_images_user1_idx` (`user_uid`),
+  CONSTRAINT `fk_images_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `images`
+--
+
+LOCK TABLES `images` WRITE;
+/*!40000 ALTER TABLE `images` DISABLE KEYS */;
+/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `location`
 --
 
@@ -174,7 +201,7 @@ CREATE TABLE `location` (
   `building` varchar(100) DEFAULT NULL,
   `street` varchar(100) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
-  `zipcode` varchar(45) DEFAULT NULL,
+  `zipcode` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`lid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -198,11 +225,11 @@ DROP TABLE IF EXISTS `review`;
 CREATE TABLE `review` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `reviewmessage` varchar(255) DEFAULT NULL,
-  `stars` int(1) NOT NULL,
-  `reviewcreatedAt` varchar(45) DEFAULT NULL,
+  `stars` int(11) NOT NULL DEFAULT 0,
+  `reviewcreatedAt` datetime DEFAULT current_timestamp(),
   `customer_cid` int(11) NOT NULL,
   `event_eid` int(11) NOT NULL,
-  PRIMARY KEY (`rid`,`event_eid`),
+  PRIMARY KEY (`rid`,`event_eid`,`customer_cid`),
   KEY `fk_review_customer1_idx` (`customer_cid`),
   KEY `fk_review_event1_idx` (`event_eid`),
   CONSTRAINT `fk_review_customer1` FOREIGN KEY (`customer_cid`) REFERENCES `customer` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -228,12 +255,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` varchar(45) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,6 +269,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -254,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-13 18:06:56
+-- Dump completed on 2020-11-13 20:41:09

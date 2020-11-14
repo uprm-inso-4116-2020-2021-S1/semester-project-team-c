@@ -17,7 +17,6 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
         role: guideData.role,
         creation_date: new Date().toLocaleDateString()
     }).then((new_user) => {
-        console.log("New user id" + JSON.stringify(new_user, null, 2));
         console.log('Successfully added guide...\n' + JSON.stringify(req.body, null, 2));
         guide.create({
             firstName: guideData.firstName,
@@ -29,8 +28,7 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
             youtube: guideData.youtube,
             instagram: guideData.instagram,
             user_uid: new_user.uid,
-            company_coid: new_user.uid,
-            company_location_lid: new_user.uid,
+            company_coid: new_user.uid
         })
     }).then(() => {
         res.status(200).json({

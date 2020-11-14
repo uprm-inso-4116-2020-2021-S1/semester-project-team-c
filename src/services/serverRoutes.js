@@ -1,6 +1,5 @@
 
 const url = "http://localhost:8080/api/";
-const 
 
 export const Server = {
     getGuides,
@@ -12,7 +11,7 @@ export const Server = {
     // getReview,
     // addUser,
     addGuide,
-    // addCustomer,
+    addCustomer,
     // addLocation,
     // addCompany,
     // addUser,
@@ -21,14 +20,13 @@ export const Server = {
 };
 //User
 
-const user = "user/"
 function getUsers() {
-    return fetch(url + user +"all-users").then(receivedData => receivedData.json());
+    return fetch(url +"all-users").then(receivedData => receivedData.json());
 }
+
 //Guide
-const guide = "guide/"
 function getGuides() {
-    return fetch(url + guide + "all-guides").then(receivedData => receivedData.json());
+    return fetch(url + "all-guides").then(receivedData => receivedData.json());
 }
 function addGuide(data){
     const req = {
@@ -42,5 +40,14 @@ function addGuide(data){
 //Company
 
 //Customer
+
+function addCustomer(data){
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: data 
+    };
+    return fetch(url + "add-customer",req).then(response => response.json());
+}
 
 export default Server

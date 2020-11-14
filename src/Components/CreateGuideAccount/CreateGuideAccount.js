@@ -444,7 +444,6 @@ export class CreateGuideAccount extends React.Component {
                         </div>
                     </div>
                 </div>
-
             </React.Fragment>
         );
     }

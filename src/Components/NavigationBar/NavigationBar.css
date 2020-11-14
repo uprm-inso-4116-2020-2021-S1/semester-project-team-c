@@ -1,9 +1,11 @@
 .navbar {
-  font-family: Merriweather;
-  font-weight: bold;
-  font-size: 19px;
+  font-family: "Montserrat", sans-serif;
+  background-color: #fff;
 }
-
+.navbar-expand-lg {
+  box-shadow: 0 5px 10px -5px #888888;
+  min-height: 10vh;
+}
 .Logo {
   position: absolute;
   width: 273px;

@@ -33,14 +33,14 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
     }).then(() => {
         res.status(200).json({
             success: true,
-            message: 'Successfully added recruiter!',
+            message: 'Successfully added guide!',
             first_name: guideData.firstName,
             last_name: guideData.lastName
         });
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error adding recruiter...',
+            message: 'Error adding guide...',
             error: err
         });
     });

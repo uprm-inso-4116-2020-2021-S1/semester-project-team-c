@@ -1,5 +1,6 @@
 
 const url = "http://localhost:8080/api/";
+const 
 
 export const Server = {
     getGuides,
@@ -18,13 +19,16 @@ export const Server = {
     // addEvent,
 
 };
+//User
 
+const user = "user/"
 function getUsers() {
-    return fetch(url + "all-users").then(receivedData => receivedData.json());
+    return fetch(url + user +"all-users").then(receivedData => receivedData.json());
 }
-
+//Guide
+const guide = "guide/"
 function getGuides() {
-    return fetch(url + "all-guides").then(receivedData => receivedData.json());
+    return fetch(url + guide + "all-guides").then(receivedData => receivedData.json());
 }
 function addGuide(data){
     const req = {
@@ -34,5 +38,9 @@ function addGuide(data){
     };
     return fetch(url + "add-guide",req).then(response => response.json());
 }
+
+//Company
+
+//Customer
 
 export default Server

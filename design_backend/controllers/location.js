@@ -9,3 +9,9 @@
 //         res.status(200).json(locations);
 //     });
 // }
+
+
+//getLocationByName = function(req,res) {
+
+
+// }

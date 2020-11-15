@@ -103,7 +103,7 @@ export class LogIn extends React.Component {
             {formErrors.password.length > 0 && (
                   <span className="errorMessage" >{formErrors.password}</span>
                 )}
-            <div className="createAccount">
+            <div className="Submit">
               <button type="submit">Log In</button> 
               <small>Dont have an account?</small> <a href="/createaccount">Create Account</a>
             </div>

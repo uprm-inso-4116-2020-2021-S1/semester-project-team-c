@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company` (
-  `coid` int(11) NOT NULL DEFAULT 1,
+  `coid` int(11) NOT NULL AUTO_INCREMENT,
   `companyname` varchar(45) DEFAULT NULL,
   `companyurl` varchar(45) DEFAULT NULL,
   `location_lid` int(11) NOT NULL,

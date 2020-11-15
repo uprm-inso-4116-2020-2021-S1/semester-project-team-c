@@ -76,7 +76,7 @@ export class CreateGuideAccount extends React.Component {
         };
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         guideData = {
             firstName: this.state.firstName,
@@ -103,9 +103,9 @@ export class CreateGuideAccount extends React.Component {
             companyData
         };
         if (formValid(this.state)) {
-            // await Server.addGuide(JSON.stringify(data));
-            console.log(" Working?")
             console.log(JSON.stringify(data));
+            await Server.addGuide(JSON.stringify(data));
+            
         } else {
             console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
         }

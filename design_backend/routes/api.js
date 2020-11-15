@@ -9,7 +9,7 @@ var customer_controller = require('../controllers/customer');
 
 //User routes
     router.get('/user/all-users', user_controller.getAll);
-    router.post('/user/add-user', user_controller.addUser);
+    // router.post('/user/add-user', user_controller.addUser);
 
 //Guide routes
     // Router for create guide

@@ -3,12 +3,13 @@ module.exports = (db, Sequelize) => {
         coid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
-        companyname: {
+        companyName: {
             type: Sequelize.STRING
         },
-        companyurl: {
+        companyURL: {
             type: Sequelize.STRING
         },
         location_lid: {

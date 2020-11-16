@@ -3,6 +3,7 @@ module.exports = (db, Sequelize) => {
         lid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         building: {
@@ -14,7 +15,7 @@ module.exports = (db, Sequelize) => {
         city: {
             type: Sequelize.STRING
         },
-        zipccode: {
+        zipcode: {
             type: Sequelize.STRING
         }
     }, {

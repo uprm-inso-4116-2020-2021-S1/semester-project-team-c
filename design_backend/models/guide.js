@@ -1,9 +1,10 @@
 var config = require('../config/config');
 module.exports = (db, Sequelize) => {
-    var user = db.define('guide', {
+    var guide = db.define('guide', {
         gid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
+            autoIncrement: true,
             unique: true
         },
         firstName: {
@@ -35,14 +36,17 @@ module.exports = (db, Sequelize) => {
         },
         company_coid: {
             type: Sequelize.NUMBER
-        },
-        company_location_lid: {
-            type: Sequelize.NUMBER
         }
+        // is_active: { for when we properly add whether guide is active or not
+            // type: Boolean(true)
+        // }
     }, {
         tableName: 'guide',
         timestamps: false
     });
-
-    return user;
+    guide.associate = (models) => {
+        guide.belongsTo(models.company, { as: 'coid', foreignKey: 'company_coid'});
+        guide.belongsTo(models.user, { as: 'uid', foreignKey: 'user_uid'});
+    };
+    return guide;
 };

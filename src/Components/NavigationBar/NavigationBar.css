@@ -1,0 +1,15 @@
+.navbar {
+  font-family: "Montserrat", sans-serif;
+  background-color: #fff;
+}
+.navbar-expand-lg {
+  box-shadow: 0 5px 10px -5px #888888;
+  min-height: 10vh;
+}
+.Logo {
+  position: absolute;
+  width: 273px;
+  height: 60px;
+  left: 0px;
+  top: 0px;
+}

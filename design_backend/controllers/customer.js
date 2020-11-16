@@ -53,7 +53,7 @@ exports.addCustomer = function (req, res) { //gid automatically created by DB
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error adding guide...',
+            message: 'Error adding customer...',
             error: err
         });
     });

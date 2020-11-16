@@ -37,6 +37,9 @@ module.exports = (db, Sequelize) => {
         company_coid: {
             type: Sequelize.NUMBER
         }
+        // is_active: { for when we properly add whether guide is active or not
+            // type: Boolean(true)
+        // }
     }, {
         tableName: 'guide',
         timestamps: false

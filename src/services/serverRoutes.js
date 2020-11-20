@@ -37,6 +37,7 @@ function addGuide(data){
 }
 
 //Company
+const company = "company/";
 
 //Customer
 const customer = "customer/";

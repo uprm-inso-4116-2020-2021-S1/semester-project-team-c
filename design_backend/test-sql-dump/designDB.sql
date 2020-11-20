@@ -31,7 +31,7 @@ CREATE TABLE `company` (
   PRIMARY KEY (`coid`,`location_lid`),
   KEY `fk_company_location1_idx` (`location_lid`),
   CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (14,'AR',' ',14,'2020-11-15 00:25:25');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,13 +109,14 @@ DROP TABLE IF EXISTS `event_has_location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event_has_location` (
-  `event_eventid` int(11) NOT NULL,
-  `location_id` int(11) NOT NULL,
-  PRIMARY KEY (`event_eventid`,`location_id`),
-  KEY `fk_event_has_location_location1_idx` (`location_id`),
-  KEY `fk_event_has_location_event1_idx` (`event_eventid`),
-  CONSTRAINT `fk_event_has_location_event1` FOREIGN KEY (`event_eventid`) REFERENCES `event` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_event_has_location_location1` FOREIGN KEY (`location_id`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `event_eid` int(11) NOT NULL,
+  `location_lid` int(11) NOT NULL,
+  `location_city` varchar(100) NOT NULL,
+  PRIMARY KEY (`event_eid`,`location_lid`,`location_city`),
+  KEY `fk_event_has_location_location1_idx` (`location_lid`,`location_city`),
+  KEY `fk_event_has_location_event1_idx` (`event_eid`),
+  CONSTRAINT `fk_event_has_location_event1` FOREIGN KEY (`event_eid`) REFERENCES `event` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_event_has_location_location1` FOREIGN KEY (`location_lid`, `location_city`) REFERENCES `location` (`lid`, `city`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -151,7 +153,7 @@ CREATE TABLE `guide` (
   KEY `fk_guide_company1_idx` (`company_coid`),
   CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,6 +162,7 @@ CREATE TABLE `guide` (
 
 LOCK TABLES `guide` WRITE;
 /*!40000 ALTER TABLE `guide` DISABLE KEYS */;
+INSERT INTO `guide` VALUES (5,'AR','AR','7875555555',' ',' ',' ',' ',' ',16,14);
 /*!40000 ALTER TABLE `guide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,10 +203,10 @@ CREATE TABLE `location` (
   `lid` int(11) NOT NULL AUTO_INCREMENT,
   `building` varchar(100) DEFAULT NULL,
   `street` varchar(100) DEFAULT NULL,
-  `city` varchar(100) DEFAULT NULL,
+  `city` varchar(100) NOT NULL,
   `zipcode` varchar(12) DEFAULT NULL,
-  PRIMARY KEY (`lid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`lid`,`city`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +215,7 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (14,'AAD','ADAF','FSDDAS','00000');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +264,7 @@ CREATE TABLE `user` (
   `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +273,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12');
+INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12'),(16,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-15 00:25:25');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -282,4 +286,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-13 20:41:09
+-- Dump completed on 2020-11-14 21:00:58

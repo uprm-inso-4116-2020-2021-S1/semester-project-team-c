@@ -7,3 +7,4 @@ exports.getall = function(req,res) {
         res.status(200).json(locations);
     });
 }
+

@@ -31,7 +31,7 @@ CREATE TABLE `company` (
   PRIMARY KEY (`coid`,`location_lid`),
   KEY `fk_company_location1_idx` (`location_lid`),
   CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (14,'AR',' ',14,'2020-11-15 00:25:25');
+INSERT INTO `company` VALUES (14,'AR',' ',14,'2020-11-15 00:25:25'),(15,'AR',' ',15,'2020-11-16 18:11:55'),(16,'ARfdsfds',' ',16,'2020-11-20 22:41:13'),(17,'AR',' ',17,'2020-11-20 23:05:35');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +59,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`cid`),
   KEY `fk_customer_user1_idx` (`user_uid`),
   CONSTRAINT `fk_customer_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'AR','AR',17),(2,'AR','AR',18),(3,'AR','AR',20);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +154,7 @@ CREATE TABLE `guide` (
   KEY `fk_guide_company1_idx` (`company_coid`),
   CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +163,7 @@ CREATE TABLE `guide` (
 
 LOCK TABLES `guide` WRITE;
 /*!40000 ALTER TABLE `guide` DISABLE KEYS */;
-INSERT INTO `guide` VALUES (5,'AR','AR','7875555555',' ',' ',' ',' ',' ',16,14);
+INSERT INTO `guide` VALUES (5,'AR','AR','7875555555',' ',' ',' ',' ',' ',16,14),(6,'AR','AR','7875555555',' ',' ',' ',' ',' ',19,15),(7,'AR','AR','7875555555',' ',' ',' ',' ',' ',21,16),(8,'AR','AR','7875555555',' ',' ',' ',' ',' ',22,17);
 /*!40000 ALTER TABLE `guide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +207,7 @@ CREATE TABLE `location` (
   `city` varchar(100) NOT NULL,
   `zipcode` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`lid`,`city`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +216,7 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (14,'AAD','ADAF','FSDDAS','00000');
+INSERT INTO `location` VALUES (14,'AAD','ADAF','FSDDAS','00000'),(15,'AAD','ADAF','FSDDAS','00000'),(16,'AAD','ADAF','FSDDAS','00000'),(17,'AAD','ADAF','FSDDAS','00000');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +265,7 @@ CREATE TABLE `user` (
   `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +274,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12'),(16,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-15 00:25:25');
+INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12'),(16,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-15 00:25:25'),(17,'r@gmol.com','A1a1',0,'2020-11-15 19:08:24'),(18,'r@gmol.com','A1a1',0,'2020-11-15 20:01:26'),(19,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-16 18:11:55'),(20,'ExplotoComo@siquitraque.com','A1a1',0,'2020-11-16 18:13:18'),(21,'r@gmol.com','A1a1',1,'2020-11-20 22:41:13'),(22,'r@gmol.com','A1a1',1,'2020-11-20 23:05:35');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -286,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-14 21:00:58
+-- Dump completed on 2020-11-20 19:12:56

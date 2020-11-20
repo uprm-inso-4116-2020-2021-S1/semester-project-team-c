@@ -10,15 +10,6 @@
 
   
 }
-<<<<<<< HEAD
-.Loginbox {
-  background-color: #fff;
-  margin: auto;
-  width: 15%;
-  padding: 10px;
-  color: rgb(22, 8, 8);
-  border: 3px solid rgb(21, 112, 187);
-=======
 
 .form-wrapper {
   width: 400px;
@@ -146,5 +137,4 @@ input.error {
 .createAccount small {
   color: #999;
   font-weight: lighter;
->>>>>>> 2581c19a0fe8490bf2e393f0ff41a325327f65a4
 }

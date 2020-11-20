@@ -2,14 +2,14 @@ const express = require('express');
 const port = process.env.PORT || 8080;
 const app = express();
 const server = require('http').Server(app);
+const passport = require('passport');
 const path = require('path');
 const morgan = require('morgan');
 const cors = require('cors');
+const hookJWTStrategy = require('./services/passport');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-var user_controller = require('./controllers/user');
-var api = require('./routes/api');
 
 var allowedOrigins = ['http:localhost:8080/'];
 
@@ -31,6 +31,9 @@ var corsOptions = {
     methods: 'POST, GET, PUT, DELETE',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, Authentication'
 };
+app.use(passport.initialize());
+hookJWTStrategy(passport);
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -40,7 +43,7 @@ app.use(morgan('dev'));
 
 
 // API Routes
-app.use('/api', api);
+app.use('/api', require('./routes/api')(passport));
 
 
 

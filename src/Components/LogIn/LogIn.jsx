@@ -36,11 +36,11 @@ export class LogIn extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     if(formValid(this.state)){
-      console.log(`
-      --SUBMITTING--
-      email: ${this.state.email}
-      password: ${this.state.password}
-      `)
+        // await Server.addGuide(JSON.stringify(data)).then((response) => {
+        //   response.json(),
+        //   console.log(response)
+        // });
+
     } else{console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
     }
   }; 

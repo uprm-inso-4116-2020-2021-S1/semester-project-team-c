@@ -15,8 +15,20 @@ export const Server = {
     // addCompany,
     // addUser,
     // addEvent,
+    login,
 
 };
+//public
+
+function login(data) {
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: data 
+    };
+    return fetch(url + "login").then(receivedData => receivedData.json());
+}
+
 //User
 const user = "user/";
 function getUsers() {

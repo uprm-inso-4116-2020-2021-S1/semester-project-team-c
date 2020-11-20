@@ -1,4 +1,4 @@
-var config = require('../config/config');
+var config = require('../config/configuration');
 module.exports = (db, Sequelize) => {
     var guide = db.define('guide', {
         gid: {

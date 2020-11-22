@@ -10,16 +10,25 @@ exports.getall = function (req, res) {
     });
 }
 
-exports.getCustomerByUid = function (req, res) {
-    var uid = req.body.uid;
-    customer.findOne({ where: { uid: uid } }).then((customer) => {
-        if (customer) {
-            res.status(200).json({
-                success: true,
-                message: 'Successfully retrieved customer',
-                customer: customer
+exports.getCustomerInfo = function (req, res) {
+    var email = req.params.email;
+    user.findOne({ where: { email: email } }).then((user) => {
+        var uid = user.uid;
+        customer.findOne({ where: { user_uid: uid } }).then((customer) => {
+            if (customer) {
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully retrieved customer',
+                    customer: customer
+                });
+            }
+        }).catch(Error, (err) => {
+            res.status(409).json({
+                success: false,
+                message: 'Error getting customer',
+                error: err
             });
-        }
+        });
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
@@ -41,7 +50,7 @@ exports.addCustomer = function (req, res) { //gid automatically created by DB
         customer.create({
             firstName: customerData.firstName,
             lastName: customerData.lastName,
-            user_id: new_user.user_id
+            user_uid: new_user.uid
         })
     }).then(() => {
         res.status(200).json({

@@ -13,17 +13,15 @@ var APIRoutes = function (passport) {
 
     //User routes
     router.get('/user/all-users', user_controller.getAll);
-    // router.post('/user/add-user', user_controller.addUser);
 
     //Guide routes
-    // Router for create guide
     router.post('/guide/add-guide', guide_controller.addGuide);
-    // Router for delete guide
+
 
     //Customer routes
-    // Router for create customer
     router.get('/customer/all-customers', customer_controller.getall);
     router.post('/customer/add-customer', customer_controller.addCustomer);
+    router.get('/customer/:email', customer_controller.getCustomerInfo);
     // Router for delete customer
 
     //Company routes

@@ -26,7 +26,7 @@ function login(data) {
         headers: {'Content-Type':'application/json'},
         body: data 
     };
-    return fetch(url + "login").then(receivedData => receivedData.json());
+    return fetch(url + "login", req);
 }
 
 //User

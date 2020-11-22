@@ -8,6 +8,9 @@ var allowOnly = require('../services/authCheck').allowOnly;
 
 
 var APIRoutes = function (passport) {
+    //public routes
+    router.post('/login', user_controller.login);
+
     //User routes
     router.get('/user/all-users', user_controller.getAll);
     // router.post('/user/add-user', user_controller.addUser);

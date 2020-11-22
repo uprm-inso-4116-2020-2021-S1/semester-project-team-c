@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var company = db.define('company', {
-        coid: {
+        company_id: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = (db, Sequelize) => {
         companyURL: {
             type: Sequelize.STRING
         },
-        location_lid: {
+        location_id: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },

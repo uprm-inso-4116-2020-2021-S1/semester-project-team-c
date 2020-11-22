@@ -1,6 +1,8 @@
 import React, {component} from "react";
 import "./LogIn.css";
 import Nav from "../NavigationBar/NavigationBar";
+import Server from '../../services/serverRoutes';
+import { login } from "../../services/authentication";
 
 const emailRegex = RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
 const passwordRegex = RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/)
@@ -18,6 +20,7 @@ const formValid = ({formErrors, ...rest}) => {
 
   return valid;
 };
+var data = [];
 
 export class LogIn extends React.Component {
   constructor(props) {
@@ -33,13 +36,18 @@ export class LogIn extends React.Component {
     };
   }
 
-  handleSubmit = e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    data = {
+      email: this.state.email,
+      password: this.state.password
+
+    };
     if(formValid(this.state)){
-        // await Server.addGuide(JSON.stringify(data)).then((response) => {
-        //   response.json(),
-        //   console.log(response)
-        // });
+        await Server.login(JSON.stringify(data)).then((response) => {
+          console.log(response);
+          // login(response.body.access_token, response.body.)
+        });
 
     } else{console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
     }

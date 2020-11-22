@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `attending_list`
+--
+
+DROP TABLE IF EXISTS `attending_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attending_list` (
+  `attending_listid` int(11) NOT NULL,
+  `tour_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`attending_listid`,`tour_id`,`user_id`),
+  KEY `fk_attending_list_tour1_idx` (`tour_id`),
+  KEY `fk_attending_list_user1_idx` (`user_id`),
+  CONSTRAINT `fk_attending_list_tour1` FOREIGN KEY (`tour_id`) REFERENCES `tour` (`tour_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_attending_list_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attending_list`
+--
+
+LOCK TABLES `attending_list` WRITE;
+/*!40000 ALTER TABLE `attending_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attending_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `company`
 --
 
@@ -23,15 +51,15 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company` (
-  `coid` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL AUTO_INCREMENT,
   `companyname` varchar(45) DEFAULT NULL,
   `companyurl` varchar(45) DEFAULT NULL,
-  `location_lid` int(11) NOT NULL,
   `companycreatedAt` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`coid`,`location_lid`),
-  KEY `fk_company_location1_idx` (`location_lid`),
-  CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  `location_id` int(11) NOT NULL,
+  PRIMARY KEY (`company_id`,`location_id`),
+  KEY `fk_company_location1_idx` (`location_id`),
+  CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +68,6 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (14,'AR',' ',14,'2020-11-15 00:25:25');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,14 +79,14 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(100) DEFAULT NULL,
   `lastName` varchar(100) DEFAULT NULL,
-  `user_uid` int(11) NOT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `fk_customer_user1_idx` (`user_uid`),
-  CONSTRAINT `fk_customer_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`customer_id`,`user_id`),
+  KEY `fk_customer_user1_idx` (`user_id`),
+  CONSTRAINT `fk_customer_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +106,7 @@ DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event` (
-  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `type` varchar(25) DEFAULT NULL,
   `duration` varchar(45) DEFAULT NULL,
@@ -88,7 +115,15 @@ CREATE TABLE `event` (
   `price` varchar(45) DEFAULT NULL,
   `eventcreatedAt` datetime DEFAULT current_timestamp(),
   `eventupdatedAt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`eid`)
+  `tour_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
+  `location_city` varchar(100) NOT NULL,
+  `event_archived` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`event_id`,`tour_id`,`location_id`,`location_city`),
+  KEY `fk_event_tour1_idx` (`tour_id`),
+  KEY `fk_event_location1_idx` (`location_id`,`location_city`),
+  CONSTRAINT `fk_event_location1` FOREIGN KEY (`location_id`, `location_city`) REFERENCES `location` (`location_id`, `city`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_event_tour1` FOREIGN KEY (`tour_id`) REFERENCES `tour` (`tour_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,34 +137,6 @@ LOCK TABLES `event` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `event_has_location`
---
-
-DROP TABLE IF EXISTS `event_has_location`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `event_has_location` (
-  `event_eid` int(11) NOT NULL,
-  `location_lid` int(11) NOT NULL,
-  `location_city` varchar(100) NOT NULL,
-  PRIMARY KEY (`event_eid`,`location_lid`,`location_city`),
-  KEY `fk_event_has_location_location1_idx` (`location_lid`,`location_city`),
-  KEY `fk_event_has_location_event1_idx` (`event_eid`),
-  CONSTRAINT `fk_event_has_location_event1` FOREIGN KEY (`event_eid`) REFERENCES `event` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_event_has_location_location1` FOREIGN KEY (`location_lid`, `location_city`) REFERENCES `location` (`lid`, `city`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `event_has_location`
---
-
-LOCK TABLES `event_has_location` WRITE;
-/*!40000 ALTER TABLE `event_has_location` DISABLE KEYS */;
-/*!40000 ALTER TABLE `event_has_location` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `guide`
 --
 
@@ -137,7 +144,7 @@ DROP TABLE IF EXISTS `guide`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `guide` (
-  `gid` int(11) NOT NULL AUTO_INCREMENT,
+  `guide_id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(100) DEFAULT NULL,
   `lastName` varchar(100) DEFAULT NULL,
   `phoneNumber` varchar(45) DEFAULT NULL,
@@ -146,14 +153,14 @@ CREATE TABLE `guide` (
   `twitter` varchar(100) DEFAULT NULL,
   `youtube` varchar(100) DEFAULT NULL,
   `instagram` varchar(100) DEFAULT NULL,
-  `user_uid` int(11) NOT NULL,
-  `company_coid` int(11) NOT NULL,
-  PRIMARY KEY (`gid`,`company_coid`,`user_uid`),
-  KEY `fk_guide_user_idx` (`user_uid`),
-  KEY `fk_guide_company1_idx` (`company_coid`),
-  CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `user_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`guide_id`,`company_id`,`user_id`),
+  KEY `fk_guide_user_idx` (`user_id`),
+  KEY `fk_guide_company1_idx` (`company_id`),
+  CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +169,6 @@ CREATE TABLE `guide` (
 
 LOCK TABLES `guide` WRITE;
 /*!40000 ALTER TABLE `guide` DISABLE KEYS */;
-INSERT INTO `guide` VALUES (5,'AR','AR','7875555555',' ',' ',' ',' ',' ',16,14);
 /*!40000 ALTER TABLE `guide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,10 +182,10 @@ DROP TABLE IF EXISTS `images`;
 CREATE TABLE `images` (
   `img_id` int(11) NOT NULL,
   `img_name` varchar(100) DEFAULT NULL,
-  `user_uid` int(11) NOT NULL,
-  PRIMARY KEY (`img_id`,`user_uid`),
-  KEY `fk_images_user1_idx` (`user_uid`),
-  CONSTRAINT `fk_images_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`img_id`,`user_id`),
+  KEY `fk_images_user1_idx` (`user_id`),
+  CONSTRAINT `fk_images_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -200,13 +206,13 @@ DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `location` (
-  `lid` int(11) NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `building` varchar(100) DEFAULT NULL,
   `street` varchar(100) DEFAULT NULL,
   `city` varchar(100) NOT NULL,
   `zipcode` varchar(12) DEFAULT NULL,
-  PRIMARY KEY (`lid`,`city`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`location_id`,`city`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +221,6 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (14,'AAD','ADAF','FSDDAS','00000');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,17 +232,13 @@ DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `review` (
-  `rid` int(11) NOT NULL AUTO_INCREMENT,
-  `reviewmessage` varchar(255) DEFAULT NULL,
-  `stars` int(11) NOT NULL DEFAULT 0,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_of_review` int(1) NOT NULL DEFAULT 0, /* 0 being review for user and 1 being review for tour */
   `reviewcreatedAt` datetime DEFAULT current_timestamp(),
-  `customer_cid` int(11) NOT NULL,
-  `event_eid` int(11) NOT NULL,
-  PRIMARY KEY (`rid`,`event_eid`,`customer_cid`),
-  KEY `fk_review_customer1_idx` (`customer_cid`),
-  KEY `fk_review_event1_idx` (`event_eid`),
-  CONSTRAINT `fk_review_customer1` FOREIGN KEY (`customer_cid`) REFERENCES `customer` (`cid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_review_event1` FOREIGN KEY (`event_eid`) REFERENCES `event` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`review_id`,`user_id`),
+  KEY `fk_review_user1_idx` (`user_id`),
+  CONSTRAINT `fk_review_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -251,6 +252,93 @@ LOCK TABLES `review` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `review_for_user`
+--
+
+DROP TABLE IF EXISTS `review_for_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `review_for_user` (
+  `review_for_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `review_message` varchar(255) DEFAULT NULL,
+  `stars` int(1) NOT NULL,
+  `review_id` int(11) NOT NULL,
+  `review_user_id` int(11) NOT NULL,
+  PRIMARY KEY (`review_for_user_id`,`review_id`,`review_user_id`),
+  KEY `fk_user_review_review1_idx` (`review_id`,`review_user_id`),
+  CONSTRAINT `fk_user_review_review1` FOREIGN KEY (`review_id`, `review_user_id`) REFERENCES `review` (`review_id`, `user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `review_for_user`
+--
+
+LOCK TABLES `review_for_user` WRITE;
+/*!40000 ALTER TABLE `review_for_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `review_for_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tour`
+--
+
+DROP TABLE IF EXISTS `tour`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tour` (
+  `tour_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tour_name` varchar(255) NOT NULL,
+  `guide_guide_id` int(11) NOT NULL,
+  `guide_company_id` int(11) NOT NULL,
+  `guide_user_id` int(11) NOT NULL,
+  PRIMARY KEY (`tour_id`,`guide_guide_id`,`guide_company_id`,`guide_user_id`),
+  KEY `fk_tour_guide1_idx` (`guide_guide_id`,`guide_company_id`,`guide_user_id`),
+  CONSTRAINT `fk_tour_guide1` FOREIGN KEY (`guide_guide_id`, `guide_company_id`, `guide_user_id`) REFERENCES `guide` (`guide_id`, `company_id`, `user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tour`
+--
+
+LOCK TABLES `tour` WRITE;
+/*!40000 ALTER TABLE `tour` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tour` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tour_review`
+--
+
+DROP TABLE IF EXISTS `tour_review`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tour_review` (
+  `tour_review_id` int(11) NOT NULL AUTO_INCREMENT,
+  `review_message` varchar(255) DEFAULT NULL,
+  `stars` int(11) NOT NULL,
+  `tour_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL,
+  `review_user_id` int(11) NOT NULL,
+  PRIMARY KEY (`tour_review_id`,`tour_id`,`review_id`,`review_user_id`),
+  KEY `fk_tour_review_tour1_idx` (`tour_id`),
+  KEY `fk_tour_review_review1_idx` (`review_id`,`review_user_id`),
+  CONSTRAINT `fk_tour_review_review1` FOREIGN KEY (`review_id`, `review_user_id`) REFERENCES `review` (`review_id`, `user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tour_review_tour1` FOREIGN KEY (`tour_id`) REFERENCES `tour` (`tour_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tour_review`
+--
+
+LOCK TABLES `tour_review` WRITE;
+/*!40000 ALTER TABLE `tour_review` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tour_review` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -258,13 +346,13 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 1,
   `createdAt` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +361,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'testing@gmol.com','test123',1,'2019-06-19 11:15:30'),(2,'testin2433g@gmol.com','test123',1,'2019-06-19 11:15:30'),(3,'angeldburgos@gmol.com','test123',1,'2020-11-14 00:09:12'),(16,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-15 00:25:25');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -286,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-14 21:00:58
+-- Dump completed on 2020-11-21 23:09:43

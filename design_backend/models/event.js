@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var event = db.define('event', {
-        eid: {
+        event_id: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true,
@@ -30,6 +30,15 @@ module.exports = (db, Sequelize) => {
         eventupdatedAt: {
             type: Sequelize.DATE
         },
+        tour_id: {
+            type: Sequelize.NUMBER
+        },
+        location_id: {
+            type: Sequelize.NUMBER
+        },
+        location_city: {
+            type: Sequelize.NUMBER
+        }
     }, {
         tableName: 'event',
         timestamps: false

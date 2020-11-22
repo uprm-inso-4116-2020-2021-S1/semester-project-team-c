@@ -1,25 +1,23 @@
 module.exports = (db, Sequelize) => {
-    var customer = db.define('customer', {
-        custome_id: {
+    var attending = db.define('attending', {
+        attending_listid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true,
             unique: true
         },
-        firstName: {
-            type: Sequelize.STRING
-        },
-        lastName: {
-            type: Sequelize.STRING
+        tour_id: {
+            type: Sequelize.NUMBER,
+            primaryKey: true
         },
         user_id: {
             type: Sequelize.NUMBER,
             primaryKey: true
-        }
+        },
     }, {
-        tableName: 'customer',
+        tableName: 'attending_list',
         timestamps: false
     });
 
-    return customer;
+    return attending;
 };

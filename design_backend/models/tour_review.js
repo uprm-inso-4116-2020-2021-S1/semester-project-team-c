@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var tour_review = db.define('tour_review', {
-        tour_review_id: {
+        trid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true
@@ -11,16 +11,16 @@ module.exports = (db, Sequelize) => {
         stars: {
             type: Sequelize.NUMBER
         },
-        tour_id: {
+        tour_tid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },
-        review_id: {
+        review_rid: {
             type: Sequelize.NUMBER,
             primaryKey: true
 
         },
-        review_user_id: {
+        review_user_uid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         }

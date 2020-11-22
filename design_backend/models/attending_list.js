@@ -6,11 +6,11 @@ module.exports = (db, Sequelize) => {
             autoIncrement: true,
             unique: true
         },
-        tour_id: {
+        tour_tid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },
-        user_id: {
+        user_uid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },

@@ -41,7 +41,7 @@ exports.addCustomer = function (req, res) { //gid automatically created by DB
         customer.create({
             firstName: customerData.firstName,
             lastName: customerData.lastName,
-            user_uid: new_user.uid
+            user_id: new_user.user_id
         })
     }).then(() => {
         res.status(200).json({

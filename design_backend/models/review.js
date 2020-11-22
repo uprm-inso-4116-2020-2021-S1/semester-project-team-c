@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var review = db.define('review', {
-        review_id: {
+        rid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = (db, Sequelize) => {
         reviewcreatedAt: {
             type: Sequelize.DATE
         },
-        user_id: {
+        user_uid: {
             type: Sequelize.NUMBER
         }
     }, {

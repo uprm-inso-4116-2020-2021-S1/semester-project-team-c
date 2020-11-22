@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var customer = db.define('customer', {
-        custome_id: {
+        cid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = (db, Sequelize) => {
         lastName: {
             type: Sequelize.STRING
         },
-        user_id: {
+        user_uid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         }

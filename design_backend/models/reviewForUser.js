@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var review_for_user = db.define('review_for_user', {
-        review_for_user_id: {
+        rfuid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true
@@ -11,10 +11,10 @@ module.exports = (db, Sequelize) => {
         stars: {
             type: Sequelize.NUMBER
         },
-        review_id: {
+        review_rid: {
             type: Sequelize.NUMBER
         },
-        review_user_id: {
+        review_user_uid: {
             type: Sequelize.NUMBER
         }
     }, {

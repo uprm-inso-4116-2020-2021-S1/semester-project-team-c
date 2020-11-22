@@ -1,7 +1,7 @@
 var config = require('../config/configuration');
 module.exports = (db, Sequelize) => {
     var user = db.define('user', {
-        user_id: {
+        uid: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,

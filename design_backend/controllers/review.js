@@ -13,8 +13,8 @@ exports.getAll = function(req, res) {
 }
 
 exports.getReviewByRid = function (req, res) {
-    var rid = req.body.rid;
-    review.findOne({where: {rid : rid}}).then((review) => {
+    var review_id = req.body.rid;
+    review.findOne({where: {review_id : review_id}}).then((review) => {
         if (review) {
             res.status(200).json({
                 success: true,

@@ -1,6 +1,6 @@
 module.exports = (db, Sequelize) => {
     var tour = db.define('tour', {
-        tour_id: {
+        tid: {
             type: Sequelize.NUMBER,
             primaryKey: true,
             autoIncrement: true
@@ -8,15 +8,15 @@ module.exports = (db, Sequelize) => {
         tour_name: {
             type: Sequelize.STRING
         },
-        guide_guide_id: {
+        guide_gid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },
-        guide_company_id: {
+        guide_company_coid: {
             type: Sequelize.NUMBER,
             primaryKey: true
         },
-        guide_user_id: {
+        guide_user_uid: {
             type: Sequelize.NUMBER,
             primaryKey: true
 

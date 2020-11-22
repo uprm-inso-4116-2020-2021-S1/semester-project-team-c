@@ -54,6 +54,15 @@ const company = "company/";
 //Customer
 const customer = "customer/";
 
+function getCustomer(email) {
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: email
+    };
+    return fetch(url + customer + "profile", req).then(receivedData => receivedData.json());
+}
+
 function getCustomers() {
     return fetch(url + customer + "all-customers").then(receivedData => receivedData.json());
 }

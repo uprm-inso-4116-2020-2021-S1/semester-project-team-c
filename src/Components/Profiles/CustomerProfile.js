@@ -10,10 +10,10 @@ import FacebookIcon from "../../images/FacebookIcon.png"
 import InstagramIcon from "../../images/InstagramIcon.png"
 import TwitterIcon from "../../images/TwitterIcon.png"
 import YoutubeIcon from "../../images/YoutubeIcon.png"
-// import { getUser, logout } from "../../services/authentication";
+// import { isLogged, logout } from "../../services/authentication";
 
 
-// const user = getUser();
+// const user = isLogged();
 
 export default class UserProfile extends React.Component {
 
@@ -22,6 +22,7 @@ export default class UserProfile extends React.Component {
   // };
 
   // handleLogout = () => {
+  //   console.log(user);
   //   logout();
   //   this.props.history.push('/login');
   // }
@@ -37,7 +38,7 @@ export default class UserProfile extends React.Component {
           <div className="HeaderDiv">
             <a href="/createaccount">Create Event</a>
           </div>
-          {/* <input type="button" onClick={this.handleLogout} value="Logout" /> testing logout*/}
+          {/* <input type="button" onClick={this.handleLogout} value="Logout" />  */}
           <Row className="justify-content-md-center">
             <Col sm={1} className="iconColPadding">
               <a href="https://www.facebook.com/Tongo_PR-1491833804253503">

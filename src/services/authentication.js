@@ -4,6 +4,12 @@ export const getUser = () => {
     else return null;
 }
 
+export const isLogged = () => {
+    const isLogged = localStorage.getItem('isLogged');
+    if(isLogged) return JSON.parse(isLogged);
+    else return null;
+}
+
 export const login = (token, email, role, log) => {
     localStorage.setItem('token', token);
     localStorage.setItem('email', JSON.stringify(email));

@@ -19,7 +19,7 @@ exports.getCustomerInfo = function (req, res) {
                 res.status(200).json({
                     success: true,
                     message: 'Successfully retrieved customer',
-                    customer: customer
+                    customer_info: customer
                 });
             }
         }).catch(Error, (err) => {
@@ -38,7 +38,7 @@ exports.getCustomerInfo = function (req, res) {
     });
 }
 
-exports.addCustomer = function (req, res) { //gid automatically created by DB
+exports.addCustomer = function (req, res) {
     var customerData = req.body;
     user.create({
         email: customerData.email,

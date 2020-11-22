@@ -10,6 +10,33 @@ exports.getAll = function (req, res) {
         res.status(200).json(guides);
     });
 }
+exports.getGuideInfo = function (req, res) {
+    var email = req.params.email;
+    user.findOne({ where: { email: email } }).then((user) => {
+        var uid = user.uid;
+        guide.findOne({ where: { user_uid: uid } }).then((guide) => {
+            if (guide) {
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully retrieved guide',
+                    guide_info: guide
+                });
+            }
+        }).catch(Error, (err) => {
+            res.status(409).json({
+                success: false,
+                message: 'Error getting guide',
+                error: err
+            });
+        });
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting guide',
+            error: err
+        });
+    });
+}
 
 exports.addGuide = function (req, res) { //gid automatically created by DB
     var guideData = req.body.guideData;

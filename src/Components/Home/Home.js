@@ -14,6 +14,7 @@ import ElMorro from "../../images/elMorro.jpg"
 import Hiking from "../../images/hiking.jpg"
 import Zipline from "../../images/zipline.jpg"
 import userEvent from "@testing-library/user-event";
+import Carousel from "../Carousel/Carousel"
 class Home extends React.Component {
 
   render() {
@@ -21,14 +22,15 @@ class Home extends React.Component {
       <React.Fragment>
       <div className="TitleDiv">
         <Nav />
-        <Container fluid>
+        <Carousel />
+        {/* <Container fluid>
           <Row>
             <Col className="noPadding"><h1 className="Title">ExplorePR</h1></Col>
           </Row>
           <Row>
             <Col className="noPadding"><h2 className="TitleDescription">Puerto Rico is full of hidden gems waiting for you to explore them.</h2></Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
       <Container fluid>
         <Row>

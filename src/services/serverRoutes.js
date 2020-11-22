@@ -45,7 +45,7 @@ function addGuide(data){
         headers: {'Content-Type':'application/json'},
         body: data 
     };
-    return fetch(url + guide + "add-guide",req).then(response => response.json());
+    return fetch(url + guide + "add-guide",req).then(receivedData => receivedData.json());
 }
 
 //Company

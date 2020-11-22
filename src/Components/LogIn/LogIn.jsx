@@ -48,7 +48,7 @@ export class LogIn extends React.Component {
     };
     if (formValid(this.state)) {
       await Server.login(JSON.stringify(data)).then((response) => {
-        login(response.access_token, response.email, response.role);
+        login(response.access_token, response.email, response.role, response.loggedIn);
         if (response.role == 'customer') {
           this.props.history.push('/customer');
         } else if (response.role == 'guide') {

@@ -1,4 +1,4 @@
-import React, {component} from "react";
+import React, {component, useState} from "react";
 import "./LogIn.css";
 import Nav from "../NavigationBar/NavigationBar";
 import Server from '../../services/serverRoutes';
@@ -6,6 +6,8 @@ import { login } from "../../services/authentication";
 
 const emailRegex = RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
 const passwordRegex = RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/)
+
+const [error, setError] = useState(null);
 
 const formValid = ({formErrors, ...rest}) => {
   let valid = true;
@@ -23,6 +25,7 @@ const formValid = ({formErrors, ...rest}) => {
 var data = [];
 
 export class LogIn extends React.Component {
+  
   constructor(props) {
     super(props);
 
@@ -46,7 +49,10 @@ export class LogIn extends React.Component {
     if(formValid(this.state)){
         await Server.login(JSON.stringify(data)).then((response) => {
           console.log(response);
-          // login(response.body.access_token, response.body.)
+          login(response.body.access_token, response.body.email, response.body.role);
+        }).catch(error => {
+          if (error.response.status === 401) setError(error.response.data.message);
+          else setError("Something went wrong. Please try again later.");
         });
 
     } else{console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
@@ -69,7 +75,7 @@ export class LogIn extends React.Component {
         break; 
     }
 
-    this.setState({formErrors, [name]: value}, () => console.log(this.state))
+    this.setState({formErrors, [name]: value})
   }
 
   render() {

@@ -23,7 +23,7 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
         company.create({
             companyName: companyData.companyName,
             companyURL: companyData.companyURL,
-            location_id: new_location.location_id
+            location_lid: new_location.lid
         }).then((new_company) => {
             created_company = new_company;
             user.create({
@@ -42,8 +42,8 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
                     twitter: guideData.twitter,
                     youtube: guideData.youtube,
                     instagram: guideData.instagram,
-                    user_id: new_user.user_id,
-                    company_id: created_company.company_id
+                    user_uid: new_user.uid,
+                    company_coid: created_company.coid
                 }).then(() => {
                         res.status(200).json({
                             success: true,

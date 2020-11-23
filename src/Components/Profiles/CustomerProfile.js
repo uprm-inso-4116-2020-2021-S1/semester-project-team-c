@@ -10,12 +10,28 @@ import FacebookIcon from "../../images/FacebookIcon.png"
 import InstagramIcon from "../../images/InstagramIcon.png"
 import TwitterIcon from "../../images/TwitterIcon.png"
 import YoutubeIcon from "../../images/YoutubeIcon.png"
-// import { isLogged, logout } from "../../services/authentication";
+import { isLogged, logout, getUserEmail } from "../../services/authentication";
+import Server from "../../services/serverRoutes";
 
 
-// const user = isLogged();
+
+const userEmail = getUserEmail();
 
 export default class UserProfile extends React.Component {
+  //this.props.email
+  state = {
+    firstName: "",
+    lastName: ""
+  }
+
+  async componentDidMount() {
+    await Server.getCustomer(userEmail).then(customer => {
+      this.setState({
+        firstName: customer.customer_info.firstName,
+        lastName: customer.customer_info.lastName
+      })
+    });
+  }
 
   // constructor(props) {
   //   super(props);
@@ -28,12 +44,14 @@ export default class UserProfile extends React.Component {
   // }
 
   render() {
+    let { firstName, lastName } = this.state;
     return (
       <React.Fragment>
+        {/* <Nav email= "emailtest@gmol.com" /> */}
         <Nav />
         <div>
           <Image className="picDim d-block" src={Tongo} roundedCircle />
-          <h1 className="Name">Name LastName</h1>
+          <h1 className="Name">{firstName} {lastName}</h1>
           <h1 className="companyName">Company Name</h1>
           <div className="HeaderDiv">
             <a href="/createaccount">Create Event</a>

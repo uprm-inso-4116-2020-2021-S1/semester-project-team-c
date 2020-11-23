@@ -13,6 +13,8 @@ const helmet = require('helmet');
 
 var allowedOrigins = ['http:localhost:8080/'];
 
+
+
 app.use(express.static('public'));
 app.use(cors());
 app.use(compression()); //Compress all routes

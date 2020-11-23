@@ -1,4 +1,4 @@
-export const getUser = () => {
+export const getUserEmail = () => {
     const userStr = localStorage.getItem('email');
     if (userStr) return JSON.parse(userStr);
     else return null;

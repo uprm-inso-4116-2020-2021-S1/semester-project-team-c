@@ -31,6 +31,7 @@ After you did these steps go to the folder design_backend in a terminal:
 			DB_PORT=3306
 		Save!
 	And to run the backend:
+		npm install (while in design_backend folder to install dependencies)
     	node app.js
     
     

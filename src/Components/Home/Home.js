@@ -14,11 +14,8 @@ import ElMorro from "../../images/elMorro.jpg"
 import Hiking from "../../images/hiking.jpg"
 import Zipline from "../../images/zipline.jpg"
 import userEvent from "@testing-library/user-event";
-<<<<<<< HEAD
 import Carousel from "../Carousel/Carousel"
-=======
 import CustomerProfile from "../CustomerProfile/CustomerProfile"
->>>>>>> FrontEndProfiles
 class Home extends React.Component {
 
   render() {

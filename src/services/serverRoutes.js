@@ -5,6 +5,8 @@ export const Server = {
     getGuides,
     getUsers,
     getCustomers,
+    getCustomer,
+    // getGuide,
     // getLocations,
     // getCompanies,
     // getEvent,
@@ -60,7 +62,7 @@ function getCustomer(email) {
         headers: {'Content-Type':'application/json'},
         body: email
     };
-    return fetch(url + customer + "profile", req).then(receivedData => receivedData.json());
+    return fetch(url + customer + email , req).then(receivedData => receivedData.json());
 }
 
 function getCustomers() {

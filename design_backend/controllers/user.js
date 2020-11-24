@@ -36,7 +36,6 @@ exports.login = function (req, res) {
                     email: fetched_user.email,
                     role: 'guide'
                 });
-                console.log(JSON.stringify(res.message, null, 2));
             } else {
                 res.status(401).json({
                     success: false,

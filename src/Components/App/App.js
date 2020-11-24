@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/createguideaccount" component={CreateGuideAccount} />
         <Route exact path="/meetourguides" component={MeetOurGuides} />
         <Route exact path="/tours" component={Tours} />
-        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/profile/:email" component={Profile} />
         {/* <Route exact path="/home" component={Home} /> */}
         {/* In case no route does not exist, can create a 404 page341 */}
         <Redirect to="/" />

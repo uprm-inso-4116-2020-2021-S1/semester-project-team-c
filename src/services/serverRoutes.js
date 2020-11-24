@@ -6,7 +6,7 @@ export const Server = {
     getUsers,
     getCustomers,
     getCustomer,
-    // getGuide,
+    getGuide,
     // getLocations,
     // getCompanies,
     // getEvent,
@@ -48,6 +48,11 @@ function addGuide(data){
         body: data 
     };
     return fetch(url + guide + "add-guide",req).then(receivedData => receivedData.json());
+}
+
+function getGuide(email) {
+
+    return fetch(url + guide + email).then(receivedData => receivedData.json());
 }
 
 //Company

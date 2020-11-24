@@ -11,24 +11,16 @@ exports.getall = function (req, res) {
 }
 
 exports.getCustomerInfo = function (req, res) {
-    var email = req.params.email;
-    user.findOne({ where: { email: email } }).then((user) => {
-        var uid = user.uid;
-        customer.findOne({ where: { user_uid: uid } }).then((customer) => {
-            if (customer) {
-                res.status(200).json({
-                    success: true,
-                    message: 'Successfully retrieved customer',
-                    customer_info: customer
-                });
-            }
-        }).catch(Error, (err) => {
-            res.status(409).json({
-                success: false,
-                message: 'Error getting customer',
-                error: err
+    var uid = req.params.uid;
+    customer.findOne({ where: { user_uid: uid } }).then((customer) => {
+        console.log()
+        if (customer) {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully retrieved customer',
+                customer_info: customer
             });
-        });
+        }
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,

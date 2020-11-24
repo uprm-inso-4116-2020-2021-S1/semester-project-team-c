@@ -4,6 +4,7 @@ const url = "http://localhost:8080/api/";
 export const Server = {
     getGuides,
     getUsers,
+    getUser,
     getCustomers,
     getCustomer,
     getGuide,
@@ -36,6 +37,10 @@ const user = "user/";
 function getUsers() {
     return fetch(url + user +"all-users").then(receivedData => receivedData.json());
 }
+
+function getUser(email) {
+    return fetch(url + user + email).then(receivedData => receivedData.json());
+}
 //Guide
 const guide = "guide/"
 function getGuides() {
@@ -50,9 +55,9 @@ function addGuide(data){
     return fetch(url + guide + "add-guide",req).then(receivedData => receivedData.json());
 }
 
-function getGuide(email) {
+function getGuide(uid) {
 
-    return fetch(url + guide + email).then(receivedData => receivedData.json());
+    return fetch(url + guide + uid).then(receivedData => receivedData.json());
 }
 
 //Company
@@ -61,9 +66,9 @@ const company = "company/";
 //Customer
 const customer = "customer/";
 
-function getCustomer(email) {
+function getCustomer(uid) {
 
-    return fetch(url + customer + email).then(receivedData => receivedData.json());
+    return fetch(url + customer + uid).then(receivedData => receivedData.json());
 }
 
 function getCustomers() {

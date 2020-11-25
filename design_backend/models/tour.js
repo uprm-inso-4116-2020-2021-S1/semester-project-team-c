@@ -19,14 +19,15 @@ module.exports = (db, Sequelize) => {
         guide_user_uid: {
             type: Sequelize.NUMBER,
             primaryKey: true
-
         }
     }, {
         tableName: 'tour',
         timestamps: false
     });
     tour.associate = (models) => {
-        tour.hasOne(models.guide, { foreignkey: 'guide_gid' , as: 'gid' });
+        tour.belongsTo(models.guide, { as: 'gid', foreignKey: 'guide_gid' });
+        tour.belongsTo(models.guide, { as: 'company_coid', foreignKey: 'guide_company_coid' });
+        tour.belongsTo(models.guide, { as: 'user_uid', foreignKey: 'guide_user_uid' });
         
     };
 

@@ -158,8 +158,8 @@ CREATE TABLE `guide` (
   `user_uid` int(11) NOT NULL,
   `company_coid` int(11) NOT NULL,
   PRIMARY KEY (`gid`,`company_coid`,`user_uid`),
-  KEY `fk_guide_user_idx` (`user_uid`),
-  KEY `fk_guide_company1_idx` (`company_coid`),
+  KEY `guide_user_uid` (`user_uid`),
+  KEY `guide_company_coid` (`company_coid`),
   CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
@@ -300,7 +300,7 @@ CREATE TABLE `tour` (
   PRIMARY KEY (`tid`,`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   KEY `fk_tour_guide1_idx` (`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   CONSTRAINT `fk_tour_guide1` FOREIGN KEY (`guide_gid`, `guide_company_coid`, `guide_user_uid`) REFERENCES `guide` (`gid`, `company_coid`, `user_uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,4 +381,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-24 20:37:46
+-- Dump completed on 2020-11-25  2:48:17

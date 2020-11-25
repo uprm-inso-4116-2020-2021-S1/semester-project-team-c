@@ -2,7 +2,8 @@ var db = require('../models');
 var event = db.event;
 var tour = db.tour;
 var location = db.location;
-var attending = db.attending_list;
+var attend = db.attending;
+
 
 exports.getAll = function (req, res) {
     event.findAll().then((events) => {
@@ -11,7 +12,6 @@ exports.getAll = function (req, res) {
 }
 
 exports.createEvent = function (req, res) {
-    var locationID = -1, locationCity = " ";
     var new_tour = req.body.tour;
     var events = req.body.tour.events;
     var tempTour;
@@ -22,43 +22,26 @@ exports.createEvent = function (req, res) {
         guide_user_uid: new_tour.uid
     }).then((createdTour) => {
         tempTour = createdTour;
-        
-        var i = 1;
         for (let content in events) {
-            var data = events[content]
-
-            
-            //Find a way to pass lid and city
-            if (content.split(" ")[0] == 'location') {
-                location.create({
-                    building: data["building"],
-                    street: data["street"],
-                    city: data["city"],
-                    zipcode: data["zipcode"]
-                }).then((event_location) => {
-                    locationID = event_location.lid,
-                    locationCity = event_location.city
-                    
-                }).catch(Error, (err) => {
-                    res.status(409).json({
-                        success: false,
-                        message: 'Error finding events.',
-                        error: err
-                    });
-                });
-            }
-            if (content.split(" ")[0] == 'event') {
-                // console.log(locationID)
+            let data = events[content];
+            var locationData = data["location"];
+            var eventData = data["event"];
+            location.create({
+                building: locationData["building"],
+                street: locationData["street"],
+                city: locationData["city"],
+                zipcode: locationData["zipcode"]
+            }).then((event_location) => {
                 event.create({
-                    name: data["name"],
-                    type: data["type"],
-                    duration: data["duration"],
-                    meetingPlace: data["meetingPlace"],
-                    eventDate: data["eventDate"],
-                    price: data["price"],
+                    name: eventData["name"],
+                    type: eventData["type"],
+                    duration: eventData["duration"],
+                    meetingPlace: eventData["meetingPlace"],
+                    eventDate: eventData["eventDate"],
+                    price: eventData["price"],
                     tour_tid: createdTour.tid,
-                    location_lid: locationID,
-                    location_city: locationCity
+                    location_lid: event_location.lid,
+                    location_city: event_location.city
                 }).catch(Error, (err) => {
                     res.status(409).json({
                         success: false,
@@ -66,10 +49,10 @@ exports.createEvent = function (req, res) {
                         error: err
                     });
                 });
-            }
-        };
+            })
+        }
     }).then(() => {
-        attending.create({
+        attend.create({
             tour_tid: tempTour.tid,
             user_uid: new_tour.uid
         })
@@ -81,7 +64,7 @@ exports.createEvent = function (req, res) {
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error finding events.',
+            message: 'Error creating events.',
             error: err
         });
     });

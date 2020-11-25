@@ -1,4 +1,4 @@
-var config = require('../config/config');
+var config = require('../config/configuration');
 module.exports = (db, Sequelize) => {
     var guide = db.define('guide', {
         gid: {
@@ -37,9 +37,6 @@ module.exports = (db, Sequelize) => {
         company_coid: {
             type: Sequelize.NUMBER
         }
-        // is_active: { for when we properly add whether guide is active or not
-            // type: Boolean(true)
-        // }
     }, {
         tableName: 'guide',
         timestamps: false

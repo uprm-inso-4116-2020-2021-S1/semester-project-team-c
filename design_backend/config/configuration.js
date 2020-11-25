@@ -2,9 +2,12 @@ var config = module.exports;
 require('dotenv').config();
 
 config.keys = {
-    secret: '/%/%/SUPER-SECRET-KEY-FOR-THIS-APP/%/%/'
+    secret: '/%/%/SECRET-KEY/%/%/'
 };
-
+config.accessLevels = {
+    customer: 'customer',
+    guide: 'guide',
+};
 config.development = {
     name: process.env.DB_DBNAME,
     user: process.env.DB_USERNAME,
@@ -18,4 +21,4 @@ config.development = {
             timezone: 'Etc/GMT0'
         }
     }
-};
+}; 

@@ -24,7 +24,7 @@ After you did these steps go to the folder design_backend in a terminal:
 		touch .env (Make sure the file is in the design_backend folder)
 		nano .env 
 		Paste this information:
-			SECRET_KEY=/%/%/SUPER-SECRET-KEY-FOR-THIS-APP/%/%/
+			SECRET_KEY=/%/%/SECRET-KEY/%/%/
 			DB_DBNAME=designDB
 			DB_USERNAME=root
 			DB_PASSWORD=

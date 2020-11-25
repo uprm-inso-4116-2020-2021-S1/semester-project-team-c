@@ -40,7 +40,7 @@ export class CreateAccount extends React.Component {
     };
   }
 
-  handleSubmit = async (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     data = {
       firstName: this.state.firstName,
@@ -49,7 +49,7 @@ export class CreateAccount extends React.Component {
       password: this.state.password,
     }
     if (formValid(this.state)) {
-      await Server.addCustomer(JSON.stringify(data));
+      Server.addCustomer(JSON.stringify(data));
     } else {
       console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
     }
@@ -77,7 +77,7 @@ export class CreateAccount extends React.Component {
         break;
     }
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state))
+    this.setState({ formErrors, [name]: value })
   }
 
   render() {

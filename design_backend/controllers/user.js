@@ -17,6 +17,25 @@ exports.getAll = function (req, res) {
     });
 }
 
+exports.getUserInfo = function (req, res) {
+    var email = req.params.email;
+    user.findOne({ where: { email: email } }).then((user) => {
+        if (user) {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully retrieved user',
+                user: user
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting user',
+            error: err
+        });
+    });
+}
+
 
 exports.login = function (req, res) {
     var email = req.body.email;
@@ -36,7 +55,6 @@ exports.login = function (req, res) {
                     email: fetched_user.email,
                     role: 'guide'
                 });
-                console.log(JSON.stringify(res.message, null, 2));
             } else {
                 res.status(401).json({
                     success: false,

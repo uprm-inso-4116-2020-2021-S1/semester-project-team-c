@@ -31,14 +31,19 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.DATE
         },
         tour_tid: {
-            type: Sequelize.NUMBER
+            type: Sequelize.NUMBER,
+            primaryKey: true,
         },
         location_lid: {
-            type: Sequelize.NUMBER
+            type: Sequelize.NUMBER,
+            primaryKey: true,
         },
         location_city: {
-            type: Sequelize.NUMBER
+            type: Sequelize.NUMBER,
+            primaryKey: true,
+
         },
+        
 
         event_archived: {
             type: Sequelize.NUMBER
@@ -47,6 +52,12 @@ module.exports = (db, Sequelize) => {
         tableName: 'event',
         timestamps: false
     });
+    event.associate = (models) => {
+        event.belongsTo(models.tour, { as: 'tid', foreignKey: 'tour_tid' });
+        event.belongsTo(models.location, { as: 'lid', foreignKey: 'location_lid' });
+        event.belongsTo(models.location, { as: 'city', foreignKey: 'location_city' });
+
+    };
 
     return event;
 };

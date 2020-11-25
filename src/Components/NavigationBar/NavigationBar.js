@@ -2,7 +2,9 @@ import React from "react";
 import "./NavigationBar.css";
 import {Navbar, Nav} from 'react-bootstrap';
 import Logo from "../../images/ExplorePRLogo.png";
+import { getUserEmail } from "../../services/authentication";
 
+const userEmail = getUserEmail();
 function NavigationBar() {
   return (
       <Navbar collapseOnSelect expand="lg" variant="light">
@@ -13,6 +15,7 @@ function NavigationBar() {
             <Nav.Link href="/meetourguides">Meet our Guides</Nav.Link>
             <Nav.Link href="/createguideaccount">Become a Guide</Nav.Link>
             <Nav.Link href="/tours">Tours</Nav.Link>
+            <Nav.Link href={"/profile/" + userEmail}>Profile</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>

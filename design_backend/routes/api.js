@@ -4,6 +4,7 @@ var guide_controller = require('../controllers/guide');
 var company_controller = require('../controllers/company');
 var customer_controller = require('../controllers/customer');
 var event_controller = require('../controllers/event');
+var tour_controller = require('../controllers/tour')
 var allowOnly = require('../services/authCheck').allowOnly;
 
 
@@ -33,7 +34,7 @@ var APIRoutes = function (passport) {
     // Router for delete company
 
     //Events
-    router.post('/event/create', event_controller.createEvent);
+    router.post('/tour/create', tour_controller.createTour);
 
     //Public routes
     return router;

@@ -25,6 +25,10 @@ module.exports = (db, Sequelize) => {
         tableName: 'tour',
         timestamps: false
     });
+    tour.associate = (models) => {
+        tour.hasOne(models.guide, { foreignkey: 'guide_gid' , as: 'gid' });
+        
+    };
 
     return tour;
 };

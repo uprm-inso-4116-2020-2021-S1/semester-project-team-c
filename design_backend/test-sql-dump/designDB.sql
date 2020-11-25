@@ -267,10 +267,11 @@ CREATE TABLE `review_for_user` (
   `review_message` varchar(255) DEFAULT NULL,
   `stars` int(1) NOT NULL,
   `review_rid` int(11) NOT NULL,
-  `review_user_uid` int(11) NOT NULL,
-  PRIMARY KEY (`rfuid`,`review_rid`,`review_user_uid`),
-  KEY `fk_user_review_review1_idx` (`review_rid`,`review_user_uid`),
-  CONSTRAINT `fk_user_review_review1` FOREIGN KEY (`review_rid`, `review_user_uid`) REFERENCES `review` (`rid`, `user_uid`) ON DELETE CASCADE ON UPDATE CASCADE
+  `reviewer_user_uid` int(11) NOT NULL,
+  `reviewee_uid` int(11) NOT NULL,
+  PRIMARY KEY (`rfuid`,`review_rid`,`reviewer_user_uid`,`reviewee_uid`),
+  KEY `fk_user_review_review1_idx` (`review_rid`,`reviewer_user_uid`),
+  CONSTRAINT `fk_user_review_review1` FOREIGN KEY (`review_rid`, `reviewer_user_uid`) REFERENCES `review` (`rid`, `user_uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -299,7 +300,7 @@ CREATE TABLE `tour` (
   PRIMARY KEY (`tid`,`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   KEY `fk_tour_guide1_idx` (`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   CONSTRAINT `fk_tour_guide1` FOREIGN KEY (`guide_gid`, `guide_company_coid`, `guide_user_uid`) REFERENCES `guide` (`gid`, `company_coid`, `user_uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +359,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,7 +368,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (24,'','A1a1',1,'2020-11-22 05:03:03'),(28,'r@gmol.com','A1a1',0,'2020-11-22 21:49:41');
+INSERT INTO `user` VALUES (24,'ExplotoComo@siquitraque.com','A1a1',1,'2020-11-22 05:03:03'),(28,'r@gmol.com','A1a1',0,'2020-11-22 21:49:41');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -380,4 +381,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-23  2:20:15
+-- Dump completed on 2020-11-24 20:37:46

@@ -10,6 +10,24 @@ exports.getAll = function (req, res) {
         res.status(200).json(guides);
     });
 }
+exports.getGuideInfo = function (req, res) {
+    var uid = req.params.uid;
+    guide.findOne({ where: { user_uid: uid } }).then((guide) => {
+        if (guide) {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully retrieved guide',
+                guide_info: guide
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting guide',
+            error: err
+        });
+    });
+}
 
 exports.addGuide = function (req, res) { //gid automatically created by DB
     var guideData = req.body.guideData;
@@ -45,13 +63,13 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
                     user_uid: new_user.uid,
                     company_coid: created_company.coid
                 }).then(() => {
-                        res.status(200).json({
-                            success: true,
-                            message: 'Successfully added guide!',
-                            first_name: guideData.firstName,
-                            last_name: guideData.lastName
-                        });
-                    })
+                    res.status(200).json({
+                        success: true,
+                        message: 'Successfully added guide!',
+                        first_name: guideData.firstName,
+                        last_name: guideData.lastName
+                    });
+                })
             })
         })
     }).catch(Error, (err) => {

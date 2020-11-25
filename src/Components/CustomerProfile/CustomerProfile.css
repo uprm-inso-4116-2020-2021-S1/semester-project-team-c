@@ -1,0 +1,47 @@
+.customerWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+}
+
+.customerContainer{
+    width: 80%;
+    min-height: 70vh;
+    display: flex;
+    box-shadow: 0px 10px 40px rgb(26, 26, 26);
+}
+
+.customerLeft{
+    width: 35%;
+    color: #fff;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #076b8a;
+    padding-top: 5%;
+}
+
+.customerName{
+    margin-top: 5%;
+}
+
+.avatarImg{
+    width: 20%;
+    margin-bottom: 10%;
+}
+
+.customerRight{
+    color: #fff;
+    padding-top: 25px;;
+    flex: 1;
+    min-width: 400px;
+    background-color: #21748dbd;
+    display: flex;
+    flex-direction: column;
+}
+
+.rightHeader{
+    text-align: center;
+}

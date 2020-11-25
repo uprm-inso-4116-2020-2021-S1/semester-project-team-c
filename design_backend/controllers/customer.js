@@ -10,14 +10,15 @@ exports.getall = function (req, res) {
     });
 }
 
-exports.getCustomerByUid = function (req, res) {
-    var uid = req.body.uid;
-    customer.findOne({ where: { uid: uid } }).then((customer) => {
+exports.getCustomerInfo = function (req, res) {
+    var uid = req.params.uid;
+    customer.findOne({ where: { user_uid: uid } }).then((customer) => {
+        console.log()
         if (customer) {
             res.status(200).json({
                 success: true,
                 message: 'Successfully retrieved customer',
-                customer: customer
+                customer_info: customer
             });
         }
     }).catch(Error, (err) => {
@@ -29,7 +30,7 @@ exports.getCustomerByUid = function (req, res) {
     });
 }
 
-exports.addCustomer = function (req, res) { //gid automatically created by DB
+exports.addCustomer = function (req, res) {
     var customerData = req.body;
     user.create({
         email: customerData.email,
@@ -53,7 +54,7 @@ exports.addCustomer = function (req, res) { //gid automatically created by DB
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error adding guide...',
+            message: 'Error adding customer...',
             error: err
         });
     });

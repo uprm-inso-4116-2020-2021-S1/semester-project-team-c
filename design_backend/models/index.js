@@ -1,4 +1,4 @@
-var config = require('../config/config').development;
+var config = require('../config/configuration').development;
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(config.name, config.user, config.password, config.options);
 var fs = require('fs');

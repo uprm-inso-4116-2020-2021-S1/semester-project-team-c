@@ -103,7 +103,6 @@ export class CreateGuideAccount extends React.Component {
             companyData
         };
         if (formValid(this.state)) {
-            console.log(JSON.stringify(data));
             await Server.addGuide(JSON.stringify(data));
             
         } else {

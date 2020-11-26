@@ -1,5 +1,6 @@
 var db = require('../models');
 var review = db.review;
+var user = db.user;
 var user_review = db.review_for_user;
 var tour_review = db.tour_review;
 var customer = db.customer;
@@ -83,35 +84,59 @@ exports.getTourReviewByTrid = function (req, res) {
     });
 }
 
-// exports.createReview = function(req, res) {
-//     var reviewData = req.body
-//     review.create({
-//         email: customer.email,
-//         password: customer.email,
-//         role: customer.role,
-//         creation_date: new Date().toLocaleDateString
-//     }).then((new_review) => {
-//         console.log("New review id" + JSON.stringify(new_review, null, 2));
-//         console.log('Successfully added new review...\n' + JSON.stringify(req.body, null, 2));
-//         review.create({
-//             customer_cid: reviewData.customer_cid,
-//             event_eid: reviewData.event_eid,
-//             event_eid: reviewData.event_eid
-//         })
-//     }).then(() => {
-//         res.status(200).json({
-//             success: true,
-//             message: 'Successfully added your review!',
-//             rid: rid
-//         });
-//     }).catch(Error, (err) => {
-//         res.status(409).json({
-//             success: false,
-//             message: 'Error adding your review...',
-//             error: err
-//         });
-//     });
-// }
+exports.createUserReview = function(req, res) {
+    var userReviewData = req.body.userReviewData;
+    var uid = req.params.user_uid;
+    var gid = req.params.reviewee_uid;
+    review.create({
+        type_of_review: 1,
+        reviewcreatedAt: new Date().toLocaleDateString,
+        user_uid: uid
+    }).then((new_review) => {
+        console.log('Succesfully added review type...\n' + JSON.stringify(req.body, null, 2));
+        user_review.create({
+            review_message: userReviewData.review_message,
+            stars: userReviewData.stars,
+            review_rid: new_review.rid,
+            reviewer_user_uid: uid,
+            reviewee_uid: gid
+        }).then(() => {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully added user review!',
+                review_message: userReviewData.review_message,
+                stars: userReviewData.stars
+            });
+        })
+    })
+}
+
+exports.createTourReview = function(req, res) {
+    var uid = req.params.user_uid;
+    var tourReviewData = req.body;
+    var tid = red.params.tour_tid;
+    review.create({
+        type_of_review: 0,
+        reviewcreatedAt: new Date().toLocaleDateString,
+        user_uid: uid
+    }).then((new_review) => {
+        console.log('Succesfully added review type...\n' + JSON.stringify(req.body, null, 2));
+        tour_review.create({
+            reviewcreatedAt: tourReviewData.review_message,
+            stars: tourReviewData.stars,
+            tour_tid: tid,
+            review_rid: new_review.rid,
+            review_user_uid: uid
+        }).then(() => {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully added tour review!',
+                review_message: tourReviewData.review_message,
+                stars: tourReviewData.stars
+            });
+        })
+    })
+}
 
 exports.deleteReviewByRid = function (rid){
     console.log('Deleting rid with id: ' + rid + '...')

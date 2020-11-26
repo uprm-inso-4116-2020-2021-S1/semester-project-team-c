@@ -5,7 +5,6 @@ var customer = db.recruiter;
 var guide = db.guide;
 var config = require('../config/configuration');
 
-// Hooks the JWT Strategy.
 function hookJWTStrategy(passport) {
     var jwtOptions = {}
     jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();

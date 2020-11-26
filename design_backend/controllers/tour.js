@@ -57,8 +57,65 @@ exports.createTour = function (req, res) {
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,
-            message: 'Error creating events.',
+            message: 'Error creating tour',
             error: err
         });
     });
+}
+
+exports.deleteTour = function (req, res) {
+    var tid = req.params.tid;
+    var locationIDarr = [];
+    var i = 0;
+    event.findAll({ where: { tour_tid: tid } }).then((events) => {
+        for (let e in events) {
+            var data = events[e]
+            locationIDarr[i] = data["location_lid"];
+            i++;
+        }
+        location.destroy({ 
+            where: { lid: locationIDarr } 
+        }).catch(Error, (err) => {
+            res.status(409).json({
+                success: false,
+                message: 'Error deleting locations',
+                error: err
+            });
+        });
+    }).then(() => {
+        tour.destroy({ 
+            where: { tid: tid } 
+        }).catch(Error, (err) => {
+            res.status(409).json({
+                success: false,
+                message: 'Error deleting tours',
+                error: err
+            });
+        });
+    }).then(() => {
+        res.status(200).json({
+            success: true,
+            message: "Succesfully deleted tour",
+        });
+    })
+}
+
+exports.getGuideTours = function (req, res) {
+    var guide_id = req.params.gid
+    tour.findAll({ where: { guide_gid: guide_id } }).then((tours) => {
+        if (tours) {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully retrieved tours',
+                allTours: tours
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting tours',
+            error: err
+        });
+    });
+
 }

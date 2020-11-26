@@ -6,7 +6,7 @@ import { Accordion, Card } from "react-bootstrap";
 
 
 const emailRegex = RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
-const urlRegex = RegExp(/^([a-zA-Z0-9_\-\.]+).([a-zA-Z]{2,5})$/)
+const urlRegex = RegExp(/^([a-zA-Z0-9_\-\.]+).([a-zA-Z]{2,5})$/) //TODO fix this regex
 const passwordRegex = RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/)
 const phoneRegex = RegExp(/^(1?(-?\d{3})-?)?(\d{3})(-?\d{4})$/)
 const zipcodeRegex = RegExp(/^([0-9\b]{0,4})$/)

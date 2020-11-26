@@ -43,8 +43,6 @@ module.exports = (db, Sequelize) => {
             primaryKey: true,
 
         },
-        
-
         event_archived: {
             type: Sequelize.NUMBER
         }

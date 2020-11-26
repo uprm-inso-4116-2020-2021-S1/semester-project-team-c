@@ -22,8 +22,6 @@ module.exports = (db, Sequelize) => {
     attending.associate = (models) => {
         attending.belongsTo(models.tour, { as: 'tid', foreignKey: 'tour_tid' });
         attending.belongsTo(models.user, { as: 'uid', foreignKey: 'user_uid' });
-        
-
     };
 
     return attending;

@@ -49,13 +49,32 @@ exports.getEventByEid = function (req, res) {
     });
 }
 
-exports.deleteEventByEid = function (eid) {
-    console.log('Deleting event with id: ' + eid + '...')
-    return event.destroy({ where: { eid: eid } });
+exports.getEventsByCity = function (req, res) {
+    var city = req.params.city;
+    event.findAll({ where: { location_city: city } }).then((events) => {
+        if (events) {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully found events',
+                event: events
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error finding events',
+            error: err
+        });
+    });
 }
 
-exports.deleteEventByName = function (name) {
-    var name = event.name
-    console.log('Delete event with name: ' + name + '...')
-    return event.deleteEventByEid({ where: { name: name } });
+exports.guideDeleteEvent = function (req, res) {
+    var eid = req.params.eid
+    console.log('Deleting event with id: ' + eid + '...')
+    event.destroy({ where: { eid: eid } }).then(() => {
+        res.status(200).json({
+            success: true,
+            message: 'Succesfully deleted event'
+        });
+    });
 }

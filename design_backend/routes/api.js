@@ -35,6 +35,11 @@ var APIRoutes = function (passport) {
 
     //Events
     router.post('/tour/create', tour_controller.createTour);
+    router.get('/tour/:gid', tour_controller.getGuideTours);
+    router.delete('/tour/delete/:tid', tour_controller.deleteTour)
+    router.get('/event/tour/:tid', event_controller.getAllEventsInTour);
+    router.get('/event/city/:city', event_controller.getEventsByCity);
+    router.delete('/event/delete/:eid', event_controller.guideDeleteEvent);
 
     //Public routes
     return router;

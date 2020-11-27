@@ -21,11 +21,68 @@ exports.getAllUserReviews = function (req, res) {
     })
 }
 
+exports.getAllReviewsAboutUser = function (req, res) {
+    var user_reviewee = req.body.reviewee_uid;
+    user_review.findAll({where: {reviewee_uid: user_reviewee}}).then((reviews) => {
+        if (reviews) {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully found reviews about user',
+                review: reviews
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error finding review(s)',
+            error: err
+        });
+    });
+}
+
+exports.getAllReviewsAboutUser = function (req, res) {
+    var user_reviewer = req.body.reviewer_user_uid
+    user_review.findAll({where: {reviewee_uid: user_reviewer}}).then((reviews) => {
+        if (reviews) {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully found reviews by user',
+                review: reviews
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error finding review(s)',
+            error: err
+        });
+    });
+}
+
 exports.getAllTourReviews = function (req, res) {
     tour_review.findAll().then((tour_reviews) => {
         res.status(200).json(tour_reviews);
     })
 }
+
+exports.getAllReviewsAboutTour = function (req, res) {
+    var tour_reviews = req.body.trid;
+    tour_review.findAll({where: {trid: tour_reviews}}).then((reviews) => {
+        if (reviews) {
+            res.status(200).json({
+                success: true,
+                message: 'Succesfully found reviews about tour',
+                review: reviews
+            });
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error finding review(s)',
+            error: err
+        });
+    });
+} 
 
 exports.getReviewByRid = function (req, res) {
     var review_id = req.body.rid;

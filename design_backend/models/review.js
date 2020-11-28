@@ -6,25 +6,15 @@ module.exports = (db, Sequelize) => {
             autoIncrement: true,
             unique: true
         },
-        email: {
-            type: Sequelize.STRING
-        },
-        password: {
-            type: Sequelize.STRING
-        },
-        role: {
+        type_of_review: {
             type: Sequelize.NUMBER
         },
         reviewcreatedAt: {
             type: Sequelize.DATE
         },
-        customer_cid: {
+        user_uid: {
             type: Sequelize.NUMBER
-        },
-        event_eid: {
-            type: Sequelize.NUMBER,
-            primaryKey: true
-        },
+        }
     }, {
         tableName: 'review',
         timestamps: false

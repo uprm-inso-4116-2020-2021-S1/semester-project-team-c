@@ -4,7 +4,8 @@ var guide_controller = require('../controllers/guide');
 var company_controller = require('../controllers/company');
 var customer_controller = require('../controllers/customer');
 var event_controller = require('../controllers/event');
-var tour_controller = require('../controllers/tour')
+var tour_controller = require('../controllers/tour');
+var review_controller = require('../controllers/review');
 var allowOnly = require('../services/authCheck').allowOnly;
 
 
@@ -41,6 +42,8 @@ var APIRoutes = function (passport) {
     router.get('/event/city/:city', event_controller.getEventsByCity);
     router.delete('/event/delete/:eid', event_controller.guideDeleteEvent);
 
+    //Review
+    router.get('/review/all-reviews', review_controller.getAllReviews);
     //Public routes
     return router;
 };

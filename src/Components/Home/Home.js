@@ -52,7 +52,7 @@ class Home extends React.Component {
           <Col className="picPadding"><Image className="picDim d-block mx-auto" src={Zipline} roundedCircle/></Col>
         </Row>
       </Container>
-      <Reviews />
+      <Reviews reviews={[{reviewMessage : "This was Great!", stars: 5, trid: 32781, review_user_uid: 43782, tour_tid: 23145, review_rid: 38923}, {reviewMessage : "Overall good for the value.", stars: 3, trid: 53623, review_user_uid: 28493, tour_tid: 23145, review_rid: 38924}]}/>
       </React.Fragment>
     );
   }

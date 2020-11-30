@@ -8,6 +8,7 @@ import CreateGuideAccount from "../CreateGuideAccount/CreateGuideAccount";
 import MeetOurGuides from "../MeetOurGuides/MeetOurGuides";
 import Tours from "../Tours/Tours";
 import Profile from "../Profile/Profile";
+import CreateTour from "../CreateTour/CreateTour";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/meetourguides" component={MeetOurGuides} />
         <Route exact path="/tours" component={Tours} />
         <Route exact path="/profile/:email" component={Profile} />
+        <Route exact path="/createtour" component={CreateTour} />
         {/* <Route exact path="/home" component={Home} /> */}
         {/* In case no route does not exist, can create a 404 page341 */}
         <Redirect to="/" />

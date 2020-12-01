@@ -23,6 +23,7 @@ var APIRoutes = function (passport) {
     //Guide routes
     router.post('/guide/add-guide', guide_controller.addGuide);
     router.get('/guide/:uid', guide_controller.getGuideInfo);
+    router.get('/guide/all-guides', guide_controller.getAll);
 
 
     //Customer routes

@@ -12,7 +12,7 @@ import TwitterIcon from "../../images/TwitterIcon.png"
 import YoutubeIcon from "../../images/YoutubeIcon.png"
 
 class MeetOurGuides extends React.Component {
-
+  
   render() {
     return (
       <React.Fragment>

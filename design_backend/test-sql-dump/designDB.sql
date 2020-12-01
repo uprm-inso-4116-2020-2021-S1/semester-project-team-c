@@ -31,7 +31,7 @@ CREATE TABLE `attending_list` (
   KEY `fk_attending_list_user1_idx` (`user_uid`),
   CONSTRAINT `fk_attending_list_tour1` FOREIGN KEY (`tour_tid`) REFERENCES `tour` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_attending_list_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `attending_list` (
 
 LOCK TABLES `attending_list` WRITE;
 /*!40000 ALTER TABLE `attending_list` DISABLE KEYS */;
+INSERT INTO `attending_list` VALUES (38,170,60),(39,171,63),(40,172,64),(41,170,65);
 /*!40000 ALTER TABLE `attending_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +60,7 @@ CREATE TABLE `company` (
   PRIMARY KEY (`coid`,`location_lid`),
   KEY `fk_company_location1_idx` (`location_lid`),
   CONSTRAINT `fk_company_location1` FOREIGN KEY (`location_lid`) REFERENCES `location` (`lid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +69,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (50,'Testing co3',' ','2020-12-01 23:09:11',207),(51,'Testing co3',' ','2020-12-01 23:23:59',208),(52,'Testing co3',' ','2020-12-01 23:35:10',210),(53,'Testing co3',' ','2020-12-01 23:40:26',211);
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +88,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`cid`,`user_uid`),
   KEY `fk_customer_user1_idx` (`user_uid`),
   CONSTRAINT `fk_customer_user1` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +97,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (5,'Juan','Ramos',61),(6,'Juan ','Ramos',65);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +127,7 @@ CREATE TABLE `event` (
   KEY `fk_event_location1_idx` (`location_lid`,`location_city`),
   CONSTRAINT `fk_event_location1` FOREIGN KEY (`location_lid`, `location_city`) REFERENCES `location` (`lid`, `city`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_event_tour1` FOREIGN KEY (`tour_tid`) REFERENCES `tour` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +136,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES (87,'Test Event','Food and Drinks','2:00','Restaurante La perla','2020-12-12 04:00:00','10.10','2020-12-01 23:29:29','2020-12-01 23:29:29',170,209,'Bayamon',0),(88,'Event 1','Beaches','1:45','Restaurante La perla','2020-12-12 04:00:00','10.00','2020-12-01 23:41:39','2020-12-01 23:41:39',172,212,'Bayamon',0);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +164,7 @@ CREATE TABLE `guide` (
   KEY `guide_company_coid` (`company_coid`),
   CONSTRAINT `fk_guide_company1` FOREIGN KEY (`company_coid`) REFERENCES `company` (`coid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_guide_user` FOREIGN KEY (`user_uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,6 +173,7 @@ CREATE TABLE `guide` (
 
 LOCK TABLES `guide` WRITE;
 /*!40000 ALTER TABLE `guide` DISABLE KEYS */;
+INSERT INTO `guide` VALUES (15,'Test','Name','7875555556',' ',' ',' ',' ',' ',60,50),(16,'Angel','Burgos','7875555556',' ',' ',' ',' ',' ',62,51),(17,'Juan','Ramos','7875555556',' ',' ',' ',' ',' ',63,52),(18,'Juan','Ramos','7875555555',' ',' ',' ',' ',' ',64,53);
 /*!40000 ALTER TABLE `guide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +217,7 @@ CREATE TABLE `location` (
   `city` varchar(100) NOT NULL,
   `zipcode` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`lid`,`city`)
-) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,6 +226,7 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (207,'Test','Test st','Test city 4','00000'),(208,'Test','Test st','Test city 4','00001'),(209,'Test','Test st 1','Bayamon','00000'),(210,'Test','Test st','Test city','00001'),(211,'Test','Test st','Test city 4','00001'),(212,'Test','Test st','Bayamon','00001');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +302,7 @@ CREATE TABLE `tour` (
   PRIMARY KEY (`tid`,`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   KEY `fk_tour_guide1_idx` (`guide_gid`,`guide_company_coid`,`guide_user_uid`),
   CONSTRAINT `fk_tour_guide1` FOREIGN KEY (`guide_gid`, `guide_company_coid`, `guide_user_uid`) REFERENCES `guide` (`gid`, `company_coid`, `user_uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,6 +311,7 @@ CREATE TABLE `tour` (
 
 LOCK TABLES `tour` WRITE;
 /*!40000 ALTER TABLE `tour` DISABLE KEYS */;
+INSERT INTO `tour` VALUES (170,'Test tour',15,50,60),(171,'Test tour',17,52,63),(172,'Test Tour',18,53,64);
 /*!40000 ALTER TABLE `tour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +362,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,6 +371,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (60,'explotocomo@siquitraque.com','A1a1',1,'2020-12-01 23:09:11'),(61,'j@gmail.com','A1a1',0,'2020-12-01 23:22:38'),(62,'angelburgos@siquitraque.com','A1a1',1,'2020-12-01 23:23:59'),(63,'juanramos@gmol.com','A1a1',1,'2020-12-01 23:35:10'),(64,'juanramos@gmail.com','A1a1',1,'2020-12-01 23:40:26'),(65,'r@gmol.com','A1a1',0,'2020-12-01 23:42:22');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -376,4 +384,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-01 17:38:56
+-- Dump completed on 2020-12-01 19:49:31

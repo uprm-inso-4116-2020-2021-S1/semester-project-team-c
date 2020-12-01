@@ -16,26 +16,31 @@ class Tours extends React.Component {
         this.search = this.search.bind(this);
     }
 
-    async search(city) {
+    async search(term) {
         this.setState({
-            change:false
+            change: false
         })
-        await Server.getEventByCity(city).then((fetchedEvents) => {
-          this.setState({
-            results: fetchedEvents.event,
-            change: true
-          })
+        await Server.getEventByCity(term).then((fetchedEvents) => {
+            
+            this.setState({
+                results: fetchedEvents.event,
+                change: true
+            })
         });
-      }
-    componentDidUpdate(nextState){
-        if(nextState.change != this.state.change){
+        //#####################################################################
+        //1. Perform Search with the given Term "term"
+        //2. this.setState the given results.
+        // Example: Spotify.search(term).then(searchResults => {this.setState({results: searchResults})})
+
+    }
+    componentDidUpdate(nextState) {
+        if (nextState.change != this.state.change) {
             this.render();
         }
     }
-    render(){
-        console.log(this.props)
+    render() {
         return (
-            
+
             <div className="TourDiv">
                 <Nav />
                 <h2 className="TourHeading">Start Exploring.</h2>

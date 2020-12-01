@@ -9,6 +9,7 @@ export const Server = {
     getCustomers,
     getCustomer,
     getGuide,
+    getTourInfo,
     getUserTours,
     getTourEvents,
     // getLocations,
@@ -94,10 +95,14 @@ function getUserTours(uid) {
     return fetch(url + tour + "attending/" + uid).then(receivedData => receivedData.json());
 }
 
-
 function getTourGuides(coid, tid) {
     return fetch(url + tour + "company/" + coid + "/guideList/" + tid).then(receivedData => receivedData.json());
 }
+
+function getTourInfo(tid) {
+    return fetch(url + tour + "info/" + tid).then(receivedData => receivedData.json());
+}
+
 
 function addTour(data) {
     const req = {

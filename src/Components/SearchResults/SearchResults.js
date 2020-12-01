@@ -1,5 +1,6 @@
 import React from "react";
 import "./SearchResults.css";
+import IndividualResult from "./../IndividualResult/IndividualResult";
 
 var guides = [];
 
@@ -7,7 +8,6 @@ class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.showResults = this.showResults.bind(this);
-    console.log(this.props.results)
   }
 
   
@@ -23,17 +23,12 @@ class SearchResults extends React.Component {
       return (
         <div className="Container">
           {this.props.results.map((event) => {
-            console.log(event)
-            // return (
-            //   <IndividualResult
-            //     name={event.name}
-            //     type={event.type}
-            //     location={event.location}
-            //     duration={event.duration}
-            //     key={event.eid}
-            //     tid={event.tid}
-            //   />
-            // );
+            return (
+              <IndividualResult
+                singleEvent = {event}
+               
+              />
+            );
           })}
         </div>
       );

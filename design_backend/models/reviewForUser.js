@@ -14,7 +14,7 @@ module.exports = (db, Sequelize) => {
         review_rid: {
             type: Sequelize.NUMBER
         },
-        review_user_uid: {
+        reviewer_user_uid: {
             type: Sequelize.NUMBER
         },
         reviewee_uid: {

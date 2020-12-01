@@ -44,6 +44,16 @@ var APIRoutes = function (passport) {
 
     //Review
     router.get('/review/all-reviews', review_controller.getAllReviews);
+    router.get('/review/all-user-reviews', review_controller.getAllUserReviews);
+    router.get('/review/all-tour-reviews', review_controller.getAllTourReviews);
+    router.get('/review/all/about/:uid', review_controller.getAllReviewsAboutUser);
+    router.get('/review/all/from/:uid', review_controller.getAllReviewsFromUser);
+    router.post('/review/user-review-create', review_controller.createUserReview);
+    router.post('/review/tour-review-create', review_controller.createTourReview);
+    router.delete('/review/delete/:rfuid', review_controller.deleteUserReviewsByRfuid);
+    router.delete('/review/delete/:trid', review_controller.deleteTourReviewsByTrid);
+    
+
     //Public routes
     return router;
 };

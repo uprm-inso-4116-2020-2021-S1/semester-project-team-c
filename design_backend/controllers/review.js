@@ -4,9 +4,9 @@ var user = db.user;
 var user_review = db.review_for_user;
 var tour_review = db.tour_review;
 var customer = db.customer;
-var config = require('../config/config');
+var config = require('../config/configuration');
 var request = require('request');
-const { DatabaseError } = require('sequelize/types');
+// const { DatabaseError } = require('sequelize/types');
 
 
 exports.getAllReviews = function (req, res) {
@@ -22,8 +22,9 @@ exports.getAllUserReviews = function (req, res) {
 }
 
 exports.getAllReviewsAboutUser = function (req, res) {
-    var user_reviewee = req.body.reviewee_uid;
-    user_review.findAll({where: {reviewee_uid: user_reviewee}}).then((reviews) => {
+    var uid = req.params.uid;
+    console.log(uid);
+    user_review.findAll({where: {reviewee_uid: uid}}).then((reviews) => {
         if (reviews) {
             res.status(200).json({
                 success: true,
@@ -40,8 +41,8 @@ exports.getAllReviewsAboutUser = function (req, res) {
     });
 }
 
-exports.getAllReviewsAboutUser = function (req, res) {
-    var user_reviewer = req.body.reviewer_user_uid
+exports.getAllReviewsFromUser = function (req, res) {
+    var user_reviewer = req.params.reviewer_user_uid;
     user_review.findAll({where: {reviewee_uid: user_reviewer}}).then((reviews) => {
         if (reviews) {
             res.status(200).json({
@@ -142,12 +143,11 @@ exports.getTourReviewByTrid = function (req, res) {
 }
 
 exports.createUserReview = function(req, res) {
-    var userReviewData = req.body.userReviewData;
-    var uid = req.params.user_uid;
-    var gid = req.params.reviewee_uid;
+    var userReviewData = req.body
+    var uid = userReviewData.uid;
+    var gid = userReviewData.gid;
     review.create({
         type_of_review: 1,
-        reviewcreatedAt: new Date().toLocaleDateString,
         user_uid: uid
     }).then((new_review) => {
         console.log('Succesfully added review type...\n' + JSON.stringify(req.body, null, 2));
@@ -169,13 +169,13 @@ exports.createUserReview = function(req, res) {
 }
 
 exports.createTourReview = function(req, res) {
-    var uid = req.params.user_uid;
-    var tourReviewData = req.body;
-    var tid = red.params.tour_tid;
+    var tourReviewData = req.body;   
+    var uid = tourReviewData.uid
+    var tid = tourReviewData.tour_tid;
+    console.log(tid);
     review.create({
         type_of_review: 0,
-        reviewcreatedAt: new Date().toLocaleDateString,
-        user_uid: uid
+        user_uid: uid,
     }).then((new_review) => {
         console.log('Succesfully added review type...\n' + JSON.stringify(req.body, null, 2));
         tour_review.create({
@@ -195,17 +195,20 @@ exports.createTourReview = function(req, res) {
     })
 }
 
-exports.deleteReviewByRid = function (rid){
+exports.deleteReviewByRid = function(req, res) {
+    var rid = req.body.reviewData;
     console.log('Deleting rid with id: ' + rid + '...')
     return review.destroy({ where: { rid: rid } });
 }
 
-exports.deleteUserReviewsByRfuid = function (rfuid){
+exports.deleteUserReviewsByRfuid = function(req, res) {
+    var rfuid = req.body.userReviewData;
     console.log('Deleting rfuid with id: ' + rfuid + '...')
     return user_review.destroy({ where: { rfuid: rfuid } });
 }
 
-exports.deleteTourReviewsByTrid = function (trid){
+exports.deleteTourReviewsByTrid = function(req, res) {
+    var trid = req.body.tourReviewData;
     console.log('Deleting rfuid with trid: ' + trid + '...')
     return tour_review.destroy({ where: { trid: trid } });
 }

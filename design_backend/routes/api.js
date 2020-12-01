@@ -46,6 +46,7 @@ var APIRoutes = function (passport) {
     router.get('/event/city/:city', event_controller.getEventsByCity);
     router.delete('/event/delete/:eid', event_controller.guideDeleteEvent);
     router.get('/tour/attending/:uid', tour_controller.toursAttending);
+    router.post('/tour/:tid/user/:uid', tour_controller.addToAttendingList);
     router.get('/tour/company/:coid/guideList/:tid', tour_controller.getTourGuides);
 
     //review

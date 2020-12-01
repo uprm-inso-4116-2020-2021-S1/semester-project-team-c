@@ -109,6 +109,7 @@ export class CreateGuideAccount extends React.Component {
         }
         if (formValid(this.state)) {
             await Server.addGuide(JSON.stringify(data)).then(async (response) => {
+                console.log(response)
                 if (response.success) {
                     await Server.login(JSON.stringify(loginData)).then((response) => {
                         login(response.access_token, response.email, response.role, response.loggedIn);

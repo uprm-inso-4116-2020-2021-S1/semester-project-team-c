@@ -2,21 +2,20 @@ import React, { component } from "react";
 import "./CreateAccount.css";
 import Nav from "../NavigationBar/NavigationBar";
 import Server from '../../services/serverRoutes';
+import { Modal, Button } from "react-bootstrap";
+import { login } from "../../services/authentication";
 
 const emailRegex = RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
 const passwordRegex = RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$/)
 
 var data = [];
+var loginData = {};
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
-  });
-
-  Object.values(rest).forEach(val => {
-    val == "" && (valid = false)
   });
 
   return valid;
@@ -31,11 +30,13 @@ export class CreateAccount extends React.Component {
       lastName: "",
       email: "",
       password: "",
+      exists: false,
       formErrors: {
         firstName: "",
         lastName: "",
         email: "",
         password: "",
+        exists: false
       }
     };
   }
@@ -48,8 +49,24 @@ export class CreateAccount extends React.Component {
       email: this.state.email,
       password: this.state.password,
     }
+    loginData = {
+      email: this.state.email,
+      password: this.state.password
+    }
     if (formValid(this.state)) {
-      Server.addCustomer(JSON.stringify(data));
+      Server.addCustomer(JSON.stringify(data)).then(async (response) => {
+        if (response.success) {
+          await Server.login(JSON.stringify(loginData)).then((response) => {
+            login(response.access_token, response.email, response.role, response.loggedIn);
+            this.props.history.push('/profile/' + response.email);
+          });
+        }
+        else {
+          this.setState({
+            exists: true
+          })
+        }
+      });
     } else {
       console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
     }
@@ -80,6 +97,12 @@ export class CreateAccount extends React.Component {
     this.setState({ formErrors, [name]: value })
   }
 
+  handleClose = () => {
+    this.setState({
+      exists: false
+    })
+  }
+
   render() {
 
     const { formErrors } = this.state;
@@ -87,6 +110,17 @@ export class CreateAccount extends React.Component {
     return (
       <React.Fragment>
         <Nav />
+        <Modal show={this.state.exists} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Error adding account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>User email already exists</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+                        </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="wrapper">
           <div className="form-wrapper">
             <h1>Create Account!</h1>

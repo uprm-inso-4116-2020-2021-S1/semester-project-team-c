@@ -2,8 +2,8 @@ import React, { component } from "react";
 import "./CreateTour.css";
 import Nav from "../NavigationBar/NavigationBar";
 import Server from '../../services/serverRoutes';
-import { Accordion, Card} from "react-bootstrap";
-import {Link }from 'react-router-dom';
+import { Accordion, Card } from "react-bootstrap";
+import { Link } from 'react-router-dom';
 import { getUserEmail, logout, isLogged } from "../../services/authentication";
 
 const zipcodeRegex = RegExp(/^([0-9\b]{0,5})$/)
@@ -13,8 +13,7 @@ var event = [];
 var event_location = [];
 var tourData = [];
 var events = [];
-var tour = [tourData,events];
-var count = 0;
+var tour = [tourData, events];
 
 
 
@@ -54,9 +53,11 @@ export class CreateTour extends React.Component {
             meetingPlace: "",
             eventDate: "",
             price: "",
-            location_city: "",       
-            
-            
+            location_city: "",
+            count: 0,
+            createdTour: false,
+
+
             formErrors: {
                 tour_name: "",
                 building: "",
@@ -73,7 +74,7 @@ export class CreateTour extends React.Component {
             }
         };
     }
-    clearArray(){
+    clearArray() {
         location = [];
         event = [];
         event_location = [];
@@ -81,7 +82,7 @@ export class CreateTour extends React.Component {
         events = [];
         tour = [];
     }
-    clearEvent_Location(){
+    clearEvent_Location() {
         this.setState({
             building: "",
             street: "",
@@ -92,10 +93,10 @@ export class CreateTour extends React.Component {
             duration: "",
             meetingPlace: "",
             eventDate: "",
-            price: "",         
-            location_city: " ",   
+            price: "",
+            location_city: " ",
         })
-        
+
     }
     async componentDidMount() {
         const response = await Server.getUser(getUserEmail());
@@ -112,29 +113,31 @@ export class CreateTour extends React.Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        tourData = {
-            tour_name: this.state.tour_name,
-            uid: this.state.uid,
-            gid: this.state.gid,
-            coid: this.state.coid
+        if(!this.state.createdTour){
+            tour = {
+                tour_name: this.state.tour_name,
+                uid: this.state.uid,
+                gid: this.state.gid,
+                coid: this.state.coid
 
-        };
-        tour = {
-            tourData,
-            events
-        };
-        console.log(tour);
-        if (formValid(this.state)) {
-            await Server.addTour(JSON.stringify(tour))
-        } else {
-            console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
+            };
+            // tour = {
+            //     tourData,
+            //     events
+            // };
+            console.log(tour);
+            if (formValid(this.state)) {
+                await Server.addTour(JSON.stringify(tour))
+            } else {
+                console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
+            }
         }
-        count = 0;
+        this.state.count = 0;
         this.clearArray();
         // this.props.history.push('/profile/'+getUserEmail());
-     
+
     };
-    addEventToTour = async(e) => {
+    addEventToTour = async (e) => {
         e.preventDefault();
         location = {
             building: this.state.building,
@@ -152,15 +155,23 @@ export class CreateTour extends React.Component {
             location_city: this.state.city,
         };
         event_location = {
+            // count: this.state.count,
             location,
             event
         };
+        // events = {
+        //     event_location
+        // }
 
-        var temp = events;
-        
-        temp.push(event_location);
-        count = count + 1;
-        this.clearEvent_Location();
+        var placeholder = 'event_location'.concat(this.state.count)
+
+        // events[placeholder] = events[placeholder] ? events[placeholder] : [];
+
+        events.push(event_location);
+
+
+        this.state.count = this.state.count + 1;
+        // this.clearEvent_Location();
         this.resetForm();
     }
 
@@ -211,15 +222,199 @@ export class CreateTour extends React.Component {
 
         this.setState({ formErrors, [name]: value })
     }
-    resetForm = () => { 
+    resetForm = () => {
         document.getElementById("tour").reset();
-      }
-      
+    }
+
 
     render() {
 
         const { formErrors } = this.state;
+        let { createdTour } = this.state;
+        let profile;
+        if (!createdTour) {
+            profile = <Card>
+                <Accordion.Toggle as={Card.Header} eventKey="0">
+                    Tour Information
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                    <Card.Body>
+                        <div className="firstName">
+                            <label htmlFor="tour_name">Tour Name</label>
+                            <input
+                                className={formErrors.tour_name.length > 0 ? "error" : null}
+                                placeholder="Tour Name"
+                                type="text"
+                                name="tour_name"
+                                noValidate
+                                onChange={this.handleChange}
+                            />
+                            {formErrors.tour_name.length > 0 && (
+                                <span className="errorMessage" >{formErrors.tour_name}</span>
+                            )}
+                        </div>
+                    </Card.Body>
+                </Accordion.Collapse>
+            </Card>
+        } else if (createdTour) {
+            profile =  <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="1">
+                {"Add Event"}
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="1">
+                <Card.Body>
 
+                    <div className="firstName">
+                        <label htmlFor="name">Event Name</label>
+                        <input
+                            className={formErrors.name.length > 0 ? "error" : null}
+                            placeholder="Event Name"
+                            type="text"
+                            name="name"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.name.length > 0 && (
+                            <span className="errorMessage" >{formErrors.name}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="type">Type: Food and Drinks, Rivers, Beaches</label>
+                        <input
+                            className={formErrors.building.length > 0 ? "error" : null}
+                            placeholder="Type"
+                            type="text"
+                            name="type"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.type.length > 0 && (
+                            <span className="errorMessage" >{formErrors.type}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="duration">Duration</label>
+                        <input
+                            className={formErrors.building.length > 0 ? "error" : null}
+                            placeholder="Duration"
+                            type="text"
+                            name="duration"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.duration.length > 0 && (
+                            <span className="errorMessage" >{formErrors.duration}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="meetingPlace">Meeting Place</label>
+                        <input
+                            className={formErrors.building.length > 0 ? "error" : null}
+                            placeholder="Meeting Place"
+                            type="text"
+                            name="meetingPlace"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.meetingPlace.length > 0 && (
+                            <span className="errorMessage" >{formErrors.meetingPlace}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="eventDate">Event Date</label>
+                        <input
+                            className={formErrors.eventDate.length > 0 ? "error" : null}
+                            placeholder="Event Date"
+                            type="text"
+                            name="eventDate"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.eventDate.length > 0 && (
+                            <span className="errorMessage" >{formErrors.eventDate}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="price">Price</label>
+                        <input
+                            className={formErrors.price.length > 0 ? "error" : null}
+                            placeholder="Price"
+                            type="text"
+                            name="price"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.price.length > 0 && (
+                            <span className="errorMessage" >{formErrors.price}</span>
+                        )}
+                    </div>
+
+
+                    <div className="firstName">
+                        <label htmlFor="building">Building</label>
+                        <input
+                            className={formErrors.building.length > 0 ? "error" : null}
+                            placeholder="Building"
+                            type="text"
+                            name="building"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.building.length > 0 && (
+                            <span className="errorMessage" >{formErrors.building}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="street">Street</label>
+                        <input
+                            className={formErrors.street.length > 0 ? "error" : null}
+                            placeholder="Street"
+                            type="text"
+                            name="street"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.street.length > 0 && (
+                            <span className="errorMessage" >{formErrors.street}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="city">City</label>
+                        <input
+                            className={formErrors.city.length > 0 ? "error" : null}
+                            placeholder="City"
+                            type="text"
+                            name="city"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.city.length > 0 && (
+                            <span className="errorMessage" >{formErrors.city}</span>
+                        )}
+                    </div>
+                    <div className="firstName">
+                        <label htmlFor="zipcode">Zipcode</label>
+                        <input
+                            className={formErrors.zipcode.length > 0 ? "error" : null}
+                            placeholder="Zipcode"
+                            type="text"
+                            name="zipcode"
+                            noValidate
+                            onChange={this.handleChange}
+                        />
+                        {formErrors.zipcode.length > 0 && (
+                            <span className="errorMessage" >{formErrors.zipcode}</span>
+                        )}
+                    </div>
+
+                    <div className="createAccount">
+                        <button onClick={this, this.addEventToTour}>Add Event</button>
+                    </div>
+
+                </Card.Body>
+            </Accordion.Collapse>
+        </Card>
+        }
         return (
             <React.Fragment>
                 <Nav />
@@ -228,205 +423,13 @@ export class CreateTour extends React.Component {
                         <h1>Create Tour</h1>
                         <p>Add all events that your Tour offers before creating Tour</p>
                         <form id="tour" onSubmit={this.handleSubmit} noValidate>
-                            <Accordion>                                    
-                                <Card>
-                            <Accordion.Toggle as={Card.Header} eventKey="0">
-                                {"Add Event"}
-                            </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey="0">
-                                        <Card.Body>
-                    
-                                            <div className="firstName">
-                                                <label htmlFor="name">Event Name</label>
-                                                <input
-                                                    className={formErrors.name.length > 0 ? "error" : null}
-                                                    placeholder="Event Name"
-                                                    type="text"
-                                                    name="name"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.name.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.name}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="type">Type: Food and Drinks, Rivers, Beaches</label>
-                                                <input
-                                                    className={formErrors.building.length > 0 ? "error" : null}
-                                                    placeholder="Type"
-                                                    type="text"
-                                                    name="type"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.type.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.type}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="duration">Duration</label>
-                                                <input
-                                                    className={formErrors.building.length > 0 ? "error" : null}
-                                                    placeholder="Duration"
-                                                    type="text"
-                                                    name="duration"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.duration.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.duration}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="meetingPlace">Meeting Place</label>
-                                                <input
-                                                    className={formErrors.building.length > 0 ? "error" : null}
-                                                    placeholder="Meeting Place"
-                                                    type="text"
-                                                    name="meetingPlace"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.meetingPlace.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.meetingPlace}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="eventDate">Event Date</label>
-                                                <input
-                                                    className={formErrors.eventDate.length > 0 ? "error" : null}
-                                                    placeholder="Event Date"
-                                                    type="text"
-                                                    name="eventDate"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.eventDate.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.eventDate}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="price">Price</label>
-                                                <input
-                                                    className={formErrors.price.length > 0 ? "error" : null}
-                                                    placeholder="Price"
-                                                    type="text"
-                                                    name="price"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.price.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.price}</span>
-                                                )}
-                                            </div>
-
-
-                                            <div className="firstName">
-                                                <label htmlFor="building">Building</label>
-                                                <input
-                                                    className={formErrors.building.length > 0 ? "error" : null}
-                                                    placeholder="Building"
-                                                    type="text"
-                                                    name="building"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.building.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.building}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="street">Street</label>
-                                                <input
-                                                    className={formErrors.street.length > 0 ? "error" : null}
-                                                    placeholder="Street"
-                                                    type="text"
-                                                    name="street"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.street.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.street}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="city">City</label>
-                                                <input
-                                                    className={formErrors.city.length > 0 ? "error" : null}
-                                                    placeholder="City"
-                                                    type="text"
-                                                    name="city"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.city.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.city}</span>
-                                                )}
-                                            </div>
-                                            <div className="firstName">
-                                                <label htmlFor="zipcode">Zipcode</label>
-                                                <input
-                                                    className={formErrors.zipcode.length > 0 ? "error" : null}
-                                                    placeholder="Zipcode"
-                                                    type="text"
-                                                    name="zipcode"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.zipcode.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.zipcode}</span>
-                                                )}
-                                            </div>
-
-                                            <div className="createAccount">
-                                                <button onClick={this,this.addEventToTour}>Add Event</button>
-                                            </div>
-
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                                <Card>
-                                    <Accordion.Toggle as={Card.Header} eventKey="1">
-                                        Tour Information
-                            </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey="1">
-                                        <Card.Body>
-                                            <div className="firstName">
-                                                <label htmlFor="tour_name">Tour Name</label>
-                                                <input
-                                                    className={formErrors.tour_name.length > 0 ? "error" : null}
-                                                    placeholder="Tour Name"
-                                                    type="text"
-                                                    name="tour_name"
-                                                    noValidate
-                                                    onChange={this.handleChange}
-                                                />
-                                                {formErrors.tour_name.length > 0 && (
-                                                    <span className="errorMessage" >{formErrors.tour_name}</span>
-                                                )}
-                                            </div>
-                                            </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                                {/* <Card>
-                            <Accordion.Toggle as={Card.Header} eventKey="2">
-                                All Created Events
-                            </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey="2">
-                                        <Card.Body>
-                                            <div>
-                                                Still in progress.
-                                            </div>
-                                        </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                     */}
+                            <Accordion>
+                                {profile}
                             </Accordion>
                             <div className="createAccount">
-                                
+
                                 <button type="submit">Create Tour</button>
-                                
+
                             </div>
                         </form>
                     </div>

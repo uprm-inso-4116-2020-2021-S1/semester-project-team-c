@@ -18,6 +18,7 @@ export const Server = {
     // addCompany,
     // addUser,
     addTour,
+    addEvent,
     login,
 
 };
@@ -95,4 +96,17 @@ function addTour(data) {
     return fetch(url + tour + "create",req).then(response => response.json());
 }
 
+//Event
+
+const event = "event/";
+function addEvent(data) {
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: data 
+    };
+    return fetch(url + event + "create",req).then(response => response.json());
+}
+
 export default Server
+

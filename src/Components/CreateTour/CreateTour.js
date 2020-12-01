@@ -203,7 +203,7 @@ export class CreateTour extends React.Component {
                 break;
                  
             case "meetingPlace":
-                formErrors.meetingPlace = value.length < 2 ? "Meeting place minimum 2 characters required" : "";
+                formErrors.meetingPlace = value.length < 3 ? "Meeting place minimum 2 characters required" : "";
                 break;
             case "eventDate":
                 formErrors.eventDate = dateRegex.test(value) ? "": "Event Date should look like 21/05/1995";

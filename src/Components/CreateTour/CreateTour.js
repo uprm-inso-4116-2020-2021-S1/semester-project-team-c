@@ -6,15 +6,16 @@ import { Accordion, Card} from "react-bootstrap";
 import {Link }from 'react-router-dom';
 import { getUserEmail, logout, isLogged } from "../../services/authentication";
 
-const zipcodeRegex = RegExp(/^([0-9\b]{0,4})$/)
-const cityRegex = RegExp(/^([a-zA-Z]{2,5})$/)
+const zipcodeRegex = RegExp(/^([0-9\b]{0,5})$/)
 
 var location = [];
 var event = [];
 var event_location = [];
 var tourData = [];
 var events = [];
-var tour = [];
+var tour = [tourData,events];
+var count = 0;
+
 
 
 
@@ -23,13 +24,13 @@ var tour = [];
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
 
-    Object.values(formErrors).forEach(val => {
-        val.length > 0 && (valid = false);
-    });
+    // Object.values(formErrors).forEach(val => {
+    //     val.length > 0 && (valid = false);
+    // });
 
-    Object.values(rest).forEach(val => {
-        val == "" && (valid = false)
-    });
+    // Object.values(rest).forEach(val => {
+    //     val == "" && (valid = false)
+    // });
 
     return valid;
 };
@@ -40,9 +41,9 @@ export class CreateTour extends React.Component {
 
         this.state = {
             tour_name: "",
-            gid: "",
-            coid: "",
             uid: "",
+            coid: "",
+            gid: "",
             building: "",
             street: "",
             city: "",
@@ -53,29 +54,22 @@ export class CreateTour extends React.Component {
             meetingPlace: "",
             eventDate: "",
             price: "",
-            tour_tid: "",
-            location_lid: "",
-            location_city: " ",       
+            location_city: "",       
             
             
             formErrors: {
                 tour_name: "",
-                gid: "",
-                coid: "",
-                uid: " ",
-                building: " ",
-                street: " ",
-                city: " ",
-                zipcode: " ",
-                name: " ",
-                type: " ",
-                duration: " ",
-                meetingPlace: " ",
-                eventDate: " ",
-                price: " ",
-                tour_tid: " ",
-                location_lid: " ",
-                location_city: " "
+                building: "",
+                street: "",
+                city: "",
+                zipcode: "",
+                name: "",
+                type: "",
+                duration: "",
+                meetingPlace: "",
+                eventDate: "",
+                price: "",
+                location_city: ""
             }
         };
     }
@@ -98,49 +92,56 @@ export class CreateTour extends React.Component {
             duration: "",
             meetingPlace: "",
             eventDate: "",
-            price: "",
-            tour_tid: "",
-            location_lid: "",
+            price: "",         
             location_city: " ",   
         })
         
+    }
+    async componentDidMount() {
+        const response = await Server.getUser(getUserEmail());
+        const user_data = response.user;
+        const get_guide = await Server.getGuide(user_data.uid);
+        const guide_data = get_guide.guide_info;
+        this.setState({
+            uid: user_data.uid,
+            gid: guide_data.gid,
+            coid: guide_data.company_coid
+        })
     }
 
 
     handleSubmit = async (e) => {
         e.preventDefault();
         tourData = {
-            firstName: this.state.tour_name,
-            lastName: this.state.gid,
-            phoneNumber: this.state.coid,
-            email: this.state.uid,
+            tour_name: this.state.tour_name,
+            uid: this.state.uid,
+            gid: this.state.gid,
+            coid: this.state.coid
+
         };
         tour = {
             tourData,
             events
+        };
+        console.log(tour);
+        if (formValid(this.state)) {
+            await Server.addTour(JSON.stringify(tour))
+        } else {
+            console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
         }
-        // if (formValid(this.state)) {
-        //     await Server.login(JSON.stringify(data)).then((response) => {
-        //       login(response.access_token, response.email, response.role, response.loggedIn);
-        //       this.props.history.push('/profile/'+response.email);
-        //     });
-        // } else {
-        //     console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
-        // }
-        console.log(tour)
+        count = 0;
         this.clearArray();
-        this.props.history.push('/profile/'+getUserEmail());
+        // this.props.history.push('/profile/'+getUserEmail());
      
     };
     addEventToTour = async(e) => {
         e.preventDefault();
-        console.log("here")
         location = {
             building: this.state.building,
             street: this.state.street,
             city: this.state.city,
             zipcode: this.state.zipcode,
-        }
+        };
         event = {
             name: this.state.name,
             type: this.state.type,
@@ -148,17 +149,17 @@ export class CreateTour extends React.Component {
             meetingPlace: this.state.meetingPlace,
             eventDate: this.state.eventDate,
             price: this.state.price,
-            tour_tid: this.state.tour_tid,
-            location_lid: this.state.location_lid,
-            location_city: this.state.location_city,
-        }
+            location_city: this.state.city,
+        };
         event_location = {
             location,
             event
-        }
+        };
+
         var temp = events;
-        temp["event_location"] = temp["event_location"] ? temp["event_location"] : [];
-        temp["event_location"].push(event_location);
+        
+        temp.push(event_location);
+        count = count + 1;
         this.clearEvent_Location();
         this.resetForm();
     }
@@ -172,55 +173,37 @@ export class CreateTour extends React.Component {
 
 
         switch (name) {
-            case 'tour_name':
-                formErrors.tour_name = value.length < 2 ? "Tour Name 2 characters required" : "";
-                break;
-            case 'gid':
-                formErrors.gid = value.length < 2 ? "gid 2 characters required" : "";
-                break;
-            case 'coid':
-                formErrors.coid = value.length < 2 ? "coid be valid phone number, make sure to leave the spaces" : "";
-                break;
-            case 'uid':
-                formErrors.uid = value.length < 3 ? "uid 3 characters required" : "";
+            case "tour_name":
+                formErrors.tour_name = value.length < 2 ? "Tour Name 2 characters required" : " ";
                 break;
 
-            case 'building':
-                formErrors.building = value.length < 3 ? "Building 3 characters required" : "";
+            case "building":
+                formErrors.building = value.length < 3 ? "Building 3 characters required" : " ";
                 break;
-            case 'street':
-                formErrors.street = value.length < 3 ? "Street 3 characters required" : "";
+            case "street":
+                formErrors.street = value.length < 3 ? "Street 3 characters required" : " ";
                 break;
-            case 'city':
-                formErrors.city = cityRegex.test(value) ? "City minimum 2 characters required" : "";
+            case "city":
+                formErrors.city = value.length < 3 ? "Street 3 characters required" : " ";
                 break;
-            case 'zipcode':
-                formErrors.zipcode = zipcodeRegex.test(value) ? "Zipcode minimum 5 characters required" : "";
+            case "zipcode":
+                formErrors.zipcode = value.length < 3 ? "Street 3 characters required" : " ";
                 break;
 
-            case 'name':
-                formErrors.name = value.length < 2 ? "Event name must be at least 2 characters" : "";
+            case "name":
+                formErrors.name = value.length < 2 ? "Event name must be at least 2 characters" : " ";
                 break;
-            case 'type':
-                formErrors.type = value.length < 2 ? "Type minimum 2 characters required" : "";
+            case "type":
+                formErrors.type = value.length < 2 ? "Type minimum 2 characters required" : " ";
                 break;
-            case 'duration':
-                formErrors.duration = value.length < 3 ? "Duration must be written like so 1:45" : "";
+            case "duration":
+                formErrors.duration = value.length < 3 ? "Duration must be written like so 1:45" : " ";
                 break;
-            case 'meetingPlace':
-                formErrors.meetingPlace = value.length < 2 ? "Meeting place minimum 2 characters required" : "";
+            case "meetingPlace":
+                formErrors.meetingPlace = value.length < 2 ? "Meeting place minimum 2 characters required" : " ";
                 break;
-            case 'eventDate':
-                formErrors.eventDate = value.length < 2 ? "Event Date minimum 2 characters required" : "";
-                break;
-            case 'tour_tid':
-                formErrors.tour_tid = value.length < 2 ? "tour_tid minimum 2 characters required" : "";
-                break;
-            case 'location_lid':
-                formErrors.location_lid = value.length < 2 ? "location_lid minimum 5 characters required" : "";
-                break;
-            case 'location_city':
-                formErrors.location_city = value.length < 2 ? "location_city minimum 5 characters required" : "";
+            case "eventDate":
+                formErrors.eventDate = value.length < 2 ? "Event Date minimum 2 characters required" : " ";
                 break;
             default:
                 break;
@@ -268,7 +251,7 @@ export class CreateTour extends React.Component {
                                                 )}
                                             </div>
                                             <div className="firstName">
-                                                <label htmlFor="type">Type</label>
+                                                <label htmlFor="type">Type: Food and Drinks, Rivers, Beaches</label>
                                                 <input
                                                     className={formErrors.building.length > 0 ? "error" : null}
                                                     placeholder="Type"

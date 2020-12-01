@@ -6,8 +6,9 @@ import { Accordion, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { getUserEmail, logout, isLogged } from "../../services/authentication";
 
-const zipcodeRegex = RegExp(/^([0-9\b]{0,5})$/)
-
+const zipcodeRegex = RegExp(/^([0-9\b]{0,4})$/)
+const dateRegex = RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)
+const priceRegx = RegExp(/^([0-9]+).([0-9]{2})$/)
 var location = [];
 var event = [];
 var event_location = [
@@ -27,13 +28,19 @@ var tour = [tourData];
 const formValid = ({ formErrors, ...rest }) => {
     let valid = true;
 
-    // Object.values(formErrors).forEach(val => {
-    //     val.length > 0 && (valid = false);
-    // });
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
 
-    // Object.values(rest).forEach(val => {
-    //     val == "" && (valid = false)
-    // });
+    return valid;
+};
+
+const formValidTour = ({ formErrorsTour, ...rest }) => {
+    let valid = true;
+
+    Object.values(formErrorsTour).forEach(val => {
+        val.length > 0 && (valid = false);
+    });
 
     return valid;
 };
@@ -63,8 +70,7 @@ export class CreateTour extends React.Component {
             tid: "",
 
 
-            formErrors: {
-                tour_name: "",
+            formErrors: {         
                 building: "",
                 street: "",
                 city: "",
@@ -75,7 +81,9 @@ export class CreateTour extends React.Component {
                 meetingPlace: "",
                 eventDate: "",
                 price: "",
-                location_city: ""
+            },
+            formErrorsTour:{
+                tour_name: "Type Tour Name",
             }
         };
     }
@@ -111,7 +119,6 @@ export class CreateTour extends React.Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         if (!this.state.createdTour) {
-            this.setState({ createdTour: true ,header: "Create Event"})
             tourData ={
                 tour_name: this.state.tour_name,
                 uid: this.state.uid,
@@ -122,8 +129,9 @@ export class CreateTour extends React.Component {
                tourData
             };
            
-            if (formValid(this.state)) {
+            if (formValidTour(this.state)) {
                 console.log(JSON.stringify(tour));
+                this.setState({ createdTour: true ,header: "Create Event"})
                 await Server.addTour(JSON.stringify(tour)).then((newTour) => {
                     this.setState({ tid: newTour.tourInfo.tid })
                 })
@@ -157,9 +165,10 @@ export class CreateTour extends React.Component {
             events ={
                 event_location
             }
-            this.resetForm();
-            this.clearEvent_Location();
+            
             if (formValid(this.state)) {
+                this.resetForm();
+                this.clearEvent_Location();
                 await Server.addEvent(JSON.stringify(events))
             } else {
                 console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
@@ -172,46 +181,55 @@ export class CreateTour extends React.Component {
 
     // this.props.history.push('/profile/'+getUserEmail());
 
-
     handleChange = e => {
         e.preventDefault();
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
+        let formErrorsTour = this.state.formErrorsTour;
 
 
         switch (name) {
             case "tour_name":
-                formErrors.tour_name = value.length < 2 ? "Tour Name 2 characters required" : " ";
+                formErrorsTour.tour_name = value.length < 3 ? "Tour Name 3 characters required" : "";
+                break;
+            case "name":
+                formErrors.name = value.length < 2 ? "Event name must be at least 2 characters" : "";
+                break;
+            case "type":
+                formErrors.type = value.length < 2 ? "Type minimum 2 characters required" : "";
+            break;
+            case "duration":
+                formErrors.duration = value.length < 3 ? "Duration must be written like so 1:45" : "";
+                break;
+                 
+            case "meetingPlace":
+                formErrors.meetingPlace = value.length < 2 ? "Meeting place minimum 2 characters required" : "";
+                break;
+            case "eventDate":
+                formErrors.eventDate = dateRegex.test(value) ? "": "Event Date should look like 21/05/1995";
+                break;
+            case "price":
+                formErrors.price = priceRegx.test(value) ? "": "Example: $2.25";
                 break;
 
             case "building":
-                formErrors.building = value.length < 3 ? "Building 3 characters required" : " ";
+                formErrors.building = value.length < 3 ? "Building 3 characters required" : "";
                 break;
             case "street":
-                formErrors.street = value.length < 3 ? "Street 3 characters required" : " ";
+                formErrors.street = value.length < 3 ? "Street 3 characters required" : "";
                 break;
             case "city":
-                formErrors.city = value.length < 3 ? "Street 3 characters required" : " ";
+                formErrors.city = value.length < 4 ? "Street 3 characters required" : "";
                 break;
             case "zipcode":
-                formErrors.zipcode = value.length < 3 ? "Street 3 characters required" : " ";
+                formErrors.zipcode = zipcodeRegex.test(value) ? "Zipcode 5 numbers required" : "";
                 break;
 
-            case "name":
-                formErrors.name = value.length < 2 ? "Event name must be at least 2 characters" : " ";
-                break;
-            case "type":
-                formErrors.type = value.length < 2 ? "Type minimum 2 characters required" : " ";
-                break;
-            case "duration":
-                formErrors.duration = value.length < 3 ? "Duration must be written like so 1:45" : " ";
-                break;
-            case "meetingPlace":
-                formErrors.meetingPlace = value.length < 2 ? "Meeting place minimum 2 characters required" : " ";
-                break;
-            case "eventDate":
-                formErrors.eventDate = value.length < 2 ? "Event Date minimum 2 characters required" : " ";
-                break;
+     
+            
+          
+        
+           
             default:
                 break;
         }
@@ -223,29 +241,29 @@ export class CreateTour extends React.Component {
 
     render() {
 
-        const { formErrors } = this.state;
+        const { formErrors, formErrorsTour } = this.state;
         let { createdTour, header} = this.state;
         let profile;
         if (!createdTour) {
             profile =
             <Card>
-                <Accordion.Toggle as={Card.Header} eventKey="1">
+                <Accordion.Toggle as={Card.Header} eventKey="0">
                     Tour Information
                 </Accordion.Toggle>
-                <Accordion.Collapse eventKey="1">
+                <Accordion.Collapse eventKey="0">
                     <Card.Body>
                         <div className="firstName">
                             <label htmlFor="tour_name">Tour Name</label>
                             <input
-                                className={formErrors.tour_name.length > 0 ? "error" : null}
-                                placeholder="Tour Name"
+                                className={formErrorsTour.tour_name.length > 0 ? "error" : null}
+                                placeholder=""
                                 type="text"
                                 name="tour_name"
                                 noValidate
                                 onChange={this.handleChange}
                             />
-                            {formErrors.tour_name.length > 0 && (
-                                <span className="errorMessage" >{formErrors.tour_name}</span>
+                            {formErrorsTour.tour_name.length > 0 && (
+                                <span className="errorMessage" >{formErrorsTour.tour_name}</span>
                             )}
                         </div>
                     </Card.Body>
@@ -255,13 +273,13 @@ export class CreateTour extends React.Component {
         } else if (createdTour) {
             profile = 
             <Card>
-                 <Accordion.Toggle as={Card.Header} eventKey="1">
+                 <Accordion.Toggle as={Card.Header} eventKey="0">
                     Event Information
                 </Accordion.Toggle>
-                <Accordion.Toggle as={Card.Header} eventKey="1">
+                <Accordion.Toggle as={Card.Header} eventKey="0">
                     {"Add Event"}
                 </Accordion.Toggle>
-                <Accordion.Collapse eventKey="1">
+                <Accordion.Collapse eventKey="0">
                     <Card.Body>
 
                         <div className="firstName">
@@ -296,7 +314,7 @@ export class CreateTour extends React.Component {
                             <label htmlFor="duration">Duration</label>
                             <input
                                 className={formErrors.building.length > 0 ? "error" : null}
-                                placeholder="Duration"
+                                placeholder="1:45"
                                 type="text"
                                 name="duration"
                                 noValidate
@@ -324,7 +342,7 @@ export class CreateTour extends React.Component {
                             <label htmlFor="eventDate">Event Date</label>
                             <input
                                 className={formErrors.eventDate.length > 0 ? "error" : null}
-                                placeholder="Event Date"
+                                placeholder="dd/mm/yyyy"
                                 type="text"
                                 name="eventDate"
                                 noValidate
@@ -338,7 +356,7 @@ export class CreateTour extends React.Component {
                             <label htmlFor="price">Price</label>
                             <input
                                 className={formErrors.price.length > 0 ? "error" : null}
-                                placeholder="Price"
+                                placeholder="$10.10"
                                 type="text"
                                 name="price"
                                 noValidate
@@ -382,7 +400,7 @@ export class CreateTour extends React.Component {
                             <label htmlFor="city">City</label>
                             <input
                                 className={formErrors.city.length > 0 ? "error" : null}
-                                placeholder="City"
+                                placeholder="Utuado"
                                 type="text"
                                 name="city"
                                 noValidate
@@ -396,7 +414,7 @@ export class CreateTour extends React.Component {
                             <label htmlFor="zipcode">Zipcode</label>
                             <input
                                 className={formErrors.zipcode.length > 0 ? "error" : null}
-                                placeholder="Zipcode"
+                                placeholder="00959"
                                 type="text"
                                 name="zipcode"
                                 noValidate
@@ -418,13 +436,18 @@ export class CreateTour extends React.Component {
                     <div className="form-wrapper">
                         <h1>{header}</h1>
                         <form id="tour" onSubmit={this.handleSubmit} noValidate>
-                            <Accordion>
+                            <Accordion defaultActiveKey="0">
                                 {profile}
                             </Accordion>
                             <div className="createAccount">
 
                                 <button type="submit">Submit</button>
 
+                            </div>
+                            <div className="createAccount">
+                                <Link to= {"/profile/"+ getUserEmail()}>
+                                <button type="button">Finish</button>
+                                </Link>
                             </div>
                         </form>
                     </div>

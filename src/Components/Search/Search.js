@@ -1,16 +1,30 @@
 import React from "react";
 import "./Search.css";
-// import { FaSearch } from "react-icons/fa";
 import { FormGroup, FormControl, Placeholder } from "react-bootstrap";
 
 class Search extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      value: ''
+    };
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+  handleSubmit(event){
+    this.props.search(this.state.value)
+  }
   render() {
     return (
       <div className="SearchBox">
       <FormGroup id="searchForm">
-        <FormControl as="select" size="lg">
+        <FormControl as="select" size="lg" value={this.state.value} onChange={this.handleChange}>
           <option>Select By Municipality...</option>
-          <option>Adjuntas</option>
+          <option value="Adjuntas">Adjuntas</option>
           <option>Aguada</option>
           <option>Aguadilla</option>
           <option>Aguas Buenas</option>
@@ -93,7 +107,7 @@ class Search extends React.Component {
       <button
           type="button"
           className="searchButton"
-          onClick={this.props.search}
+          onClick={this.handleSubmit}
         >
           Enter
       </button>

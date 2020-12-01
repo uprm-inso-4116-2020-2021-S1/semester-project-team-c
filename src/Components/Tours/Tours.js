@@ -10,21 +10,32 @@ class Tours extends React.Component {
         super(props);
         this.state = {
             results: [],
+            change: false
         };
 
         this.search = this.search.bind(this);
     }
 
-    async search() {
-        await Server.getEventByCity().then((fetchedEvents) => {
+    async search(city) {
+        this.setState({
+            change:false
+        })
+        await Server.getEventByCity(city).then((fetchedEvents) => {
           this.setState({
-            results: fetchedEvents.event
+            results: fetchedEvents.event,
+            change: true
           })
         });
       }
-
+    componentDidUpdate(nextState){
+        if(nextState.change != this.state.change){
+            this.render();
+        }
+    }
     render(){
+        console.log(this.props)
         return (
+            
             <div className="TourDiv">
                 <Nav />
                 <h2 className="TourHeading">Start Exploring.</h2>

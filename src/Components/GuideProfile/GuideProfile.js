@@ -1,12 +1,10 @@
 import React from "react";
 import "./GuideProfile.css";
-import IndividualResult from "./../IndividualResult/IndividualResult";
 import Avatar from "../../images/avatar.png";
-import SearchResults from "../SearchResults/SearchResults";
-import TourResults from "../tourResults/tourResults";
-import { withRouter } from "react-router-dom";
+import TourResults from "../TourResults/TourResults";
 import Server from '../../services/serverRoutes';
 import {Link }from 'react-router-dom';
+import SearchResults from "../SearchResults/SearchResults";
 
 var data;
 var tours = {};
@@ -67,7 +65,7 @@ class GuideProfile extends React.Component {
     let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram, tours } = this.state;
     let component;
     if(this.state.fetched){
-      component = <TourResults results={tours} />
+      component = <SearchResults results={tours} />
     }
     return (
       <div className="customerWrapper">

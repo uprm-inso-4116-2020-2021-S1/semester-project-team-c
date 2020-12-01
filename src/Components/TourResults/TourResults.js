@@ -1,35 +1,34 @@
 import React from "react";
-import "./SearchResults.css";
-import IndividualResult from "./../IndividualResult/IndividualResult";
+import IndividualResult from "../IndividualResult/IndividualResult";
 import Server from "../../services/serverRoutes";
 
 var guides = [];
 
-class SearchResults extends React.Component {
+class TourResults extends React.Component {
   constructor(props) {
     super(props);
     this.showResults = this.showResults.bind(this);
+    
   }
 
   
 
 
   showResults() {
-    var eventFromTour = this.props.results;
-    if (eventFromTour.length == 0) {
+    if (this.props.results.length == 0) {
       return (
         <h1> No Tours to show </h1>
       )
     }
-    if (eventFromTour.length > 0) {
+    if (this.props.results.length > 0) {
       return (
         <div className="Container">
           {this.props.results.map((tour) => {
             return (
-              <IndividualResult
+              <TourResults
                 name={tour.tour_name}
-                key={tour.eid}
                 tid={tour.tid}
+                coid={tour.guide_company_coid}
               />
             );
           })}
@@ -43,4 +42,4 @@ class SearchResults extends React.Component {
   }
 }
 
-export default SearchResults;
+export default TourResults;

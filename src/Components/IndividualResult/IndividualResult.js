@@ -3,13 +3,21 @@ import "./IndividualResult.css";
 import Rivers from "../../images/rivers.jpg";
 import Beaches from "../../images/beaches.jpg";
 import FoodAndDrinks from "../../images/foodAndDrinks.jpg";
+import Server from '../../services/serverRoutes';
 
+var guides = [];
 class IndividualResults extends React.Component {
   constructor(props) {
     super(props);
     this.renderImage = this.renderImage.bind(this);
   }
 
+
+  async getGuides(coid, tid) {
+    Server.getTourGuides(coid, tid).then((fetchedGuides) => {
+      guides.push(fetchedGuides.tourGuides)
+    });
+  }
   renderImage() {
     const currType = this.props.type;
     if (currType === "Food and Drinks") {
@@ -32,9 +40,9 @@ class IndividualResults extends React.Component {
           <div className="details">
             <div className="location">Location: {this.props.location}</div>
             <div className="duration">Duration: {this.props.duration}</div>
-            <div className="guides">
+            {/* <div className="guides">
               Number of Guides: {this.props.guides.length}
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="image">{this.renderImage()}</div>

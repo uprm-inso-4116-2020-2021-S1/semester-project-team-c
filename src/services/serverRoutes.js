@@ -86,17 +86,6 @@ function addCustomer(data){
     };
     return fetch(url + customer + "add-customer",req).then(response => response.json());
 }
-//Tour
-const tour = "tour/";
-
-function addTour(data) {
-    const req = {
-        method: 'post',
-        headers: {'Content-Type':'application/json'},
-        body: data 
-    };
-    return fetch(url + tour + "create",req).then(response => response.json());
-}
 
 //Tours
 const tour = "tour/";
@@ -109,6 +98,16 @@ function getUserTours(uid) {
 function getTourGuides(coid, tid) {
     return fetch(url + tour + "company/" + coid + "/guideList/" + tid).then(receivedData => receivedData.json());
 }
+
+function addTour(data) {
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: data 
+    };
+    return fetch(url + tour + "create",req).then(response => response.json());
+}
+
 
 //Events
 const event = "event/";

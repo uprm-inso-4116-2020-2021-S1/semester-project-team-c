@@ -179,14 +179,14 @@ export class CreateGuideAccount extends React.Component {
                 <div className="wrapper">
                     <div className="form-wrapper">
                         <h1>Create Account!</h1>
-                        <form onSubmit={this.handleSubmit} noValidate>
+                        <form onSubmit={this.handleSubmit} noValidate> 
                         <Accordion defaultActiveKey="0">
                             <Card>
                                 <Accordion.Toggle as={Card.Header} eventKey="0">
                                     Guide Information
-                            </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body>
+                                </Accordion.Toggle>
+                                    <Accordion.Collapse eventKey="0">
+                                        <Card.Body>
                                             <div className="firstName">
                                                 <label htmlFor="firstName">First Name</label>
                                                 <input
@@ -334,15 +334,15 @@ export class CreateGuideAccount extends React.Component {
                                             {formErrors.description.length > 0 && (
                                                 <span className="errorMessage" >{formErrors.description}</span>
                                             )}
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card>
-                                <Accordion.Toggle as={Card.Header} eventKey="1">
-                                    Company Information
-                        </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="1">
-                                    <Card.Body>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                                <Card>
+                                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                                        Company Information
+                                    </Accordion.Toggle>
+                                        <Accordion.Collapse eventKey="1">
+                                            <Card.Body>
                                             <div className="companyName">
                                                 <label htmlFor="companyName">Company Name</label>
                                                 <input
@@ -429,9 +429,9 @@ export class CreateGuideAccount extends React.Component {
                                                 <span className="errorMessage" >{formErrors.zipcode}</span>
                                             )}
 
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
                         </Accordion>
                         <div className="createAccount">
                             <button type="submit">Create Account</button>

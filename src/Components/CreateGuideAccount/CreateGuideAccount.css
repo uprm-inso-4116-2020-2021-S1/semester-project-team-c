@@ -1,17 +1,16 @@
 .wrapper {
-  height: 100vh;
+  min-height: 200vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url("../../images/MorroAereal.jpg") ;
-  background-size: cover;
-
-  
+  background-size: cover;  
 }
 
 .form-wrapper {
+  margin-top: 5%;
   width: 400px;
   display: flex;
   flex-direction: column;
@@ -99,7 +98,7 @@ input.error {
 .twitter,
 .instagram,
 .youtube {
-  width: 49%;
+  width: 100%;
 }
 
 .email,

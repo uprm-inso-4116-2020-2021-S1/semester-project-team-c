@@ -1,10 +1,10 @@
 import React from "react";
 import "./GuideProfile.css";
-import IndividualResult from "./../IndividualResult/IndividualResult";
 import Avatar from "../../images/avatar.png";
-import SearchResults from "../SearchResults/SearchResults";
-import { withRouter } from "react-router-dom";
+import TourResults from "../TourResults/TourResults";
 import Server from '../../services/serverRoutes';
+import { Link } from 'react-router-dom';
+import { getUserEmail } from "../../services/authentication";
 
 var data;
 
@@ -23,29 +23,60 @@ class GuideProfile extends React.Component {
       facebook: "",
       twitter: "",
       youtube: "",
-      instagram: ""
+      instagram: "",
+      tours: {},
+      fetched: false,
+      owner: false
     }
   }
 
   async componentDidMount() {
+    if (this.state.email == getUserEmail()) {
+      this.setState({
+        owner: true
+      })
+    }
     await Server.getGuide(this.state.uid).then(guide => {
       if (guide) {
         this.setState({
-            firstName: guide.guide_info.firstName,
-            lastName: guide.guide_info.lastName,
-            phoneNumber: guide.guide_info.phoneNumber,
-            description: guide.guide_info.description,
-            facebook: guide.guide_info.facebook,
-            twitter: guide.guide_info.twitter,
-            youtube: guide.guide_info.youtube,
-            instagram: guide.guide_info.instagram
+          firstName: guide.guide_info.firstName,
+          lastName: guide.guide_info.lastName,
+          phoneNumber: guide.guide_info.phoneNumber,
+          description: guide.guide_info.description,
+          facebook: guide.guide_info.facebook,
+          twitter: guide.guide_info.twitter,
+          youtube: guide.guide_info.youtube,
+          instagram: guide.guide_info.instagram
         });
 
       }
     }).catch(err => console.error(err));
+
+    await Server.getUserTours(this.state.uid).then((tourList) => {
+      this.setState({
+        tours: tourList.allTours,
+        fetched: true
+      });
+    }).catch(err => console.error(err));
   }
+
+  componentDidUpdate(nextState) {
+    if (nextState.fetched != this.state.fetched) {
+      this.render();
+    }
+    if (nextState.owner != this.state.owner) {
+      this.render();
+    }
+  }
+
   render() {
-    let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram } = this.state;
+    let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram, tours, owner } = this.state;
+    let addButton;
+    if (owner) {
+      addButton = <Link to="/createtour">
+                      <button type="button" className="tourButton">Add Tour</button>
+                  </Link>
+    }
     return (
       <div className="customerWrapper">
         <div className="customerContainer">
@@ -60,9 +91,9 @@ class GuideProfile extends React.Component {
           <div className="customerRight">
             <div className="rightHeader">
               <h3>My Tours</h3>
-              <button type="button" className="tourButton">Add Tour</button>
+              {addButton}
             </div>
-            {/* <SearchResults results={ } /> */}
+            <TourResults results={tours} />
           </div>
         </div>
       </div>

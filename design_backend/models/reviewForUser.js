@@ -16,6 +16,9 @@ module.exports = (db, Sequelize) => {
         },
         review_user_uid: {
             type: Sequelize.NUMBER
+        },
+        reviewee_uid: {
+            type: Sequelize.NUMBER
         }
     }, {
         tableName: 'review_for_user',

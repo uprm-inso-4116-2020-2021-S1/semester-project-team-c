@@ -1,19 +1,13 @@
-.TourDiv {
-  text-align: center;
-  background-image: url("../../images/surf.jpg");
-  background-position: center;
-  background-size: cover;
-  min-height: 100vh;
+.reviewWrapper{
+  width: 80%;
+  background-color: rgb(241, 241, 241);
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
-.TourHeading {
-  margin-top: 5%;
-  margin-bottom: 0px;
-  padding-top: 30px;
-  color: #fff;
-  font-family: Merriweather;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 36px;
-  line-height: 45px;
+.reviewForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
 }

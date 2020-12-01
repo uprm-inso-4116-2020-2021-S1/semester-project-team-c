@@ -2,7 +2,8 @@ import React, { component } from "react";
 import "./CreateGuideAccount.css";
 import Nav from "../NavigationBar/NavigationBar";
 import Server from '../../services/serverRoutes';
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, Modal, Button } from "react-bootstrap";
+import { login } from "../../services/authentication";
 
 
 const emailRegex = RegExp(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
@@ -12,8 +13,10 @@ const phoneRegex = RegExp(/^(1?(-?\d{3})-?)?(\d{3})(-?\d{4})$/)
 const zipcodeRegex = RegExp(/^([0-9\b]{0,4})$/)
 const cityRegex = RegExp(/^([a-zA-Z]{2,5})$/)
 
+
 var guideData = [];
 var companyData = [];
+var loginData = {};
 
 var data = [
     guideData,
@@ -25,10 +28,6 @@ const formValid = ({ formErrors, ...rest }) => {
 
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == "" && (valid = false)
     });
 
     return valid;
@@ -55,6 +54,7 @@ export class CreateGuideAccount extends React.Component {
             street: " ",
             city: " ",
             zipcode: "",
+            exists: false,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -72,6 +72,7 @@ export class CreateGuideAccount extends React.Component {
                 street: "",
                 city: "",
                 zipcode: "",
+                exists: false
             }
         };
     }
@@ -102,9 +103,24 @@ export class CreateGuideAccount extends React.Component {
             guideData,
             companyData
         };
+        loginData = {
+            email: this.state.email,
+            password: this.state.password
+        }
         if (formValid(this.state)) {
-            await Server.addGuide(JSON.stringify(data));
-            
+            await Server.addGuide(JSON.stringify(data)).then(async (response) => {
+                if (response.success) {
+                    await Server.login(JSON.stringify(loginData)).then((response) => {
+                        login(response.access_token, response.email, response.role, response.loggedIn);
+                        this.props.history.push('/profile/' + response.email);
+                    });
+                }
+                else {
+                    this.setState({
+                        exists: true
+                    })
+                }
+            });
         } else {
             console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
         }
@@ -169,24 +185,42 @@ export class CreateGuideAccount extends React.Component {
         this.setState({ formErrors, [name]: value })
     }
 
+    handleClose = () => {
+        this.setState({
+            exists: false
+        })
+    }
+
+
     render() {
 
         const { formErrors } = this.state;
-
         return (
+
             <React.Fragment>
                 <Nav />
+                <Modal show={this.state.exists} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error adding account</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>User email already exists</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 <div className="wrapper">
                     <div className="form-wrapper">
                         <h1>Create Account!</h1>
                         <form onSubmit={this.handleSubmit} noValidate>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
-                                <Accordion.Toggle as={Card.Header} eventKey="0">
-                                    Guide Information
+                            <Accordion defaultActiveKey="0">
+                                <Card>
+                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                        Guide Information
                             </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body>
+                                    <Accordion.Collapse eventKey="0">
+                                        <Card.Body>
                                             <div className="firstName">
                                                 <label htmlFor="firstName">First Name</label>
                                                 <input
@@ -334,15 +368,15 @@ export class CreateGuideAccount extends React.Component {
                                             {formErrors.description.length > 0 && (
                                                 <span className="errorMessage" >{formErrors.description}</span>
                                             )}
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                            <Card>
-                                <Accordion.Toggle as={Card.Header} eventKey="1">
-                                    Company Information
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                                <Card>
+                                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                                        Company Information
                         </Accordion.Toggle>
-                                <Accordion.Collapse eventKey="1">
-                                    <Card.Body>
+                                    <Accordion.Collapse eventKey="1">
+                                        <Card.Body>
                                             <div className="companyName">
                                                 <label htmlFor="companyName">Company Name</label>
                                                 <input
@@ -429,14 +463,14 @@ export class CreateGuideAccount extends React.Component {
                                                 <span className="errorMessage" >{formErrors.zipcode}</span>
                                             )}
 
-                                    </Card.Body>
-                                </Accordion.Collapse>
-                            </Card>
-                        </Accordion>
-                        <div className="createAccount">
-                            <button type="submit">Create Account</button>
-                            <small>Already have an account?</small><a href="/login">Log In</a>
-                        </div>
+                                        </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
+                            <div className="createAccount">
+                                <button type="submit">Create Account</button>
+                                <small>Already have an account?</small><a href="/login">Log In</a>
+                            </div>
                         </form>
                     </div>
                 </div>

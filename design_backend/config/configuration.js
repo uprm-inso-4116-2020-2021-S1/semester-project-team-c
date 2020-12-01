@@ -6,7 +6,7 @@ config.keys = {
 };
 config.accessLevels = {
     customer: 'customer',
-    guide: 'guide',
+    guide: 'guide', 
 };
 config.development = {
     name: process.env.DB_DBNAME,

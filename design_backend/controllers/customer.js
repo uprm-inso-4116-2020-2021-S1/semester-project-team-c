@@ -32,30 +32,43 @@ exports.getCustomerInfo = function (req, res) {
 
 exports.addCustomer = function (req, res) {
     var customerData = req.body;
-    user.create({
-        email: customerData.email,
-        password: customerData.password,
-        role: 0,
-        creation_date: new Date().toLocaleDateString()
-    }).then((new_user) => {
-        console.log('Successfully added customer...\n' + JSON.stringify(req.body, null, 2));
-        customer.create({
-            firstName: customerData.firstName,
-            lastName: customerData.lastName,
-            user_uid: new_user.uid
-        })
-    }).then(() => {
-        res.status(200).json({
-            success: true,
-            message: 'Successfully added customer!',
-            first_name: customerData.firstName,
-            last_name: customerData.lastName
-        });
-    }).catch(Error, (err) => {
-        res.status(409).json({
-            success: false,
-            message: 'Error adding customer...',
-            error: err
-        });
-    });
+
+    user.findOne({ where: { email: customerData.email } }).then((response) => {
+        if (response) {
+            res.status(200).json({
+                success: false,
+                message: 'Email exists'
+            });
+        }
+        else {
+            user.create({
+                email: customerData.email,
+                password: customerData.password,
+                role: 0,
+                creation_date: new Date().toLocaleDateString()
+            }).then((new_user) => {
+                console.log('Successfully added customer...\n' + JSON.stringify(req.body, null, 2));
+                customer.create({
+                    firstName: customerData.firstName,
+                    lastName: customerData.lastName,
+                    user_uid: new_user.uid
+                })
+            }).then(() => {
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully added customer!',
+                    first_name: customerData.firstName,
+                    last_name: customerData.lastName
+                });
+            }).catch(Error, (err) => {
+                res.status(409).json({
+                    success: false,
+                    message: 'Error adding customer...',
+                    error: err
+                });
+            });
+
+        }
+
+    })
 }

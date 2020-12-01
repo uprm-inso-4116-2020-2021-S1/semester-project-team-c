@@ -4,7 +4,7 @@ exports.allowOnly = function(accessLevel, callback) {
             res.sendStatus(403);
             return;
         }
-        callback(req, res);
+        callback(req, res); 
     }
 
     return checkUserRole;

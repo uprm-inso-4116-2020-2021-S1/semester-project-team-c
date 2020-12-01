@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import Carousel from 'react-bootstrap/Carousel'; 
 import "./Carousel.css";
-import Chinchorro from "../../images/chinchorro.jpg"
-import ElMorro from "../../images/elMorro.jpg"
-import Hiking from "../../images/hiking.jpg"  
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+
 var listOfImages =[];
 
 export default function ControlledCarousel() {
@@ -15,7 +11,7 @@ export default function ControlledCarousel() {
       setIndex(selectedIndex);
     };
     function componentWillMount() {
-      listOfImages = importAll(require.context('../../images/', false, /\.(png|jpe?g|svg)$/));
+      listOfImages = importAll(require.context('../../CarouselImages/', false, /\.(png|jpe?g|svg)$/));
     }
     function importAll(r) {
       return r.keys().map(r);

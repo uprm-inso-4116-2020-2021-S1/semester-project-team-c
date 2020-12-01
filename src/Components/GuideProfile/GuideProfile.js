@@ -7,7 +7,6 @@ import {Link }from 'react-router-dom';
 import SearchResults from "../SearchResults/SearchResults";
 
 var data;
-var tours = {};
 
 class GuideProfile extends React.Component {
 
@@ -63,10 +62,6 @@ class GuideProfile extends React.Component {
 
   render() {
     let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram, tours } = this.state;
-    let component;
-    if(this.state.fetched){
-      component = <SearchResults results={tours} />
-    }
     return (
       <div className="customerWrapper">
         <div className="customerContainer">
@@ -85,7 +80,7 @@ class GuideProfile extends React.Component {
                 <button type="button" className="tourButton">Add Tour</button>
               </Link>    
             </div>
-            {component}
+            <TourResults results={tours} />
           </div>
         </div>
       </div>

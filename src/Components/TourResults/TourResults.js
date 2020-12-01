@@ -1,5 +1,5 @@
 import React from "react";
-import IndividualResult from "../IndividualResult/IndividualResult";
+import IndividualTour from "../individualTour/individualTour";
 import Server from "../../services/serverRoutes";
 
 var guides = [];
@@ -7,6 +7,7 @@ var guides = [];
 class TourResults extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.results)
     this.showResults = this.showResults.bind(this);
     
   }
@@ -25,10 +26,8 @@ class TourResults extends React.Component {
         <div className="Container">
           {this.props.results.map((tour) => {
             return (
-              <TourResults
-                name={tour.tour_name}
-                tid={tour.tid}
-                coid={tour.guide_company_coid}
+              <IndividualTour
+                results={tour}
               />
             );
           })}

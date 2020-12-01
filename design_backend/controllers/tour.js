@@ -9,7 +9,8 @@ var guide = db.guide;
 
 
 exports.createTour = function (req, res) {
-    var new_tour = req.body.tour;
+    var new_tour = req.body.tourData;
+    console.log(new_tour);
     var tempTour;
     tour.create({
         tour_name: new_tour.tour_name,

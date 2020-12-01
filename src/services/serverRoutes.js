@@ -117,6 +117,7 @@ function addTour(data) {
 //Event
 
 const event = "event/";
+
 function addEvent(data) {
     const req = {
         method: 'post',

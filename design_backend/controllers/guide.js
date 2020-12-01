@@ -41,7 +41,7 @@ exports.addGuide = function (req, res) { //gid automatically created by DB
     var companyData = req.body.companyData;
     user.findOne({where: {email: guideData.email}}).then((response) => {
         if(response){
-            res.status(400).json({
+            res.status(200).json({
                 success: false,
                 message: 'Email exists'
             });

@@ -13,7 +13,7 @@ const phoneRegex = RegExp(/^(1?(-?\d{3})-?)?(\d{3})(-?\d{4})$/)
 const zipcodeRegex = RegExp(/^([0-9\b]{0,4})$/)
 const cityRegex = RegExp(/^([a-zA-Z]{2,5})$/)
 
-var exists = false;
+
 var guideData = [];
 var companyData = [];
 var loginData = {};
@@ -28,10 +28,6 @@ const formValid = ({ formErrors, ...rest }) => {
 
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (valid = false);
-    });
-
-    Object.values(rest).forEach(val => {
-        val == "" && (valid = false)
     });
 
     return valid;
@@ -58,6 +54,7 @@ export class CreateGuideAccount extends React.Component {
             street: " ",
             city: " ",
             zipcode: "",
+            exists: false,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -75,6 +72,7 @@ export class CreateGuideAccount extends React.Component {
                 street: "",
                 city: "",
                 zipcode: "",
+                exists: false
             }
         };
     }
@@ -118,10 +116,11 @@ export class CreateGuideAccount extends React.Component {
                     });
                 }
                 else {
-                    this.exists = true;
+                    this.setState({
+                        exists: true
+                    })
                 }
             });
-            console.log(this.exists)
         } else {
             console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
         }
@@ -187,7 +186,9 @@ export class CreateGuideAccount extends React.Component {
     }
 
     handleClose = () => {
-        this.exists = false;
+        this.setState({
+            exists: false
+        })
     }
 
 
@@ -198,7 +199,7 @@ export class CreateGuideAccount extends React.Component {
 
             <React.Fragment>
                 <Nav />
-                <Modal show={this.exists} onHide={this.handleClose}>
+                <Modal show={this.state.exists} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Error adding account</Modal.Title>
                     </Modal.Header>

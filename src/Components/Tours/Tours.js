@@ -27,10 +27,6 @@ class Tours extends React.Component {
                 change: true
             })
         });
-        //#####################################################################
-        //1. Perform Search with the given Term "term"
-        //2. this.setState the given results.
-        // Example: Spotify.search(term).then(searchResults => {this.setState({results: searchResults})})
 
     }
     componentDidUpdate(nextState) {

@@ -37,3 +37,12 @@
 .details div {
   margin-right: 10%;
 }
+.addButon {
+  padding: 2%;
+  font-size: 15px;
+  background-color: rgb(0, 102, 102);
+  color: #fff;
+  border-style: none;
+  border-radius: 20px;
+  width: 120px;
+}

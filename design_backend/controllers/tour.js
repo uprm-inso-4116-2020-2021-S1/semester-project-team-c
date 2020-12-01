@@ -10,7 +10,6 @@ var guide = db.guide;
 
 exports.createTour = function (req, res) {
     var new_tour = req.body.tourData;
-    console.log(new_tour);
     var tempTour;
     tour.create({
         tour_name: new_tour.tour_name,
@@ -34,8 +33,8 @@ exports.createTour = function (req, res) {
 
 exports.getTourInfo = function (req, res) {
     var tid = req.params.tid;
-    tour.findOne({where: {tid : tid}}).then((foundTour) => {
-        if(foundTour){
+    tour.findOne({ where: { tid: tid } }).then((foundTour) => {
+        if (foundTour) {
 
             res.status(200).json({
                 success: true,
@@ -43,7 +42,7 @@ exports.getTourInfo = function (req, res) {
                 tourInfo: foundTour
             });
         }
-        else{
+        else {
             res.status(404).json({
                 success: false,
                 message: "No tour found"
@@ -163,4 +162,38 @@ exports.toursAttending = function (req, res) {
             error: err
         });
     });
+}
+exports.addToAttendingList = function (req, res) {
+    var uid = req.params.uid
+    var tid = req.params.tid
+
+    user.findOne({ where: { uid: uid } }).then((User) => {
+        User.getTours({where: {tid: tid}}).then((results) => {
+            
+            if (results.length  === 0 ) {
+                attend.create({
+                    tour_tid: tid,
+                    user_uid: uid
+                }).then(() => {
+                    res.status(200).json({
+                        success: true,
+                        message: 'You are now attending this tour!'
+                    });
+                }).catch(Error, (err) => {
+                    res.status(409).json({
+                        success: false,
+                        message: 'Error getting tours',
+                        error: err
+                    });
+                });
+            }
+            else {
+                res.status(200).json({
+                    success: true,
+                    message: 'You are already attending this tour'
+                });
+                
+            }
+        })
+    })
 }

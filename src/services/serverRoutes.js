@@ -12,6 +12,7 @@ export const Server = {
     getTourInfo,
     getUserTours,
     getTourEvents,
+    addTourToList,
     // getLocations,
     // getCompanies,
     // getReview,
@@ -102,6 +103,14 @@ function getTourGuides(coid, tid) {
 
 function getTourInfo(tid) {
     return fetch(url + tour + "info/" + tid).then(receivedData => receivedData.json());
+}
+
+function addTourToList(tid, uid){
+    const req = {
+        method: 'post',
+        headers: {'Content-Type':'application/json'}
+    };
+    return fetch(url + tour + tid + "/user/" + uid, req).then(receivedData => receivedData.json());
 }
 
 

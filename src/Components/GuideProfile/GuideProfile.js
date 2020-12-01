@@ -1,13 +1,13 @@
 import React from "react";
 import "./GuideProfile.css";
-import IndividualResult from "./../IndividualResult/IndividualResult";
 import Avatar from "../../images/avatar.png";
-import SearchResults from "../SearchResults/SearchResults";
-import { withRouter } from "react-router-dom";
+import TourResults from "../TourResults/TourResults";
 import Server from '../../services/serverRoutes';
 import {Link }from 'react-router-dom';
+import SearchResults from "../SearchResults/SearchResults";
 
 var data;
+var tours = {};
 
 class GuideProfile extends React.Component {
 
@@ -24,7 +24,9 @@ class GuideProfile extends React.Component {
       facebook: "",
       twitter: "",
       youtube: "",
-      instagram: ""
+      instagram: "",
+      tours: {},
+      fetched: false
     }
   }
 
@@ -44,9 +46,27 @@ class GuideProfile extends React.Component {
 
       }
     }).catch(err => console.error(err));
+
+    await Server.getUserTours(this.state.uid).then((tourList) => {
+        this.setState({
+          tours: tourList.allTours,
+          fetched: true
+        });
+    }).catch(err => console.error(err));
   }
+
+  componentDidUpdate(nextState){
+    if (nextState.fetched != this.state.fetched) {
+      this.render();
+    }
+  }
+
   render() {
-    let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram } = this.state;
+    let { email, firstName, lastName, phoneNumber, description, facebook, twitter, youtube, instagram, tours } = this.state;
+    let component;
+    if(this.state.fetched){
+      component = <SearchResults results={tours} />
+    }
     return (
       <div className="customerWrapper">
         <div className="customerContainer">
@@ -65,7 +85,7 @@ class GuideProfile extends React.Component {
                 <button type="button" className="tourButton">Add Tour</button>
               </Link>    
             </div>
-            {/* <SearchResults results={ } /> */}
+            {component}
           </div>
         </div>
       </div>

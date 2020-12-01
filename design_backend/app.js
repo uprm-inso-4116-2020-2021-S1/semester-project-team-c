@@ -11,7 +11,7 @@ const compression = require('compression');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
-var allowedOrigins = ['http:localhost:8080/'];
+var allowedOrigins = ['http:localhost:8080/','localhost:8080'];
 
 
 

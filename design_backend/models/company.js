@@ -12,12 +12,12 @@ module.exports = (db, Sequelize) => {
         companyURL: {
             type: Sequelize.STRING
         },
+        companycreatedAt: {
+            type: Sequelize.DATE
+        },
         location_lid: {
             type: Sequelize.NUMBER,
             primaryKey: true
-        },
-        companycreatedAt: {
-            type: Sequelize.DATE
         }
     }, {
         tableName: 'company',

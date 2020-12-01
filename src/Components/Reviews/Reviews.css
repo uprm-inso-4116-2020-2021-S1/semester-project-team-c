@@ -1,0 +1,13 @@
+.reviewWrapper{
+  width: 80%;
+  background-color: rgb(241, 241, 241);
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.reviewForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}

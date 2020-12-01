@@ -3,73 +3,44 @@ import React from "react";
 import Nav from "../NavigationBar/NavigationBar";
 import Search from "../Search/Search";
 import SearchResults from "../SearchResults/SearchResults";
+import Server from "../../services/serverRoutes";
 
 class Tours extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             results: [],
+            change: false
         };
 
         this.search = this.search.bind(this);
     }
 
-    search() {
+    async search(term) {
         this.setState({
-          results: [
-            {
-              name: "Rincon Beach Adventure",
-              location: "Rincon, PR",
-              type: "Beaches",
-              guides: ["Sandra", "Diego"],
-              duration: "3hr/s",
-              meetingPlace:
-                "The light house, right at the stairs of the main entrance",
-              meetingTime: "12:00pm",
-              price: "$40 per person",
-              reviews: [{ author: "Arnaldo", stars: "5", comments: "" }],
-              id: 1,
-            },
-            {
-              name: "Beer Tour",
-              location: "Rincon, PR",
-              type: "Food and Drinks",
-              guides: ["Walter"],
-              duration: "2.5hr/s",
-              meetingPlace: "Rincon Beer Company at the Rincon Plaza",
-              meetingTime: "7:00pm",
-              price: "$15 per person",
-              reviews: [
-                { author: "John", stars: "5", comments: "" },
-                {
-                  author: "Wanda",
-                  stars: "5",
-                  comments: "Definitely recommend !!",
-                },
-              ],
-              id: 2,
-            },
-            {
-              name: "River Adventure",
-              location: "Rincon, PR",
-              type: "Rivers",
-              guides: ["Joanna", "Mike"],
-              duration: "4.5hr/s",
-              meetingPlace: "Rincon Light House, by the main entrance",
-              meetingTime: "9:00am",
-              price: "$25 per person",
-              reviews: [
-                { author: "Jacobo", stars: "5", comments: "Great Guides!" },
-                { author: "Ari", stars: "5", comments: "" },
-              ],
-              id: 3,
-            },
-          ],
+            change: false
+        })
+        await Server.getEventByCity(term).then((fetchedEvents) => {
+            
+            this.setState({
+                results: fetchedEvents.event,
+                change: true
+            })
         });
-      }
+        //#####################################################################
+        //1. Perform Search with the given Term "term"
+        //2. this.setState the given results.
+        // Example: Spotify.search(term).then(searchResults => {this.setState({results: searchResults})})
 
-    render(){
+    }
+    componentDidUpdate(nextState) {
+        if (nextState.change != this.state.change) {
+            this.render();
+        }
+    }
+    render() {
         return (
+
             <div className="TourDiv">
                 <Nav />
                 <h2 className="TourHeading">Start Exploring.</h2>

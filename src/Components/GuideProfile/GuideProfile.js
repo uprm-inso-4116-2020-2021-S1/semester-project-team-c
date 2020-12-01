@@ -6,6 +6,7 @@ import SearchResults from "../SearchResults/SearchResults";
 import TourResults from "../tourResults/tourResults";
 import { withRouter } from "react-router-dom";
 import Server from '../../services/serverRoutes';
+import {Link }from 'react-router-dom';
 
 var data;
 var tours = {};
@@ -81,8 +82,10 @@ class GuideProfile extends React.Component {
           </div>
           <div className="customerRight">
             <div className="rightHeader">
-              <h3>My Tours</h3>
-              <button type="button" className="tourButton">Add Tour</button>
+              <h3>My Tours</h3>  
+              <Link to="/createtour">   
+                <button type="button" className="tourButton">Add Tour</button>
+              </Link>    
             </div>
             {component}
           </div>

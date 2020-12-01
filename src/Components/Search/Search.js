@@ -1,14 +1,32 @@
 import React from "react";
 import "./Search.css";
-// import { FaSearch } from "react-icons/fa";
 import { FormGroup, FormControl, Placeholder } from "react-bootstrap";
 
 class Search extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      term : '',
+    };
+
+    this.search = this.search.bind(this);
+    this.handleTermChange = this.handleTermChange.bind(this);
+  }
+
+  handleTermChange(event){
+    this.setState({term : event.target.value});
+  }
+
+  search(){
+    this.props.search(this.state.term)
+  }
+
   render() {
     return (
       <div className="SearchBox">
       <FormGroup id="searchForm">
-        <FormControl as="select" size="lg">
+        <FormControl as="select" size="lg" onChange={this.handleTermChange}>
           <option>Select By Municipality...</option>
           <option>Adjuntas</option>
           <option>Aguada</option>
@@ -17,22 +35,22 @@ class Search extends React.Component {
           <option>Aibonito</option>
           <option>Arecibo</option>
           <option>Arroyo</option>
-          <option>Añasco</option>
+          <option>Anasco</option>
           <option>Barceloneta</option>
           <option>Barranquitas</option>
-          <option>Bayamón</option>
+          <option>Bayamon</option>
           <option>Cabo Rojo</option>
           <option>Caguas</option>
           <option>Camuy</option>
-          <option>Canóvanas</option>
+          <option>Canovanas</option>
           <option>Carolina</option>
-          <option>Cataño</option>
+          <option>Catano</option>
           <option>Cayey</option>
           <option>Ceiba</option>
           <option>Ciales</option>
           <option>Cidra</option>
           <option>Coamo</option>
-          <option>Comerío</option>
+          <option>Comerio</option>
           <option>Corozal</option>
           <option>Culebra</option>
           <option>Dorado</option>
@@ -42,41 +60,41 @@ class Search extends React.Component {
           <option>Guayanilla</option>
           <option>Guaynabo</option>
           <option>Gurabo</option>
-          <option>Guánica</option>
+          <option>Guanica</option>
           <option>Hatillo</option>
           <option>Hormigueros</option>
           <option>Humacao</option>
           <option>Isabela</option>
           <option>Jayuya</option>
-          <option>Juana Díaz</option>
+          <option>Juana Diaz</option>
           <option>Juncos</option>
           <option>Lajas</option>
           <option>Lares</option>
-          <option>Las Marías</option>
+          <option>Las Marias</option>
           <option>Las Piedras</option>
           <option>Loiza</option>
           <option>Luquillo</option>
-          <option>Manatí</option>
+          <option>Manati</option>
           <option>Maricao</option>
           <option>Maunabo</option>
-          <option>Mayagüez</option>
+          <option>Mayaguez</option>
           <option>Moca</option>
           <option>Morovis</option>
           <option>Naguabo</option>
           <option>Naranjito</option>
           <option>Orocovis</option>
           <option>Patillas</option>
-          <option>Peñuelas</option>
+          <option>Penuelas</option>
           <option>Ponce</option>
           <option>Quebradillas</option>
-          <option>Rincón</option>
+          <option>Rincon</option>
           <option>Rio Grande</option>
           <option>Sabana Grande</option>
           <option>Salinas</option>
-          <option>San Germán</option>
+          <option>San German</option>
           <option>San Juan</option>
           <option>San Lorenzo</option>
-          <option>San Sebastián</option>
+          <option>San Sebastian</option>
           <option>Santa Isabel</option>
           <option>Toa Alta</option>
           <option>Toa Baja</option>
@@ -93,7 +111,7 @@ class Search extends React.Component {
       <button
           type="button"
           className="searchButton"
-          onClick={this.props.search}
+          onClick={this.search}
         >
           Enter
       </button>

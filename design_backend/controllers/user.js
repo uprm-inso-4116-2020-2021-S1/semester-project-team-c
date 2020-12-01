@@ -27,6 +27,12 @@ exports.getUserInfo = function (req, res) {
                 user: user
             });
         }
+        else{
+            res.status(400).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
     }).catch(Error, (err) => {
         res.status(409).json({
             success: false,

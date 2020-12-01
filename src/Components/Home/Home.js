@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import Nav from "../NavigationBar/NavigationBar";
+import Reviews from "../Reviews/Reviews";
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -16,8 +17,8 @@ import Zipline from "../../images/zipline.jpg"
 import userEvent from "@testing-library/user-event";
 import Carousel from "../Carousel/Carousel"
 import CustomerProfile from "../CustomerProfile/CustomerProfile"
-class Home extends React.Component {
 
+class Home extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -51,6 +52,7 @@ class Home extends React.Component {
           <Col className="picPadding"><Image className="picDim d-block mx-auto" src={Zipline} roundedCircle/></Col>
         </Row>
       </Container>
+      <Reviews reviews={[{reviewMessage : "This was Great!", stars: 5, trid: 32781, review_user_uid: 43782, tour_tid: 23145, review_rid: 38923}, {reviewMessage : "Overall good for the value.", stars: 3, trid: 53623, review_user_uid: 28493, tour_tid: 23145, review_rid: 38924}]}/>
       </React.Fragment>
     );
   }

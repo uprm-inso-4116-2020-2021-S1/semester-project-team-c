@@ -14,16 +14,19 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.NUMBER,
             primaryKey: true
         },
+
     }, {
         tableName: 'attending_list',
         timestamps: false
     });
 
     attending.associate = (models) => {
-        attending.belongsTo(models.tour, { as: 'tid', foreignKey: 'tour_tid' });
-        attending.belongsTo(models.user, { as: 'uid', foreignKey: 'user_uid' });
-        
-
+        var User = models.user;
+        var Tour = models.tour;
+        attending.belongsTo(Tour, {foreignKey: 'tour_tid', targetKey: 'tid' });
+        attending.belongsTo(User, {foreignKey: 'user_uid', targetKey: 'uid' });
+        Tour.belongsToMany(User, { as: 'Users', through: 'attending' ,foreignKey: 'tour_tid' });
+        User.belongsToMany(Tour, { as: 'Tours', through: 'attending' ,foreignKey: 'user_uid' });
     };
 
     return attending;

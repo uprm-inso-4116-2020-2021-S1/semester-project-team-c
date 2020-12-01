@@ -3,17 +3,20 @@ const url = "http://localhost:8080/api/";
 
 export const Server = {
     getGuides,
+    getTourGuides, //All guides that are participating in tour
     getUsers,
     getUser,
     getCustomers,
     getCustomer,
     getGuide,
+    getUserTours,
+    getTourEvents,
     // getLocations,
     // getCompanies,
-    // getEvent,
     // getReview,
     addGuide,
     addCustomer,
+    getEventByCity,
     // addLocation,
     // addCompany,
     // addUser,
@@ -52,7 +55,7 @@ function addGuide(data){
         headers: {'Content-Type':'application/json'},
         body: data 
     };
-    return fetch(url + guide + "add-guide",req).then(receivedData => receivedData.json());
+    return fetch(url + guide + "add-guide",req);
 }
 
 function getGuide(uid) {
@@ -83,5 +86,29 @@ function addCustomer(data){
     };
     return fetch(url + customer + "add-customer",req).then(response => response.json());
 }
+
+//Tours
+const tour = "tour/";
+
+function getUserTours(uid) {
+    return fetch(url + tour + "attending/" + uid).then(receivedData => receivedData.json());
+}
+
+
+function getTourGuides(coid, tid) {
+    return fetch(url + tour + "company/" + coid + "/guideList/" + tid).then(receivedData => receivedData.json());
+}
+
+//Events
+const event = "event/";
+
+function getTourEvents(tid) {
+    return fetch(url + event + "tour/" + tid).then(receivedData => receivedData.json());
+}
+function getEventByCity(city){
+    return fetch(url + event + "city/" + city).then(receivedData => receivedData.json());
+}
+
+
 
 export default Server

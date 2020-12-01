@@ -18,24 +18,20 @@ class SearchResults extends React.Component {
     var eventFromTour = this.props.results;
     if (eventFromTour.length == 0) {
       return (
-        <h1> No events to show </h1>
+        <h1> No Tours to show </h1>
       )
     }
     if (eventFromTour.length > 0) {
       return (
         <div className="Container">
-          {this.props.results.map((event) => {
-            console.log(event)
-            // return (
-            //   <IndividualResult
-            //     name={event.name}
-            //     type={event.type}
-            //     location={event.location}
-            //     duration={event.duration}
-            //     key={event.eid}
-            //     tid={event.tid}
-            //   />
-            // );
+          {this.props.results.map((tour) => {
+            return (
+              <IndividualResult
+                name={tour.tour_name}
+                key={tour.eid}
+                tid={tour.tid}
+              />
+            );
           })}
         </div>
       );

@@ -3,6 +3,8 @@ var event = db.event;
 var tour = db.tour;
 var location = db.location;
 var attend = db.attending;
+var user = db.user;
+var guide = db.guide;
 
 exports.createTour = function (req, res) {
     var new_tour = req.body.tour;
@@ -73,8 +75,8 @@ exports.deleteTour = function (req, res) {
             locationIDarr[i] = data["location_lid"];
             i++;
         }
-        location.destroy({ 
-            where: { lid: locationIDarr } 
+        location.destroy({
+            where: { lid: locationIDarr }
         }).catch(Error, (err) => {
             res.status(409).json({
                 success: false,
@@ -83,8 +85,8 @@ exports.deleteTour = function (req, res) {
             });
         });
     }).then(() => {
-        tour.destroy({ 
-            where: { tid: tid } 
+        tour.destroy({
+            where: { tid: tid }
         }).catch(Error, (err) => {
             res.status(409).json({
                 success: false,
@@ -101,7 +103,8 @@ exports.deleteTour = function (req, res) {
 }
 
 exports.getGuideTours = function (req, res) {
-    var guide_id = req.params.gid
+    var guide_id = req.params.gid;
+
     tour.findAll({ where: { guide_gid: guide_id } }).then((tours) => {
         if (tours) {
             res.status(200).json({
@@ -117,5 +120,54 @@ exports.getGuideTours = function (req, res) {
             error: err
         });
     });
+}
 
+exports.getTourGuides = function (req, res) {
+    var tid = req.params.tid;
+    var guide_company_coid = req.params.coid;
+    tour.findOne({ where: { tid: tid, guide_company_coid: guide_company_coid } }).then((Tour) => {
+        Tour.getUsers({ where: { role: 1 } }).then((userList) => {
+            var guideTemp = [];
+            for(let g in userList){
+                var data = userList[g]
+                var test = guide.findOne({where: {user_uid: data["uid"]}});
+                guideTemp.push(test);
+            }
+            return Promise.all(guideTemp);
+        }).then((results) => {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully retrieved guides',
+                tourGuides: results
+            });
+        })
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting guides',
+            error: err
+        });
+    });
+}
+
+exports.toursAttending = function (req, res) {
+    var uid = req.params.uid
+    user.findOne({ where: { uid: uid } }).then((User) => {
+        if (User) {
+            User.getTours().then((results) => {
+
+                res.status(200).json({
+                    success: true,
+                    message: 'Successfully retrieved tours',
+                    allTours: results
+                });
+            })
+        }
+    }).catch(Error, (err) => {
+        res.status(409).json({
+            success: false,
+            message: 'Error getting tours',
+            error: err
+        });
+    });
 }

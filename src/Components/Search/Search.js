@@ -4,11 +4,30 @@ import "./Search.css";
 import { FormGroup, FormControl, Placeholder } from "react-bootstrap";
 
 class Search extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      term : '',
+    };
+
+    this.search = this.search.bind(this);
+    this.handleTermChange = this.handleTermChange.bind(this);
+  }
+
+  handleTermChange(event){
+    this.setState({term : event.target.value});
+  }
+
+  search(){
+    this.props.search(this.state.term)
+  }
+
   render() {
     return (
       <div className="SearchBox">
       <FormGroup id="searchForm">
-        <FormControl as="select" size="lg">
+        <FormControl as="select" size="lg" onChange={this.handleTermChange}>
           <option>Select By Municipality...</option>
           <option>Adjuntas</option>
           <option>Aguada</option>
@@ -93,7 +112,7 @@ class Search extends React.Component {
       <button
           type="button"
           className="searchButton"
-          onClick={this.props.search}
+          onClick={this.search}
         >
           Enter
       </button>
